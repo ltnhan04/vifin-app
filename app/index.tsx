@@ -10,6 +10,7 @@ export default function Index() {
       }}
     >
       <Text>This is new text</Text>
+      <Text className="text-red-500">This is new text 1</Text>
     </View>
   );
 }
