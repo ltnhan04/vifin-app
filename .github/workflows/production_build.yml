@@ -1,0 +1,60 @@
+name: Publish Prod Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: npm
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          expo-cache: true
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run:
+          yarn
+
+          # Set NODE_ENV to production
+      - name: Set NODE_ENV to production
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
+
+      - name: Configure EAS Build
+        run: eas build:configure --platform android
+        env:
+          NODE_ENV: production
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Trigger EAS Build for Android
+        if: env.NODE_ENV == 'production'
+        run: |
+          eas build --platform android --profile production --non-interactive
+
+      - name: Add Build Status to production
+        if: env.NODE_ENV == 'production'
+        uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            ## Android Production Build Triggered
+            The build process for **Android (Production)** has been triggered successfully.
+            Track the build here: [EAS Build Dashboard](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/builds)
