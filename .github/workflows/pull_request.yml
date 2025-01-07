@@ -11,15 +11,18 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      # Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
           cache: npm
 
+      # Setup Expo
       - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
@@ -28,18 +31,26 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      # Install dependencies
       - name: Install dependencies
         run: yarn
 
+      # Set NODE_ENV to dev
+      - name: Set NODE_ENV to dev
+        run: echo "NODE_ENV=dev" >> $GITHUB_ENV
+
+      # Configure EAS Update
       - name: Configure EAS Update
         run: eas update:configure
 
+      # Publish to EAS Update
       - name: Publish to EAS Update
         if: env.NODE_ENV == 'dev'
         run: |
           BRANCH_NAME=pr-${{ github.event.number }}
           eas update --branch $BRANCH_NAME --non-interactive --message "PR #${{ github.event.number }}"
 
+      # Add EAS Update Link to PR
       - name: Add EAS Update Link to PR
         if: env.NODE_ENV == 'dev'
         uses: mshick/add-pr-comment@v1
