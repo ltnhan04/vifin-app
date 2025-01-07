@@ -1,0 +1,52 @@
+name: Publish Pull Request
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: npm
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          expo-cache: true
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Configure EAS Update
+        run: eas update:configure
+
+      - name: Publish to EAS Update
+        if: env.NODE_ENV == 'dev'
+        run: |
+          BRANCH_NAME=pr-${{ github.event.number }}
+          eas update --branch $BRANCH_NAME --non-interactive --message "PR #${{ github.event.number }}"
+
+      - name: Add EAS Update Link to PR
+        if: env.NODE_ENV == 'dev'
+        uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            ## Test this PR with EAS Update
+            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=pr-${{ github.event.number }})
+            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/updates/pr-${{ github.event.number }}) ------**
