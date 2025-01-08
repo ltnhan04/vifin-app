@@ -35,24 +35,18 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      # Set NODE_ENV to dev
+      # Set NODE_ENV to development
       - name: Set NODE_ENV to development
         run: echo "NODE_ENV=development" >> $GITHUB_ENV
 
-      # Configure EAS Update
-      #- name: Configure EAS Update
-      # run: eas update:configure
-
       # Publish to EAS Update
       - name: Publish to EAS Update
-        if: env.NODE_ENV == 'development'
         run: |
           BRANCH_NAME=build-${{ github.event.number }}
           eas update --branch $BRANCH_NAME --non-interactive --message "Development #${{ github.event.number }}"
 
       # Add EAS Update Link to PR
       - name: Add EAS Update Link to Development
-        if: env.NODE_ENV == 'development'
         uses: mshick/add-pr-comment@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,3 +55,14 @@ jobs:
             ## Test this Development with EAS Update
             ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=build-${{ github.event.number }})
             **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/build-${{ github.event.number }}) ------**
+
+      # Save GitHub Event Number to a file
+      - name: Save GitHub Event Number
+        run: echo "${{ github.event.number }}" > event_number.txt
+
+      # Upload the file as an artifact
+      - name: Upload Event Number Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: event-number
+          path: event_number.txt
