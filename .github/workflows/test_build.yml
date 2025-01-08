@@ -42,8 +42,8 @@ jobs:
       - name: Publish to EAS Update
         if: env.NODE_ENV == 'test'
         run: |
-          BRANCH_NAME=preview-${{ github.event.number }}
-          eas update --branch $BRANCH_NAME --non-interactive --message "Preview #${{ github.event.number }}"
+          BRANCH_NAME=preview-${{ github.run_id }}
+          eas update --branch $BRANCH_NAME --non-interactive --message "Preview #${{ github.run_id }}"
 
       - name: Add EAS Update Link to Staging
         if: env.NODE_ENV == 'test'
@@ -53,5 +53,5 @@ jobs:
         with:
           message: |
             ## Test this Staging with EAS Update
-            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=preview-${{ github.event.number }})
-            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/preview-${{ github.event.number }}) ------**
+            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=preview-${{ github.run_id }})
+            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/preview-${{ github.run_id }}) ------**
