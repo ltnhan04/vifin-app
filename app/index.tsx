@@ -15,6 +15,7 @@ export default function Index() {
       <Text className="text-gray-400">This is new text 3</Text>
       <Text className="text-gray-400">This is new text 4</Text>
       <Text className="text-gray-400">This is new text 5</Text>
+      <Text className="text-gray-400">This is new text 6</Text>
     </View>
   );
 }
