@@ -47,7 +47,7 @@ jobs:
       - name: Publish to EAS Update
         if: env.NODE_ENV == 'development'
         run: |
-          BRANCH_NAME=${{ github.sha }}
+          BRANCH_NAME=build-${{ github.event.number }}
           eas update --branch $BRANCH_NAME --non-interactive --message "Development #${{ github.sha }}"
 
       # Add EAS Update Link to PR
@@ -59,5 +59,5 @@ jobs:
         with:
           message: |
             ## Test this Development with EAS Update
-            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=${{ github.sha }})
-            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/${{ github.sha }}) ------**
+            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=build-${{ github.event.number }})
+            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/build-${{ github.event.number }}) ------**
