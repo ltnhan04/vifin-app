@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    env:
+      NODE_ENV: test
+      EXPO_ROUTER_APP_ROOT: .
     steps:
       # Checkout code
       - name: Checkout
@@ -35,10 +38,6 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: yarn
-
-      # Set NODE_ENV to staging
-      - name: Set NODE_ENV to test
-        run: echo "NODE_ENV=test" >> $GITHUB_ENV
 
       # Publish to EAS Update
       - name: Publish to EAS Update
