@@ -40,8 +40,8 @@ jobs:
         run: echo "NODE_ENV=development" >> $GITHUB_ENV
 
       # Configure EAS Update
-      - name: Configure EAS Update
-        run: eas update:configure
+      #- name: Configure EAS Update
+      # run: eas update:configure
 
       # Publish to EAS Update
       - name: Publish to EAS Update
