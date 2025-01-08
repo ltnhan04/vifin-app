@@ -29,14 +29,15 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
-        run: yarn
-
-      - name: Configure EAS Update
         run:
-          eas update:configure
+          yarn
+
           # Set NODE_ENV to staging
       - name: Set NODE_ENV to Staging
         run: echo "NODE_ENV=test" >> $GITHUB_ENV
+
+      - name: Configure EAS Update
+        run: eas update:configure
 
       - name: Publish to EAS Update
         if: env.NODE_ENV == 'test'
