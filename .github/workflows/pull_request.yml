@@ -60,4 +60,4 @@ jobs:
           message: |
             ## Test this Development with EAS Update
             ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=${{ github.sha }})
-            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/${{ github.event.number }}) ------**
+            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/${{ github.sha }}) ------**
