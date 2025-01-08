@@ -1,4 +1,4 @@
-name: Publish Prod Build
+name: Production Build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish:
+  deploy-to-production:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
@@ -48,7 +48,7 @@ jobs:
         run: |
           eas build --platform android --profile production --non-interactive
 
-      - name: Add Build Status to production
+      - name: Add Build Status to Production
         if: env.NODE_ENV == 'production'
         uses: mshick/add-pr-comment@v1
         env:
