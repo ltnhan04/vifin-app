@@ -48,7 +48,7 @@ jobs:
         if: env.NODE_ENV == 'development'
         run: |
           BRANCH_NAME=build-${{ github.event.number }}
-          eas update --branch $BRANCH_NAME --non-interactive --message "Development #${{ github.sha }}"
+          eas update --branch $BRANCH_NAME --non-interactive --message "Development #${{ github.event.number }}"
 
       # Add EAS Update Link to PR
       - name: Add EAS Update Link to Development
