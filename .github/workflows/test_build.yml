@@ -5,7 +5,7 @@ on:
       - release/**
 
 jobs:
-  publish:
+  staging-build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
