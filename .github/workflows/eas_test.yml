@@ -1,0 +1,58 @@
+name: Staging Build
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  staging-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # Checkout code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: npm
+
+      # Setup Expo
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          expo-cache: true
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn
+
+      # Set NODE_ENV to staging
+      - name: Set NODE_ENV to test
+        run: echo "NODE_ENV=test" >> $GITHUB_ENV
+
+      # Publish to EAS Update
+      - name: Publish to EAS Update
+        run: |
+          BRANCH_NAME=build-${{ github.run_number }}
+          eas update --branch $BRANCH_NAME --non-interactive --message "Staging Build #${{ github.run_number }}"
+
+      # Add EAS Update Link to Staging
+      - name: Add EAS Update Link to Staging
+        uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            ## Test this Staging with EAS Update
+            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=build-${{ github.run_number }})
+            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/build-${{ github.run_number }}) ------**
