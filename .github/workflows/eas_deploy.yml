@@ -8,19 +8,20 @@ on:
 jobs:
   deploy-to-production:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
 
     steps:
+      # Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
           cache: npm
 
+      # Setup Expo
       - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
@@ -29,27 +30,25 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      # Install dependencies
       - name: Install dependencies
-        run:
-          yarn
+        run: npm ci
 
-          # Set NODE_ENV to production
-      - name: Set NODE_ENV to production
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
-
+      # Configure EAS Build
       - name: Configure EAS Build
         run: eas build:configure --platform android
         env:
-          NODE_ENV: production
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
+      # Trigger EAS Build for Android
       - name: Trigger EAS Build for Android
-        if: env.NODE_ENV == 'production'
         run: |
           eas build --platform android --profile production --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
+      # Add Build Status to GitHub
       - name: Add Build Status to Production
-        if: env.NODE_ENV == 'production'
         uses: mshick/add-pr-comment@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
