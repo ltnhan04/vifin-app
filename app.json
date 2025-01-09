@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nhanluong.vifinapp"
     },
     "web": {
       "bundler": "metro",
@@ -62,6 +63,12 @@
         "projectId": "bb50d400-ca3c-4de3-9551-b14dac5a3218"
       }
     },
-    "owner": "nhanluong"
+    "owner": "nhanluong",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/bb50d400-ca3c-4de3-9551-b14dac5a3218"
+    }
   }
 }
