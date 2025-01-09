@@ -62,15 +62,15 @@ export default {
         origin: false,
       },
       eas: {
-        projectId: process.env.EXPO_PROJECT_ID,
+        projectId: process.env.EXPO_PUBLIC_PROJECT_ID,
       },
     },
-    owner: process.env.EXPO_OWNER,
+    owner: process.env.EXPO_PUBLIC_OWNER,
     runtimeVersion: {
       policy: "appVersion",
     },
     updates: {
-      url: "https://u.expo.dev/bb50d400-ca3c-4de3-9551-b14dac5a3218",
+      url: `https://u.expo.dev/${process.env.EXPO_PUBLIC_PROJECT_ID}`,
     },
   },
 };
