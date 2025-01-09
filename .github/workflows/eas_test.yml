@@ -39,7 +39,7 @@ jobs:
 
       # Build APK for staging
       - name: Build APK
-        run: eas build --profile preview --non-interaction
+        run: eas build --profile preview --non-interactive
 
       # Upload Artifact
       - name: Upload Artifact
