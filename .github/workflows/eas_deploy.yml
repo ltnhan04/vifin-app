@@ -46,14 +46,3 @@ jobs:
           eas build --platform android --profile production --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      # Add Build Status to GitHub
-      - name: Add Build Status to Production
-        uses: mshick/add-pr-comment@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          message: |
-            ## Android Production Build Triggered
-            The build process for **Android (Production)** has been triggered successfully.
-            Track the build here: [EAS Build Dashboard](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/builds)
