@@ -34,11 +34,7 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: yarn
-
-      # Set NODE_ENV to development
-      - name: Set NODE_ENV to development
-        run: echo "NODE_ENV=development" >> $GITHUB_ENV
+        run: npm ci
 
       # Publish to EAS Update
       - name: Publish to EAS Update

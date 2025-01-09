@@ -1,6 +1,7 @@
 name: Staging Build
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
@@ -11,9 +12,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    env:
-      NODE_ENV: test
-      EXPO_ROUTER_APP_ROOT: .
     steps:
       # Checkout code
       - name: Checkout
@@ -37,21 +35,16 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: yarn
+        run: npm ci
 
-      # Publish to EAS Update
-      - name: Publish to EAS Update
-        run: |
-          BRANCH_NAME=build-${{ github.run_number }}
-          eas update --branch $BRANCH_NAME --non-interactive --message "Staging Build #${{ github.run_number }}"
+      # Build APK for staging
+      - name: Build APK
+        run: eas build --profile preview --non-interaction
 
-      # Add EAS Update Link to Staging
-      - name: Add EAS Update Link to Staging
-        uses: mshick/add-pr-comment@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Upload Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          message: |
-            ## Test this Staging with EAS Update
-            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://u.expo.dev/${{ secrets.EXPO_ACCOUNT_NAME }}/vifin-app?channel-name=build-${{ github.run_number }})
-            **------ Build published to [EAS Update](https://expo.dev/accounts/${{ secrets.EXPO_ACCOUNT_NAME }}/projects/vifin-app/branches/build-${{ github.run_number }}) ------**
+          name: staging-apk
+          path: dist/*.apk
+          if-no-files-found: error
