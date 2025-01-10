@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
 
 import SplashScreen from "./splash-screen";
 import "./global.css";
+import React from "react";
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -28,10 +30,13 @@ export default function RootLayout() {
   return isLoading ? (
     <SplashScreen />
   ) : (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    />
+    <>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+      <StatusBar style="dark" />
+    </>
   );
 }
