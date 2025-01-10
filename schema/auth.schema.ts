@@ -42,5 +42,5 @@ export const signUpSchema = z
       });
     }
   });
-export type signUpType = z.TypeOf<typeof signUpSchema>;
-export type signInType = z.TypeOf<typeof signInSchema>;
+export type SignUpType = z.TypeOf<typeof signUpSchema>;
+export type SignInType = z.TypeOf<typeof signInSchema>;

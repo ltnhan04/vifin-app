@@ -10,12 +10,11 @@ export type FormData = {
 export type FormDataProps = {
   label: string;
   type: KeyBoardType;
-  isSecure: boolean;
+  isSecure?: boolean;
   icon?: HTMLImageElement;
   placeholder: string;
   name: ValidFieldName;
   control: Control<signInType | signUpType>;
-  handleChangeText: () => void;
 };
 
 export type KeyBoardType =

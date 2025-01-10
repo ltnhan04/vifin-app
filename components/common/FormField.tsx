@@ -11,7 +11,6 @@ const FormField: React.FC<FormDataProps> = ({
   isSecure,
   control,
   placeholder,
-  handleChangeText,
 }) => {
   return (
     <Controller
@@ -21,17 +20,22 @@ const FormField: React.FC<FormDataProps> = ({
         field: { onChange, onBlur, value },
         fieldState: { error },
       }) => (
-        <View className="space-y-2 w-full">
-          <Text className="font-rubik-medium text-sm text-secondary-gray">
+        <View className="gap-y-2 w-full">
+          <Text className="font-rubik-medium text-lg text-secondary-gray">
             {label}
           </Text>
           <View>
             <TextInput
-              onChangeText={handleChangeText}
               secureTextEntry={isSecure}
               keyboardType={type}
               placeholder={placeholder}
+              className="border border-secondary-gray-200 text-base text-white px-5 py-4 rounded-lg transition-all duration-300 ease-in-out ring-secondary-gray-200 focus:ring-2 focus:border-primary-brightBlue focus:border-opacity-50 focus:border-4 shadow-md focus:shadow-primary-brightBlue text-center"
+              placeholderTextColor="#D3D3D3"
+              style={{
+                textAlignVertical: "center",
+              }}
             />
+
             {icon && <Image source={icon}></Image>}
           </View>
         </View>
