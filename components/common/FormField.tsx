@@ -36,7 +36,13 @@ const FormField: React.FC<FormDataProps> = ({
               }}
             />
 
-            {icon && <Image source={icon}></Image>}
+            {icon && (
+              <Image
+                style={{ backgroundColor: "#fff" }}
+                className="size-6"
+                source={icon}
+              ></Image>
+            )}
           </View>
         </View>
       )}
