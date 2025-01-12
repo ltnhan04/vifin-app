@@ -13,8 +13,6 @@ import google from "@/assets/icons/google.png";
 import logout from "@/assets/icons/LogoutOutline.png";
 import pencil from "@/assets/icons/PencilAltOutline.png";
 import setting from "@/assets/icons/CogOutline.png";
-import star from "@/assets/icons/Star.png";
-import user from "@/assets/icons/User.png";
 import viewGrid from "@/assets/icons/ViewGridAddOutline.png";
 
 export default {
@@ -33,7 +31,5 @@ export default {
   logout,
   pencil,
   setting,
-  star,
-  user,
   viewGrid,
 };
