@@ -54,15 +54,17 @@
           ]
         }
       ],
-      "expo-build-properties",
-      {
-        "android": {
-          "enableProguardInReleaseBuilds": true,
-          "enableShrinkResourcesInReleaseBuilds": true,
-          "useLegacyPackaging": true
-        },
-        "ios": {}
-      }
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "useLegacyPackaging": true
+          },
+          "ios": {}
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
