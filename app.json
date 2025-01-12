@@ -17,6 +17,9 @@
       "supportsTablet": true
     },
     "android": {
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -49,6 +52,17 @@
             "./assets/fonts/Rubik-Regular.ttf",
             "./assets/fonts/Rubik-SemiBold.ttf"
           ]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "useLegacyPackaging": true
+          },
+          "ios": {}
         }
       ]
     ],
