@@ -65,14 +65,14 @@ export default function Signin() {
                 control={control}
                 error={errors}
                 type="visible-password"
-                isSecure={isShowingPassword}
+                isSecure={!isShowingPassword}
                 placeholder="Enter your password"
                 handleShowingPassword={() =>
                   setIsShowingPassword(!isShowingPassword)
                 }
                 label="Password"
                 name="password"
-                icon={isShowingPassword ? "eye" : "eye-slash"}
+                icon={isShowingPassword ? "eye-slash" : "eye"}
               />
               <Button
                 background="#6BBDE3"

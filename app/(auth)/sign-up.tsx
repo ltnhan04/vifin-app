@@ -68,7 +68,7 @@ const SignUp = () => {
                 control={control}
                 error={errors}
                 type="visible-password"
-                isSecure={isShowingPassword["password"]}
+                isSecure={!isShowingPassword["password"]}
                 placeholder="Enter your password"
                 handleShowingPassword={() =>
                   setIsShowingPassword((prev) => ({
@@ -78,13 +78,13 @@ const SignUp = () => {
                 }
                 label="Password"
                 name="password"
-                icon={isShowingPassword["password"] ? "eye" : "eye-slash"}
+                icon={isShowingPassword["password"] ? "eye-slash" : "eye"}
               />
               <FormField
                 control={control}
                 error={errors}
                 type="visible-password"
-                isSecure={isShowingPassword["confirmPassword"]}
+                isSecure={!isShowingPassword["confirmPassword"]}
                 placeholder="Enter your confirm password"
                 handleShowingPassword={() =>
                   setIsShowingPassword((prev) => ({
@@ -95,7 +95,7 @@ const SignUp = () => {
                 label="Confirm Password"
                 name="confirmPassword"
                 icon={
-                  isShowingPassword["confirmPassword"] ? "eye" : "eye-slash"
+                  isShowingPassword["confirmPassword"] ? "eye-slash" : "eye"
                 }
               />
               <Button
