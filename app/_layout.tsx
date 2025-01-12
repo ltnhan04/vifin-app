@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, Redirect } from "expo-router";
 import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
+import { configureReanimatedLogger } from "react-native-reanimated";
+import SplashScreen from "@/app/splash-screen";
 
-import SplashScreen from "./splash-screen";
 import "./global.css";
+import React from "react";
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -17,6 +20,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    configureReanimatedLogger({ strict: false });
     if (fontsLoaded) {
       const timer = setTimeout(() => {
         setIsLoading(false);
@@ -28,10 +32,19 @@ export default function RootLayout() {
   return isLoading ? (
     <SplashScreen />
   ) : (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    />
+    <>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(root)/(tabs)" />
+        <Stack.Screen name="(onboarding)" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="splash-screen" />
+      </Stack>
+      <StatusBar style="dark" />
+    </>
   );
 }
