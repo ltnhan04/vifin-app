@@ -23,8 +23,8 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
       onPress={() => {
         handleOnPress();
       }}
-      activeOpacity={0.8}
-      className={`py-5 px-6 mt-4 rounded-xl ${isLoading ? "opacity-50" : ""}`}
+      activeOpacity={0.7}
+      className={`py-5 px-6 mt-4 rounded-xl transition-opacity duration-300 ease-in-out ${isLoading ? "opacity-40" : ""}`}
       style={{ backgroundColor: background }}
     >
       <View className="flex flex-row items-center justify-center gap-x-4">
