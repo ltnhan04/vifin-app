@@ -1,21 +1,19 @@
-import arrowDown from "@/assets/icons/arrow-down.png";
-import arrowLeft from "@/assets/icons/arrow-left.png";
-import bell from "@/assets/icons/bell.png";
-import calendar from "@/assets/icons/calendar.png";
-import charSquare from "@/assets/icons/char-square.png";
-import chartPie from "@/assets/icons/chart-pie.png";
-import creditCard from "@/assets/icons/credit-card.png";
-import dollar from "@/assets/icons/dollar.png";
-import eyeHide from "@/assets/icons/eye-hide.png";
-import eyeOpen from "@/assets/icons/eye-open.png";
-import globe from "@/assets/icons/globe.png";
+import arrowDown from "@/assets/icons/ArrowCircleDownOutline.png";
+import arrowLeft from "@/assets/icons/ArrowCircleLeftOutline.png";
+import bell from "@/assets/icons/BellOutline.png";
+import calendar from "@/assets/icons/CalendarOutline.png";
+import charSquare from "@/assets/icons/ChartPieOutline.png";
+import chartPie from "@/assets/icons/ChartPieOutline.png";
+import creditCard from "@/assets/icons/CreditCardOutline.png";
+import dollar from "@/assets/icons/CurrencyDollarOutline.png";
+import eyeHide from "@/assets/icons/EyeOffOutline.png";
+import eyeOpen from "@/assets/icons/EyeOutline.png";
+import globe from "@/assets/icons/GlobeAltOutline.png";
 import google from "@/assets/icons/google.png";
-import logout from "@/assets/icons/logout.png";
-import pencil from "@/assets/icons/pencil.png";
-import setting from "@/assets/icons/setting.png";
-import star from "@/assets/icons/star.png";
-import user from "@/assets/icons/user.png";
-import viewGrid from "@/assets/icons/view-grid.png";
+import logout from "@/assets/icons/LogoutOutline.png";
+import pencil from "@/assets/icons/PencilAltOutline.png";
+import setting from "@/assets/icons/CogOutline.png";
+import viewGrid from "@/assets/icons/ViewGridAddOutline.png";
 
 export default {
   arrowDown,
@@ -33,7 +31,5 @@ export default {
   logout,
   pencil,
   setting,
-  star,
-  user,
   viewGrid,
 };
