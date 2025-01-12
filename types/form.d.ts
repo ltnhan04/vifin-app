@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { Control, FieldError } from "react-hook-form";
 import type { signInType, signUpType } from "@/schema/auth.schema";
 
 export type FormData = {
@@ -11,9 +11,12 @@ export type FormDataProps = {
   label: string;
   type: KeyBoardType;
   isSecure?: boolean;
-  icon?: HTMLImageElement;
+  icon?: string;
+  error: FieldError<signInType | signUpType> | undefined;
   placeholder: string;
   name: ValidFieldName;
+
+  handleShowingPassword?: () => void;
   control: Control<signInType | signUpType>;
 };
 

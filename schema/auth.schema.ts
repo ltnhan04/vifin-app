@@ -20,16 +20,15 @@ export const signUpSchema = z
     email: z.string().email("Email is not valid!"),
     password: z
       .string()
-      .min(1, "Password must be at least one character")
+      .min(8, "Password must be at least 8 characters")
       .max(100, "Password must not exceed 100 characters")
-      .regex(
-        /[!@#$%^&*(),.?":{}|<>]/,
-        "Password must include at least one special character",
-      )
-      .regex(/[A-Z]/, "Password must be at least one uppercase character"),
+      .refine(
+        (val) => /[!@#$%^&*(),.?":{}|<>]/.test(val) && /[A-Z]/.test(val),
+        "Password must include at least one special character and one uppercase character",
+      ),
     confirmPassword: z
       .string()
-      .min(1, "Password must be at least one character")
+      .min(8, "Password must be at least 8 characters")
       .max(100, "Password must not exceed 100 characters"),
   })
   .strict()
