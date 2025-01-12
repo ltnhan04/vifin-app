@@ -41,9 +41,9 @@ export default function Signin() {
             <Image
               source={images.signIn}
               resizeMode="contain"
-              className="max-w-[260px] mx-auto"
+              className="max-w-md mx-auto"
             />
-            <Text className="font-rubik text-white text-lg text-center">
+            <Text className="font-rubik text-white text-lg text-center mt-6">
               Welcome to ViFin
             </Text>
             <Text className="font-rubik-bold text-3xl text-white text-center mt-2">
