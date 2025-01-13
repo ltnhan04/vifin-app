@@ -64,7 +64,6 @@ const SignUp = () => {
       }
     } catch (error: any) {
       const err = error as FirebaseError;
-      console.log(err);
       Toast.show({
         type: "error",
         text1: "Registration failed: " + err.message,

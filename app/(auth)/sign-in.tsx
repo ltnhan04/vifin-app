@@ -8,9 +8,13 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { auth } from "@/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import Toast from "react-native-toast-message";
 
 import { signInSchema, SignInType } from "@/schema/auth.schema";
 import images from "@/constants/images";
@@ -20,6 +24,7 @@ import FormField from "@/components/common/FormField";
 import Button from "@/components/common/Button";
 
 export default function Signin() {
+  const router = useRouter();
   const [isShowingPassword, setIsShowingPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -35,15 +40,28 @@ export default function Signin() {
     },
   });
 
-  const onSubmit: SubmitHandler<SignInType> = (data: SignInType) => {
+  const onSubmit: SubmitHandler<SignInType> = async (data: SignInType) => {
     setIsLoading(true);
     try {
-      console.log(data);
-    } catch (error) {
+      const { email, password } = data;
+      const loginUser = await signInWithEmailAndPassword(auth, email, password);
+      Toast.show({
+        type: "success",
+        text1: "Sign Up Successfully!",
+      });
+      if (loginUser.user) {
+        router.push("/(root)/(tabs)/home");
+      }
+    } catch (error: any) {
+      const err = error as FirebaseError;
+      Toast.show({
+        type: "error",
+        text1: "Sign In Failed: " + err.message,
+      });
     } finally {
       setIsLoading(false);
+      reset();
     }
-    reset();
   };
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
