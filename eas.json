@@ -12,9 +12,6 @@
     "preview": {
       "distribution": "internal",
       "channel": "staging",
-      "hooks": {
-        "postInstall": "echo $GOOGLE_SERVICES_JSON > android/app/google-services.json"
-      },
       "android": {
         "buildType": "apk"
       },
@@ -34,8 +31,5 @@
         "changesNotSentForReview": true
       }
     }
-  },
-  "hooks": {
-    "postInstall": "echo $GOOGLE_SERVICES_JSON > android/app/google-services.json"
   }
 }
