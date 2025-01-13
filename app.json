@@ -14,7 +14,9 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nhanluong.vifinapp",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "runtimeVersion": {
@@ -22,9 +24,10 @@
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#081657"
       },
-      "package": "com.nhanluong.vifinapp"
+      "package": "com.nhanluong.vifinapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -62,9 +65,14 @@
             "enableShrinkResourcesInReleaseBuilds": true,
             "useLegacyPackaging": true
           },
-          "ios": {}
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true
