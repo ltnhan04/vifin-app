@@ -11,10 +11,10 @@
     },
     "preview": {
       "distribution": "internal",
+      "channel": "staging",
       "hooks": {
         "postInstall": "echo $GOOGLE_SERVICES_JSON > android/app/google-services.json"
       },
-      "channel": "staging",
       "android": {
         "buildType": "apk"
       },
@@ -29,13 +29,13 @@
   },
   "submit": {
     "production": {
-      "hooks": {
-        "postInstall": "echo $GOOGLE_SERVICES_JSON > android/app/google-services.json"
-      },
       "android": {
         "track": "production",
         "changesNotSentForReview": true
       }
     }
+  },
+  "hooks": {
+    "postInstall": "echo $GOOGLE_SERVICES_JSON > android/app/google-services.json"
   }
 }
