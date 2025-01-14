@@ -12,16 +12,26 @@ import { Link, useRouter } from "expo-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth } from "@/firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+
 import { FirebaseError } from "firebase/app";
 import Toast from "react-native-toast-message";
 
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { signInSchema, SignInType } from "@/schema/auth.schema";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 
 import FormField from "@/components/common/FormField";
 import Button from "@/components/common/Button";
+
+GoogleSignin.configure({
+  webClientId: process.env.GOOGLE_CLIENT_ID,
+});
 
 export default function Signin() {
   const router = useRouter();
@@ -47,7 +57,7 @@ export default function Signin() {
       const loginUser = await signInWithEmailAndPassword(auth, email, password);
       Toast.show({
         type: "success",
-        text1: "Sign Up Successfully!",
+        text1: "Sign In Successfully!",
       });
       if (loginUser.user) {
         router.push("/(root)/(tabs)/home");
@@ -63,6 +73,37 @@ export default function Signin() {
       reset();
     }
   };
+
+  const signInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+
+      const googleCredential = GoogleAuthProvider.credential(
+        userInfo.data?.idToken,
+      );
+
+      const loginUser = await signInWithCredential(auth, googleCredential);
+      Toast.show({
+        type: "success",
+        text1: "Google Sign-In Successful!",
+      });
+
+      if (loginUser.user) {
+        router.push("/(root)/(tabs)/home");
+      }
+    } catch (error) {
+      const err = error as FirebaseError;
+      Toast.show({
+        type: "error",
+        text1: "Google Sign-In Failed: " + err.message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
       <SafeAreaView style={{ flex: 1 }}>
@@ -126,7 +167,7 @@ export default function Signin() {
               </View>
               <Button
                 icon={icons.google}
-                handleOnPress={() => {}}
+                handleOnPress={signInWithGoogle}
                 isLoading={isLoading}
                 textColor="black"
                 background="#F3F4F6"

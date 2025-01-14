@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:739948025106:android:b533a41a3f8dcf0d428fcb",
+        "mobilesdk_app_id": "1:739948025106:android:aad51f604e13b41a428fcb",
         "android_client_info": {
           "package_name": "com.nhanluong.vifinapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "739948025106-tui8caj4m6s16s67nfnru21cd625ptrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBLtZyY9h9L-0VCx7k_fABDDtf5m361s70"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739948025106-tui8caj4m6s16s67nfnru21cd625ptrr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739948025106-g19cc78ucgd5hsuo0assgu6cuu8en210.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nhanluong.vifinapp"
+              }
+            }
+          ]
         }
       }
     }
