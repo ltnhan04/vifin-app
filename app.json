@@ -19,9 +19,7 @@
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "runtimeVersion": {
-        "policy": "appVersion"
-      },
+      "runtimeVersion": "1.0.0",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#081657"
@@ -86,9 +84,8 @@
       }
     },
     "owner": "nhanluong",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.0",
+
     "updates": {
       "url": "https://u.expo.dev/bb50d400-ca3c-4de3-9551-b14dac5a3218"
     }

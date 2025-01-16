@@ -11,28 +11,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { auth } from "@/firebaseConfig";
-import {
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithCredential,
-} from "firebase/auth";
-
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FirebaseError } from "firebase/app";
 import Toast from "react-native-toast-message";
 
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { signInSchema, SignInType } from "@/schema/auth.schema";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 
 import FormField from "@/components/common/FormField";
 import Button from "@/components/common/Button";
-
 GoogleSignin.configure({
-  webClientId: process.env.GOOGLE_CLIENT_ID,
+  webClientId:
+    "739948025106-tui8caj4m6s16s67nfnru21cd625ptrr.apps.googleusercontent.com",
 });
-
 export default function Signin() {
   const router = useRouter();
   const [isShowingPassword, setIsShowingPassword] = useState(false);
@@ -54,7 +47,10 @@ export default function Signin() {
     setIsLoading(true);
     try {
       const { email, password } = data;
-      const loginUser = await signInWithEmailAndPassword(auth, email, password);
+      const loginUser = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
       Toast.show({
         type: "success",
         text1: "Sign In Successfully!",
@@ -74,35 +70,17 @@ export default function Signin() {
     }
   };
 
-  const signInWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
+  // const onGoogleButtonPress = async () => {
+  //   await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  //   const signInResult = await GoogleSignin.signIn();
 
-      const googleCredential = GoogleAuthProvider.credential(
-        userInfo.data?.idToken,
-      );
+  //   const { idToken } = signInResult.data;
+  //   if (!idToken) {
+  //     console.log("No ID token found");
+  //   }
 
-      const loginUser = await signInWithCredential(auth, googleCredential);
-      Toast.show({
-        type: "success",
-        text1: "Google Sign-In Successful!",
-      });
-
-      if (loginUser.user) {
-        router.push("/(root)/(tabs)/home");
-      }
-    } catch (error) {
-      const err = error as FirebaseError;
-      Toast.show({
-        type: "error",
-        text1: "Google Sign-In Failed: " + err.message,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   const googleCredential =
+  // };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -167,7 +145,7 @@ export default function Signin() {
               </View>
               <Button
                 icon={icons.google}
-                handleOnPress={signInWithGoogle}
+                handleOnPress={() => {}}
                 isLoading={isLoading}
                 textColor="black"
                 background="#F3F4F6"

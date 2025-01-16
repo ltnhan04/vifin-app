@@ -28,6 +28,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="vifin"/>
         <data android:scheme="com.nhanluong.vifinapp"/>
+        <data android:scheme="exp+vifin-app"/>
       </intent-filter>
     </activity>
   </application>

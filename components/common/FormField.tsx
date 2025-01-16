@@ -33,11 +33,8 @@ const FormField: React.FC<FormDataProps> = ({
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
-              className={`font-rubik border border-secondary-gray-200 text-lg text-white px-6 py-5  rounded-xl transition-all duration-300 ease-in-out ring-secondary-gray-200 focus:ring-2 focus:border-primary-brightBlue ${error && "focus:shadow-secondary-red"} focus:border-4 shadow-md focus:shadow-primary-brightBlue text-center`}
+              className={`font-rubik border border-secondary-gray-200 text-lg text-white px-5 py-4  rounded-xl transition-all duration-300 ease-in-out ring-secondary-gray-200 focus:ring-2 focus:border-primary-brightBlue ${error[name]?.message ? "focus:border-secondary-red" : ""} focus:border-4  focus:shadow-primary-brightBlue text-center`}
               placeholderTextColor="#D3D3D3"
-              style={{
-                lineHeight: 20,
-              }}
             />
 
             {icon && (
