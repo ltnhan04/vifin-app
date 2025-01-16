@@ -7,17 +7,11 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development",
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@GOOGLE_SERVICES_JSON"
-      }
+      "channel": "development"
     },
     "development-simulator": {
       "developmentClient": true,
       "distribution": "internal",
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@GOOGLE_SERVICES_JSON"
-      },
       "ios": {
         "simulator": true
       }
@@ -27,9 +21,6 @@
       "channel": "staging",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@GOOGLE_SERVICES_JSON"
       },
       "ios": {
         "simulator": true

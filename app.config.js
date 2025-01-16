@@ -25,12 +25,18 @@ export default {
         backgroundColor: "#081657",
       },
       package: "com.nhanluong.vifinapp",
-      googleServicesFile: "./google-services.json",
+      googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     },
     web: {
       bundler: "metro",
       output: "static",
       favicon: "./assets/images/favicon.png",
+    },
+    doctor: {
+      reactNativeDirectoryCheck: {
+        exclude: ["@hookform/resolvers", "dotenv", "firebase", "tailwindcss"],
+        listUnknownPackages: false,
+      },
     },
     plugins: [
       "expo-router",
