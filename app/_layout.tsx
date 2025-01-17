@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
@@ -8,7 +8,6 @@ import Toast from "react-native-toast-message";
 import SplashScreen from "@/app/splash-screen";
 
 import "./global.css";
-import React from "react";
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState<boolean>(true);

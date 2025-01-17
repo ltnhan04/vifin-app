@@ -7,22 +7,19 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
+import auth from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
-import Toast from "react-native-toast-message";
 
 import { signUpSchema, SignUpType } from "@/schema/auth.schema";
-
 import images from "@/constants/images";
-import icons from "@/constants/icons";
-
-import FormField from "@/components/common/FormField";
-import Button from "@/components/common/Button";
+import FormField from "@/components/ui/FormField";
+import Button from "@/components/ui/Button";
+import GoogleLoginSection from "@/components/common/auth/GoogleLoginSection";
 
 const SignUp = () => {
   const router = useRouter();
@@ -50,8 +47,7 @@ const SignUp = () => {
     setIsLoading(true);
     try {
       const { email, password } = data;
-      const createUser = await createUserWithEmailAndPassword(
-        auth,
+      const createUser = await auth().createUserWithEmailAndPassword(
         email,
         password,
       );
@@ -64,7 +60,6 @@ const SignUp = () => {
       }
     } catch (error: any) {
       const err = error as FirebaseError;
-      console.log(err);
       Toast.show({
         type: "error",
         text1: "Registration failed: " + err.message,
@@ -98,6 +93,7 @@ const SignUp = () => {
               <View className="gap-y-4 mt-4">
                 <FormField
                   control={control}
+                  isDisabled={isLoading}
                   error={errors}
                   type="email-address"
                   placeholder="Enter your email"
@@ -107,6 +103,7 @@ const SignUp = () => {
                 <FormField
                   control={control}
                   error={errors}
+                  isDisabled={isLoading}
                   type="visible-password"
                   isSecure={!isShowingPassword["password"]}
                   placeholder="Enter your password"
@@ -123,6 +120,7 @@ const SignUp = () => {
                 <FormField
                   control={control}
                   error={errors}
+                  isDisabled={isLoading}
                   type="visible-password"
                   isSecure={!isShowingPassword["confirmPassword"]}
                   placeholder="Enter your confirm password"
@@ -157,14 +155,7 @@ const SignUp = () => {
                   </Link>
                 </Text>
               </View>
-              <Button
-                icon={icons.google}
-                handleOnPress={() => {}}
-                isLoading={isLoading}
-                textColor="black"
-                background="#F3F4F6"
-                title="Continue with Google"
-              />
+              <GoogleLoginSection />
             </View>
           </ScrollView>
         </LinearGradient>

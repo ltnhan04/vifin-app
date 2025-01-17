@@ -11,6 +11,7 @@ export type FormDataProps = {
   label: string;
   type: KeyBoardType;
   isSecure?: boolean;
+  isDisabled: boolean;
   icon?: string;
   error: FieldError<signInType | signUpType> | undefined;
   placeholder: string;
