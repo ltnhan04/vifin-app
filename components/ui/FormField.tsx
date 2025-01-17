@@ -1,8 +1,14 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Controller } from "react-hook-form";
 import { FormDataProps } from "@/types/form";
-import React from "react";
 
 const FormField: React.FC<FormDataProps> = ({
   type,
@@ -10,11 +16,13 @@ const FormField: React.FC<FormDataProps> = ({
   label,
   icon,
   isSecure,
+  isDisabled,
   error,
   handleShowingPassword,
   control,
   placeholder,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
   return (
     <Controller
       name={name}
@@ -24,16 +32,26 @@ const FormField: React.FC<FormDataProps> = ({
           <Text className="font-rubik-medium text-lg text-secondary-gray">
             {label}
           </Text>
+
           <View className="relative">
             <TextInput
+              disableFullscreenUI={isDisabled}
               secureTextEntry={isSecure}
               keyboardType={type}
               placeholder={placeholder}
               maxLength={100}
               value={value}
-              onBlur={onBlur}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => {
+                setIsFocused(false);
+                onBlur();
+              }}
               onChangeText={onChange}
-              className={`font-rubik border border-secondary-gray-200 text-lg text-white px-5 py-4  rounded-xl transition-all duration-300 ease-in-out ring-secondary-gray-200 focus:ring-2 focus:border-primary-brightBlue ${error[name]?.message ? "focus:border-secondary-red" : ""} focus:border-4  focus:shadow-primary-brightBlue text-center`}
+              style={[
+                styles.textInput,
+                isFocused && styles.textInputFocused,
+                error[name]?.message && styles.textInputError,
+              ]}
               placeholderTextColor="#D3D3D3"
             />
 
@@ -46,6 +64,7 @@ const FormField: React.FC<FormDataProps> = ({
               </TouchableOpacity>
             )}
           </View>
+
           {error[name]?.message && (
             <Text className="text-secondary-red font-rubik-bold mt-1">
               {error[name]?.message}
@@ -58,3 +77,28 @@ const FormField: React.FC<FormDataProps> = ({
 };
 
 export default FormField;
+
+const styles = StyleSheet.create({
+  textInput: {
+    fontFamily: "Rubik",
+    borderWidth: 1,
+    borderColor: "#E4E4E7",
+    fontSize: 16,
+    color: "#FFFFFF",
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 12,
+    textAlign: "left",
+  },
+  textInputFocused: {
+    borderColor: "#38BDF8",
+    borderWidth: 2,
+    shadowColor: "#38BDF8",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  textInputError: {
+    borderColor: "#EF4444",
+  },
+});

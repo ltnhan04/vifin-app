@@ -3,6 +3,7 @@ import useAuth from "@/utils/useAuth";
 
 const Index = () => {
   const user = useAuth();
+  console.log("User: ", user);
   return user ? (
     <Redirect href={"/(root)/(tabs)/home"} />
   ) : (

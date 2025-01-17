@@ -16,7 +16,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.nhanluong.vifinapp",
-      googleServicesFile: "./GoogleService-Info.plist",
+      googleServicesFile: process.env.GOOGLE_SERVICES_INFO_JSON,
     },
     android: {
       runtimeVersion: "1.0.0",
@@ -92,7 +92,7 @@ export default {
     owner: "nhanluong",
     runtimeVersion: "1.0.0",
     updates: {
-      url: "https://u.expo.dev/bb50d400-ca3c-4de3-9551-b14dac5a3218",
+      url: `https://u.expo.dev/bb50d400-ca3c-4de3-9551-b14dac5a3218`,
     },
   },
 };
