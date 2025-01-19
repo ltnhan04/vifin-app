@@ -34,13 +34,13 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
           ""
         )}
         <Text
-          className={`text-center font-rubik-bold text-base`}
+          className={`text-center font-rubik-medium text-base`}
           style={{ color: textColor }}
         >
           {isLoading ? (
             <View className="flex flex-row items-center gap-x-2">
               <Text
-                className={`text-center font-rubik-bold text-base`}
+                className={`text-center font-rubik-medium text-base`}
                 style={{ color: textColor }}
               >
                 {title}

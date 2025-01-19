@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View } from "react-native";
 
 const TabIcon = ({
@@ -12,14 +12,14 @@ const TabIcon = ({
   title: string;
 }) => {
   return (
-    <View className="flex-1 flex flex-col items-center mt-2">
+    <View className="flex-1 flex flex-col items-center">
       <Icon name={icon} color={focused ? "#6BBFFF" : "#F3F4F6"} size={24} />
       <Text
         className={`${
           focused
             ? " text-primary-brighterBlue font-rubik-medium"
             : "text-secondary-gray font-rubik"
-        } text-xs w-full text-center mt-1`}
+        } text-sm w-full text-center mt-2`}
       >
         {title}
       </Text>
@@ -34,11 +34,13 @@ const TabsLayout = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#081657",
-          borderTopColor: "#fff",
-          borderWidth: 1,
-          borderTopLeftRadius: 14,
-          borderTopRightRadius: 14,
           minHeight: 70,
+          shadowColor: "#6BBFFF",
+          paddingTop: "3%",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 8,
         },
       }}
     >
@@ -58,7 +60,7 @@ const TabsLayout = () => {
           title: "Budget",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Budget" icon="money" />
+            <TabIcon focused={focused} title="Budget" icon="wallet" />
           ),
         }}
       />
@@ -66,8 +68,20 @@ const TabsLayout = () => {
         name="scan/index"
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="" icon="qrcode" />
+          tabBarIcon: () => (
+            <View
+              className="absolute -top-3 w-16 h-16 flex items-center justify-center rounded-full"
+              style={{
+                backgroundColor: "#6BBFFF",
+                shadowColor: "#6BBFFF",
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 0.8,
+                shadowRadius: 20,
+                elevation: 12,
+              }}
+            >
+              <Icon name={"scan"} color="#fff" size={32} />
+            </View>
           ),
         }}
       />
@@ -77,17 +91,17 @@ const TabsLayout = () => {
           title: "Transactions",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Transactions" icon="dollar" />
+            <TabIcon focused={focused} title="Transactions" icon="cash" />
           ),
         }}
       />
       <Tabs.Screen
-        name="settings/index"
+        name="settings"
         options={{
           title: "Settings",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} title="Settings" icon="cog" />
+            <TabIcon focused={focused} title="Settings" icon="settings" />
           ),
         }}
       />
