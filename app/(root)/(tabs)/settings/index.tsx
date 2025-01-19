@@ -23,22 +23,19 @@ const Settings = () => {
           <TouchableOpacity>
             <SettingItem icon="grid" title="Categories" showArrow={true} />
           </TouchableOpacity>
+          <SettingItem icon="timer" title="Reminder" showSwitch={true} />
+          <SettingItem
+            icon="cash"
+            title="Currency Unit"
+            showOptions="currency_unit"
+          />
+          <SettingItem
+            icon="language"
+            title="Languages"
+            showOptions="languages"
+          />
           <TouchableOpacity>
-            <SettingItem icon="timer" title="Reminder" showSwitch={true} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <SettingItem
-              icon="cash"
-              title="Currency Unit"
-              showOptions={"currency_unit"}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <SettingItem
-              icon="language"
-              title="Languages"
-              showOptions={"languages"}
-            />
+            <SettingItem icon="log-out" title="Logout" isLogout={true} />
           </TouchableOpacity>
         </View>
       </ScrollView>
