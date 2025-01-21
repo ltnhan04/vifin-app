@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -10,6 +11,7 @@ import Button from "@/components/ui/Button";
 import icons from "@/constants/icons";
 
 const GoogleLoginSection = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +31,7 @@ const GoogleLoginSection = () => {
       const userCredential =
         await auth().signInWithCredential(googleCredential);
       dispatch(setUser(userCredential.user));
+      router.push("/(root)/(tabs)/home");
     } catch (error: any) {
       const err = error as FirebaseError;
       Toast.show({

@@ -1,39 +1,20 @@
-import { Tabs } from "expo-router";
+import { View } from "react-native";
+import { Tabs, useSegments } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Text, View } from "react-native";
-
-const TabIcon = ({
-  focused,
-  icon,
-  title,
-}: {
-  focused: boolean;
-  icon: string;
-  title: string;
-}) => {
-  return (
-    <View className="flex-1 flex flex-col items-center">
-      <Icon name={icon} color={focused ? "#6BBFFF" : "#F3F4F6"} size={24} />
-      <Text
-        className={`${
-          focused
-            ? " text-primary-brighterBlue font-rubik-medium"
-            : "text-secondary-gray font-rubik"
-        } text-sm w-full text-center mt-2`}
-      >
-        {title}
-      </Text>
-    </View>
-  );
-};
+import usePageToHide from "@/utils/usePageToHide";
+import TabIcon from "@/components/ui/TabIcon";
 
 const TabsLayout = () => {
+  const segment = useSegments();
+  const pageToHide = usePageToHide();
+  const page = segment[segment.length - 1];
   return (
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#081657",
+          display: pageToHide.includes(page) ? "none" : "flex",
           minHeight: 70,
           shadowColor: "#6BBFFF",
           paddingTop: "3%",

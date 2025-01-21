@@ -72,7 +72,7 @@ export default function Dropdown({
                   styles.options,
                   {
                     position: "absolute",
-                    top: buttonPosition.y + buttonPosition.height,
+                    top: buttonPosition.y + buttonPosition.height - 22,
                     left: buttonPosition.x,
                     width: buttonPosition.width,
                   },

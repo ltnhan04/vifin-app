@@ -1,21 +1,47 @@
+import React from "react";
 import {
   View,
   Text,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
+import { useRouter } from "expo-router";
+import images from "@/constants/images";
 import androidSafeArea from "@/utils/android-safe-area";
-import React from "react";
 import SettingItem from "@/components/ui/SettingItem";
+import LogoutSection from "@/components/common/settings/LogoutSection";
 
 const Settings = () => {
+  const router = useRouter();
   return (
     <SafeAreaView style={androidSafeArea.androidSafeArea}>
       <ScrollView contentContainerClassName="px-6 py-10">
+        <View className="w-full flex flex-row items-center justify-center my-6">
+          <Image
+            className="w-48 h-48 rounded-full border-2 border-primary-brighterBlue shadow-xl shadow-primary-brighterBlue"
+            src={
+              "https://www.iconarchive.com/download/i104802/papirus-team/papirus-status/avatar-default.512.png"
+            }
+          />
+        </View>
+        <Text className="text-center my-3 text-white font-rubik-extrabold text-2xl">
+          Nhan Luong
+        </Text>
+        <View className="flex flex-row justify-center gap-x-4 items-start">
+          <Image
+            source={images.mail}
+            resizeMode="contain"
+            className="size-6 bg-primary-transparent"
+          />
+          <Text className="text-center mb-12 text-white font-rubik-extrabold text-lg">
+            luongtunhan2004@gmail.com
+          </Text>
+        </View>
         <View className="flex flex-col gap-y-6">
-          <TouchableOpacity>
-            <SettingItem icon="person" title="My Profile" showArrow={true} />
+          <TouchableOpacity onPress={() => router.push("/settings/profile")}>
+            <SettingItem icon="person" title="Edit Profile" showArrow={true} />
           </TouchableOpacity>
           <TouchableOpacity>
             <SettingItem icon="wallet" title="My Wallet" showArrow={true} />
@@ -34,9 +60,7 @@ const Settings = () => {
             title="Languages"
             showOptions="languages"
           />
-          <TouchableOpacity>
-            <SettingItem icon="log-out" title="Logout" isLogout={true} />
-          </TouchableOpacity>
+          <LogoutSection />
         </View>
       </ScrollView>
     </SafeAreaView>
