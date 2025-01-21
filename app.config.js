@@ -39,7 +39,17 @@ export default {
       },
     },
     plugins: [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          asyncRoutes: {
+            web: true,
+            android: true,
+            ios: true,
+            default: "development",
+          },
+        },
+      ],
       [
         "expo-splash-screen",
         {

@@ -4,6 +4,9 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "../redux/store";
 
 import SplashScreen from "@/app/splash-screen";
 
@@ -33,20 +36,22 @@ export default function RootLayout() {
   return isLoading ? (
     <SplashScreen />
   ) : (
-    <>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(root)/(tabs)" />
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="splash-screen" />
-      </Stack>
-      <StatusBar style="dark" />
-      <Toast />
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(root)/(tabs)" />
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="splash-screen" />
+        </Stack>
+        <StatusBar style="dark" />
+        <Toast />
+      </PersistGate>
+    </Provider>
   );
 }

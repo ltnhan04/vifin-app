@@ -35,7 +35,7 @@ const FormField: React.FC<FormDataProps> = ({
 
           <View className="relative">
             <TextInput
-              disableFullscreenUI={isDisabled}
+              editable={!isDisabled}
               secureTextEntry={isSecure}
               keyboardType={type}
               placeholder={placeholder}

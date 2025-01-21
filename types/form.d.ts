@@ -1,5 +1,6 @@
 import { Control, FieldError } from "react-hook-form";
 import type { signInType, signUpType } from "@/schema/auth.schema";
+import type { ProfileType } from "@/schema/profile.schema";
 
 export type FormData = {
   name: string;
@@ -13,12 +14,12 @@ export type FormDataProps = {
   isSecure?: boolean;
   isDisabled: boolean;
   icon?: string;
-  error: FieldError<signInType | signUpType> | undefined;
+  error: FieldError<signInType | signUpType | ProfileType> | undefined;
   placeholder: string;
   name: ValidFieldName;
 
   handleShowingPassword?: () => void;
-  control: Control<signInType | signUpType>;
+  control: Control<signInType | signUpType | ProfileType>;
 };
 
 export type KeyBoardType =
@@ -36,4 +37,4 @@ export type KeyBoardType =
   | "web-search"
   | "visible-password";
 
-export type ValidFieldName = "email" | "password" | "confirmPassword";
+export type ValidFieldName = "email" | "password" | "confirmPassword" | "name";
