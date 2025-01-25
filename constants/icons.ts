@@ -16,6 +16,7 @@ import viewGrid from "@/assets/icons/ViewGridAddOutline.png";
 import target from "@/assets/icons/target.png";
 import hello from "@/assets/icons/hello.png";
 import dollar from "@/assets/icons/dollar.png";
+import wallet from "@/assets/icons/purse.png";
 import moneyWings from "@/assets/icons/money-wings.png";
 
 export default {
@@ -27,6 +28,7 @@ export default {
   bell,
   calendar,
   charSquare,
+  wallet,
   chartPie,
   creditCard,
   dollar,

@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useAppSelector } from "@/redux/hooks";
 import images from "@/constants/images";
 import androidSafeArea from "@/utils/android-safe-area";
 import SettingItem from "@/components/ui/SettingItem";
@@ -15,6 +16,7 @@ import LogoutSection from "@/components/common/settings/LogoutSection";
 
 const Settings = () => {
   const router = useRouter();
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <SafeAreaView style={androidSafeArea.androidSafeArea}>
       <ScrollView contentContainerClassName="px-6 py-10">
@@ -22,12 +24,14 @@ const Settings = () => {
           <Image
             className="w-48 h-48 rounded-full border-2 border-primary-brighterBlue shadow-xl shadow-primary-brighterBlue"
             src={
-              "https://www.iconarchive.com/download/i104802/papirus-team/papirus-status/avatar-default.512.png"
+              user?.photoURL
+                ? user.photoURL
+                : "https://www.iconarchive.com/download/i104802/papirus-team/papirus-status/avatar-default.512.png"
             }
           />
         </View>
         <Text className="text-center my-3 text-white font-rubik-extrabold text-2xl">
-          Nhan Luong
+          {user?.displayName}
         </Text>
         <View className="flex flex-row justify-center gap-x-4 items-start">
           <Image
@@ -36,7 +40,7 @@ const Settings = () => {
             className="size-6 bg-primary-transparent"
           />
           <Text className="text-center mb-12 text-white font-rubik-extrabold text-lg">
-            luongtunhan2004@gmail.com
+            {user?.email}
           </Text>
         </View>
         <View className="flex flex-col gap-y-6">
