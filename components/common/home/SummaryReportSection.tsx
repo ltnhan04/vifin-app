@@ -54,13 +54,21 @@ const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
           </Text>
           <TopItem
             type={type}
+            avt="foodBeverage"
             title="Food & Beverage"
             price={550000}
             percent={70}
           />
-          <TopItem type={type} title="Shopping" price={250000} percent={20} />
           <TopItem
             type={type}
+            avt="shopping"
+            title="Shopping"
+            price={250000}
+            percent={20}
+          />
+          <TopItem
+            type={type}
+            avt="transportation"
             title="Transportation"
             price={100000}
             percent={10}

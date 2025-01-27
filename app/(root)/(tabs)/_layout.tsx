@@ -36,7 +36,7 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="budget/index"
+        name="budget/(top-tabs)"
         options={{
           title: "Budget",
           headerShown: false,

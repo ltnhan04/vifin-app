@@ -18,6 +18,42 @@ import hello from "@/assets/icons/hello.png";
 import dollar from "@/assets/icons/dollar.png";
 import wallet from "@/assets/icons/purse.png";
 import moneyWings from "@/assets/icons/money-wings.png";
+import walletIcon from "@/assets/icons/wallet-icon.png";
+import billUtils from "@/assets/icons/bill&utils.png";
+import education from "@/assets/icons/education.png";
+import electricityBill from "@/assets/icons/electricity-bill.png";
+import entertainment from "@/assets/icons/entertainment.png";
+import family from "@/assets/icons/family.png";
+import fitness from "@/assets/icons/fitness.png";
+import foodBeverage from "@/assets/icons/food&beverage.png";
+import funMoney from "@/assets/icons/fun-money.png";
+import game from "@/assets/icons/game.png";
+import gasBill from "@/assets/icons/gas-bill.png";
+import giftDonations from "@/assets/icons/gift&donations.png";
+import healthFitness from "@/assets/icons/health&fitness.png";
+import homeMaintenance from "@/assets/icons/home-maintenance.png";
+import homeService from "@/assets/icons/home-service.png";
+import houseService from "@/assets/icons/houseware.png";
+import insurance from "@/assets/icons/insurance.png";
+import internetBill from "@/assets/icons/internet-bill.png";
+import investment from "@/assets/icons/investment.png";
+import makeup from "@/assets/icons/makeup.png";
+import medicalCheckup from "@/assets/icons/medical-checkup.png";
+import otherExpense from "@/assets/icons/other-expense.png";
+import otherUtils from "@/assets/icons/other-utils.png";
+import outgoingTransfer from "@/assets/icons/outgoing-transfer.png";
+import payInterest from "@/assets/icons/pay-interest.png";
+import personalItem from "@/assets/icons/persional-item.png";
+import pets from "@/assets/icons/pets.png";
+import phoneBill from "@/assets/icons/phone-bill.png";
+import rentals from "@/assets/icons/rentals.png";
+import shopping from "@/assets/icons/shopping.png";
+import streamingService from "@/assets/icons/streaming-service.png";
+import television from "@/assets/icons/television-bill.png";
+import transportation from "@/assets/icons/transportation.png";
+import uncategorizedExpense from "@/assets/icons/uncategorized-expense.png";
+import vehicalMaintenance from "@/assets/icons/vehicle-maintainance.png";
+import waterBill from "@/assets/icons/water-bill.png";
 
 export default {
   arrowDown,
@@ -40,4 +76,40 @@ export default {
   pencil,
   setting,
   viewGrid,
+  walletIcon,
+  billUtils,
+  education,
+  electricityBill,
+  entertainment,
+  family,
+  fitness,
+  foodBeverage,
+  funMoney,
+  game,
+  gasBill,
+  giftDonations,
+  healthFitness,
+  homeMaintenance,
+  homeService,
+  houseService,
+  insurance,
+  internetBill,
+  investment,
+  makeup,
+  medicalCheckup,
+  otherExpense,
+  otherUtils,
+  outgoingTransfer,
+  payInterest,
+  personalItem,
+  pets,
+  phoneBill,
+  rentals,
+  shopping,
+  streamingService,
+  television,
+  transportation,
+  uncategorizedExpense,
+  vehicalMaintenance,
+  waterBill,
 };
