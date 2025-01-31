@@ -47,7 +47,7 @@ const EmailLoginSection = () => {
       });
       if (loginUser.user) {
         dispatch(setUser(loginUser.user));
-        router.push("/(root)/(tabs)/home");
+        router.push("/(tabs)/home");
       }
     } catch (error: any) {
       const err = error as FirebaseError;

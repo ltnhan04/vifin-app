@@ -22,7 +22,7 @@ const NotFound = () => {
         </Text>
         <TouchableOpacity
           className="bg-primary-brightBlue mt-5 px-5 py-3 rounded-lg"
-          onPress={() => router.replace("/(root)/(tabs)/home")}
+          onPress={() => router.replace("/(tabs)/home")}
         >
           <Text className="text-base text-white font-medium">Return Home</Text>
         </TouchableOpacity>

@@ -24,7 +24,7 @@ const HomeScreen = () => {
             <View className="flex flex-row items-center">
               <Image
                 source={icons.hello}
-                className="size-8"
+                className="size-7"
                 resizeMode="contain"
               />
               <Text className="text-white font-rubik-medium text-xl ml-2">

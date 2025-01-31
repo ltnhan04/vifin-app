@@ -13,9 +13,14 @@ const TabIcon = ({
 }) => {
   return (
     <View className="flex-1 flex flex-col items-center">
-      <Icon name={icon} color={focused ? "#6BBFFF" : "#F3F4F6"} size={24} />
+      <Icon
+        className="transition-colors duration-300 ease-in-out"
+        name={icon}
+        color={focused ? "#6BBFFF" : "#F3F4F6"}
+        size={24}
+      />
       <Text
-        className={`${
+        className={`transition-colors duration-300 ease-in-out ${
           focused
             ? " text-primary-brighterBlue font-rubik-medium"
             : "text-secondary-gray font-rubik"

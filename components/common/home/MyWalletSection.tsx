@@ -11,7 +11,7 @@ const MyWalletSection = () => {
           <Image
             source={icons.wallet}
             resizeMode="contain"
-            className="size-6"
+            className="size-8"
           />
           <Text className="font-rubik-medium text-lg text-secondary-yellow ml-3">
             My Wallet

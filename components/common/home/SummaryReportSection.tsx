@@ -18,7 +18,7 @@ const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
           <Image
             source={icons.moneyWings}
             resizeMode="contain"
-            className="size-7"
+            className="size-8"
           />
           <Text className="font-rubik-medium text-lg text-secondary-yellow ml-2">
             {type === "expense" ? "Spending" : "Income"} Report

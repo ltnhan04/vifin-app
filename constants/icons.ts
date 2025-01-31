@@ -13,11 +13,10 @@ import logout from "@/assets/icons/LogoutOutline.png";
 import pencil from "@/assets/icons/PencilAltOutline.png";
 import setting from "@/assets/icons/CogOutline.png";
 import viewGrid from "@/assets/icons/ViewGridAddOutline.png";
-import target from "@/assets/icons/target.png";
-import hello from "@/assets/icons/hello.png";
-import dollar from "@/assets/icons/dollar.png";
-import wallet from "@/assets/icons/purse.png";
-import moneyWings from "@/assets/icons/money-wings.png";
+import hello from "@/assets/icons/wave.png";
+import dollar from "@/assets/icons/profits.png";
+import wallet from "@/assets/icons/wallet.png";
+import moneyWings from "@/assets/icons/monitor.png";
 import walletIcon from "@/assets/icons/wallet-icon.png";
 import billUtils from "@/assets/icons/bill&utils.png";
 import education from "@/assets/icons/education.png";
@@ -54,6 +53,7 @@ import transportation from "@/assets/icons/transportation.png";
 import uncategorizedExpense from "@/assets/icons/uncategorized-expense.png";
 import vehicalMaintenance from "@/assets/icons/vehicle-maintainance.png";
 import waterBill from "@/assets/icons/water-bill.png";
+import target from "@/assets/icons/targeted.png";
 
 export default {
   arrowDown,

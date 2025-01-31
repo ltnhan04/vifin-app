@@ -56,7 +56,7 @@ const SignUp = () => {
         text1: "Sign Up Successfully!",
       });
       if (createUser.user) {
-        router.push("/(root)/(tabs)/home");
+        router.push("/(tabs)/home");
       }
     } catch (error: any) {
       const err = error as FirebaseError;

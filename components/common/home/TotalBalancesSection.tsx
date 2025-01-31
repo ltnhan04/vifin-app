@@ -11,7 +11,7 @@ const TotalBalancesSection = () => {
   return (
     <View className="px-6 py-4 mt-6 border border-primary-brightBlue rounded-xl">
       <View className="flex flex-row items-center">
-        <Image source={icons.dollar} resizeMode="contain" className="size-7" />
+        <Image source={icons.dollar} resizeMode="contain" className="size-8" />
         <Text className="font-rubik-medium text-lg text-secondary-yellow ml-2">
           Total Balances
         </Text>

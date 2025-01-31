@@ -4,6 +4,7 @@ import mail from "@/assets/images/mail.png";
 import signIn from "@/assets/images/sign-in.png";
 import signUp from "@/assets/images/sign-up.png";
 import splash from "@/assets/images/splash.png";
+import emptyBox from "@/assets/images/empty-box.png";
 
 export default {
   avatar,
@@ -12,4 +13,5 @@ export default {
   signUp,
   splash,
   mail,
+  emptyBox,
 };

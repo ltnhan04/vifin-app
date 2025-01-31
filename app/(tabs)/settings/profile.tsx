@@ -13,11 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FirebaseError } from "firebase/app";
 import { ProfileType, profileSchema } from "@/schema/profile.schema";
 import Toast from "react-native-toast-message";
+import Icon from "react-native-vector-icons/Ionicons";
 import FormField from "@/components/ui/FormField";
 import ButtonSubmit from "@/components/ui/Button";
 import RadioSection from "@/components/common/settings/RadioSection";
 import androidSafeArea from "@/utils/android-safe-area";
-import Icon from "react-native-vector-icons/Ionicons";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
