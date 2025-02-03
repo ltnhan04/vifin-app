@@ -27,22 +27,7 @@ const ModalLayout = () => {
           title: "Add Budget",
         }}
       />
-      <Stack.Screen
-        name="selected-categories"
-        options={{
-          headerTitle: "Select Category",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontFamily: "Rubik",
-            fontWeight: 700,
-            fontSize: 18,
-          },
-          headerSearchBarOptions: {
-            placeholder: "Search category",
-            hideWhenScrolling: false,
-          },
-        }}
-      />
+      <Stack.Screen name="(category)" options={{ headerShown: false }} />
       <Stack.Screen name="selected-calendar" />
     </Stack>
   );

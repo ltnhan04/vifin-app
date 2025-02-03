@@ -1,6 +1,7 @@
 import { View, Text, Image } from "react-native";
 import icons from "@/constants/icons";
 import type { IconKey } from "@/types/icon";
+import { formatCurrency } from "@/utils/format-currency";
 
 const TopItem = ({
   title,
@@ -25,7 +26,7 @@ const TopItem = ({
         <Text className="text-base text-white font-rubik-medium">{title}</Text>
         <View className="flex flex-row items-center justify-between">
           <Text className="text-sm text-white font-rubik-medium">
-            {price} VND
+            {formatCurrency(price, "VND")}
           </Text>
           <Text
             className={`${type === "expense" ? "text-secondary-red" : "text-secondary-green-100"} font-rubik-bold text-sm`}

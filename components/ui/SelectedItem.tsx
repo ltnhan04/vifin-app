@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -50,7 +50,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({ selectedItem }) => {
             className="flex flex-row justify-between"
             activeOpacity={0.7}
             onPress={() =>
-              router.push("/(tabs)/budget/modal/selected-categories")
+              router.push("/(tabs)/budget/modal/(category)/selected-categories")
             }
           >
             <Text className="font-rubik-semibold text-xl text-secondary-gray-200">
@@ -67,7 +67,12 @@ const SelectedItem: React.FC<SelectedItemProps> = ({ selectedItem }) => {
             <Text className="font-rubik-semibold text-sm text-secondary-gray-200">
               Amount
             </Text>
-            <Text className="font-rubik-semibold text-xl text-black">0</Text>
+            <TextInput
+              keyboardType="numeric"
+              maxLength={14}
+              placeholder="0"
+              placeholderTextColor={"#000"}
+            />
           </View>
         );
       case "dueDate":

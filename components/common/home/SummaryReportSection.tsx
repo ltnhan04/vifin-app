@@ -5,6 +5,7 @@ import TopItem from "@/components/ui/TopItem";
 import icons from "@/constants/icons";
 import SwitchTab from "@/components/ui/SwitchSelector";
 import { switchItem } from "@/constants/data";
+import { formatCurrency } from "@/utils/format-currency";
 
 type ReportProps = {
   type: "expense" | "income";
@@ -32,7 +33,7 @@ const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
         <SwitchTab itemTab={switchItem} />
         <View className="mt-4">
           <Text className="text-white text-2xl font-rubik-bold">
-            250.000 VND
+            {formatCurrency(250000, "VND")}
           </Text>
           <View className="flex flex-row items-center justify-between">
             <Text className="font-rubik-medium text-white text-sm">

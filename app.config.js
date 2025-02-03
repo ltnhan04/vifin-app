@@ -24,6 +24,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#081657",
       },
+      softwareKeyboardLayoutMode: "pan",
       package: "com.nhanluong.vifinapp",
       googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     },
