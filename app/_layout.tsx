@@ -44,12 +44,12 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="index" />
-          <Stack.Screen name="(root)/(tabs)" />
+          <Stack.Screen name="(tabs)" />
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="(auth)" />
           <Stack.Screen name="splash-screen" />
         </Stack>
-        <StatusBar style="dark" />
+        <StatusBar style="inverted" />
         <Toast />
       </PersistGate>
     </Provider>

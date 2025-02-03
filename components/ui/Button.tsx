@@ -12,6 +12,7 @@ import { ButtonProps } from "@/types/button";
 const ButtonSubmit: React.FC<ButtonProps> = ({
   title,
   isLoading,
+  isDisabled,
   background,
   icon,
   textColor,
@@ -19,12 +20,12 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      disabled={isLoading}
+      disabled={isLoading || isDisabled}
       onPress={() => {
         handleOnPress();
       }}
       activeOpacity={0.7}
-      className={`py-4 px-5 mt-4 rounded-xl transition-opacity duration-300 ease-in-out ${isLoading ? "opacity-40" : ""}`}
+      className={`py-4 px-5 mt-4 w-full rounded-xl transition-opacity duration-300 ease-in-out ${isLoading || isDisabled ? "opacity-40" : ""}`}
       style={{ backgroundColor: background }}
     >
       <View className="flex flex-row items-center justify-center gap-x-4">
@@ -37,7 +38,7 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
           className={`text-center font-rubik-medium text-lg`}
           style={{ color: textColor }}
         >
-          {isLoading ? (
+          {isLoading || isDisabled ? (
             <View className="flex flex-row items-center gap-x-2">
               <Text
                 className={`text-center font-rubik-medium text-lg`}
@@ -45,7 +46,9 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
               >
                 {title}
               </Text>
-              <ActivityIndicator size="small" color={textColor} />
+              {isLoading && (
+                <ActivityIndicator size="small" color={textColor} />
+              )}
             </View>
           ) : (
             title

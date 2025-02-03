@@ -11,7 +11,7 @@ const TargetProgressSection = () => {
           <Image
             source={icons.target}
             resizeMode="contain"
-            className="size-7"
+            className="size-8"
           />
           <Text className="font-rubik-medium text-lg text-secondary-yellow ml-2">
             Target Progress

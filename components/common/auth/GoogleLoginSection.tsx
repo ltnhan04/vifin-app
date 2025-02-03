@@ -31,7 +31,7 @@ const GoogleLoginSection = () => {
       const userCredential =
         await auth().signInWithCredential(googleCredential);
       dispatch(setUser(userCredential.user));
-      router.push("/(root)/(tabs)/home");
+      router.push("/(tabs)/home");
     } catch (error: any) {
       const err = error as FirebaseError;
       Toast.show({

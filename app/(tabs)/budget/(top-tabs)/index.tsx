@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const BudgetScreen = () => {
+const ThisWeekScreen = () => {
   return (
     <View>
-      <Text>BudgetScreen</Text>
+      <Text>ThisWeekScreen</Text>
     </View>
   );
 };
 
-export default BudgetScreen;
+export default ThisWeekScreen;

@@ -17,7 +17,10 @@ export default function Signin() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
       <SafeAreaView style={{ flex: 1 }}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-          <ScrollView contentContainerClassName="px-6 py-10">
+          <ScrollView
+            contentContainerClassName="px-6 py-10"
+            showsVerticalScrollIndicator={false}
+          >
             <View>
               <Image
                 source={images.signIn}

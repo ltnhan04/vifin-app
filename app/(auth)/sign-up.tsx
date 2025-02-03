@@ -56,7 +56,7 @@ const SignUp = () => {
         text1: "Sign Up Successfully!",
       });
       if (createUser.user) {
-        router.push("/(root)/(tabs)/home");
+        router.push("/(tabs)/home");
       }
     } catch (error: any) {
       const err = error as FirebaseError;
@@ -74,7 +74,10 @@ const SignUp = () => {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
       <SafeAreaView style={{ flex: 1 }}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-          <ScrollView contentContainerClassName="px-6 py-10">
+          <ScrollView
+            contentContainerClassName="px-6 py-10"
+            showsVerticalScrollIndicator={false}
+          >
             <View>
               <Image
                 source={images.signUp}
@@ -91,6 +94,15 @@ const SignUp = () => {
                 Take control of your finances with ease!
               </Text>
               <View className="gap-y-4 mt-4">
+                <FormField
+                  control={control}
+                  isDisabled={isLoading}
+                  error={errors}
+                  type="default"
+                  placeholder="Enter your username"
+                  label="Name"
+                  name="name"
+                />
                 <FormField
                   control={control}
                   isDisabled={isLoading}
