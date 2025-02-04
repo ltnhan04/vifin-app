@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, View } from "react-native";
 
 const ModalLayout = () => {
   const router = useRouter();
@@ -8,27 +8,29 @@ const ModalLayout = () => {
       <Stack.Screen
         name="index"
         options={{
+          headerBackground: () => (
+            <View className="bg-primary-dark" style={{ flex: 1 }}></View>
+          ),
           headerTitle: "Add Budget",
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "Rubik",
             fontWeight: 700,
             fontSize: 18,
+            color: "#fff",
           },
           headerLeft: () => {
             return (
               <TouchableOpacity onPress={() => router.back()}>
-                <Text className="font-rubik-medium text-base text-black">
+                <Text className="font-rubik-medium text-base text-white">
                   Cancel
                 </Text>
               </TouchableOpacity>
             );
           },
-          title: "Add Budget",
         }}
       />
       <Stack.Screen name="(category)" options={{ headerShown: false }} />
-      <Stack.Screen name="selected-calendar" />
     </Stack>
   );
 };

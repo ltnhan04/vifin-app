@@ -1,8 +1,16 @@
 import { Stack } from "expo-router";
+import { View } from "react-native";
 
 const CategoryLayout = () => {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerBackground: () => (
+          <View className="bg-primary-dark" style={{ flex: 1 }}></View>
+        ),
+        headerTintColor: "#fff",
+      }}
+    >
       <Stack.Screen
         name="selected-categories"
         options={{
@@ -12,10 +20,15 @@ const CategoryLayout = () => {
             fontFamily: "Rubik",
             fontWeight: 700,
             fontSize: 18,
+            color: "#fff",
           },
           headerSearchBarOptions: {
             placeholder: "Search category",
             hideWhenScrolling: false,
+            headerIconColor: "#fff",
+            tintColor: "#fff",
+            textColor: "#fff",
+            hintTextColor: "#ccc",
           },
         }}
       />
