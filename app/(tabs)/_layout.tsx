@@ -15,6 +15,7 @@ const TabsLayout = () => {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
+          tabBarHideOnKeyboard: true,
           animation: "shift",
           tabBarStyle: {
             backgroundColor: "#081657",

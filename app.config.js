@@ -24,6 +24,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#081657",
       },
+      softwareKeyboardLayoutMode: "pan",
       package: "com.nhanluong.vifinapp",
       googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     },
@@ -48,6 +49,13 @@ export default {
             ios: true,
             default: "development",
           },
+        },
+      ],
+      [
+        "expo-image-picker",
+        {
+          photosPermission:
+            "The app accesses your photos to let you share them with your friends.",
         },
       ],
       [

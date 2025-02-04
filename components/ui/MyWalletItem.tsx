@@ -1,6 +1,7 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 import icons from "@/constants/icons";
+import { formatCurrency } from "@/utils/format-currency";
 
 const MyWalletItem = ({ name, price }: { name: string; price: number }) => {
   return (
@@ -12,7 +13,9 @@ const MyWalletItem = ({ name, price }: { name: string; price: number }) => {
         />
         <Text className="text-white font-rubik-medium ">{name}</Text>
       </View>
-      <Text className="text-white font-rubik-medium ">{price} VND</Text>
+      <Text className="text-white font-rubik-medium ">
+        {formatCurrency(price, "VND")}{" "}
+      </Text>
     </View>
   );
 };

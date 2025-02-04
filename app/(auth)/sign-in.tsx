@@ -11,11 +11,12 @@ import { Link } from "expo-router";
 import images from "@/constants/images";
 import EmailSection from "@/components/common/auth/EmailLoginSection";
 import GoogleSection from "@/components/common/auth/GoogleLoginSection";
+import androidSafeArea from "@/utils/android-safe-area";
 
 export default function Signin() {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={androidSafeArea.androidSafeArea}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <ScrollView
             contentContainerClassName="px-6 py-10"

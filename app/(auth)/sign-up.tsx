@@ -20,6 +20,7 @@ import images from "@/constants/images";
 import FormField from "@/components/ui/FormField";
 import Button from "@/components/ui/Button";
 import GoogleLoginSection from "@/components/common/auth/GoogleLoginSection";
+import androidSafeArea from "@/utils/android-safe-area";
 
 const SignUp = () => {
   const router = useRouter();
@@ -72,7 +73,7 @@ const SignUp = () => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={androidSafeArea.androidSafeArea}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <ScrollView
             contentContainerClassName="px-6 py-10"

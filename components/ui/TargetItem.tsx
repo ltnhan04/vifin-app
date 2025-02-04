@@ -3,6 +3,7 @@ import React from "react";
 import { PieChart } from "react-native-gifted-charts";
 import Badge from "@/components/ui/Badge";
 import { getColorForValue } from "@/utils/get-color";
+import { formatCurrency } from "@/utils/format-currency";
 
 const TargetItem = ({ percentage }: { percentage: number }) => {
   const pieData = [
@@ -39,13 +40,13 @@ const TargetItem = ({ percentage }: { percentage: number }) => {
         </View>
         <View className="flex flex-row items-center gap-x-5">
           <Text className="text-white text-xs font-rubik-medium">
-            3.000.000 / 4.000.000 VND
+            {formatCurrency(3000000, "VND")} / {formatCurrency(4000000, "VND")}
           </Text>
           <Text
             className="text-xs font-rubik-medium"
             style={{ color: getColorForValue(percentage) }}
           >
-            1.000.000 VND Left
+            {formatCurrency(1000000, "VND")}
           </Text>
         </View>
         <Text className="text-white text-xs font-rubik-bold ">

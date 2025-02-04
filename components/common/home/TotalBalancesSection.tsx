@@ -4,6 +4,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/Ionicons";
 import icons from "@/constants/icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { formatCurrency } from "@/utils/format-currency";
 
 const TotalBalancesSection = () => {
   const [isHide, setIsHide] = useState(false);
@@ -20,7 +21,7 @@ const TotalBalancesSection = () => {
         <MaskedView
           maskElement={
             <Text className=" text-xl font-rubik-medium text-left">
-              {isHide ? "***********" : "300.000"} VND
+              {isHide ? "***********" : formatCurrency(300000, "VND")}
             </Text>
           }
         >
