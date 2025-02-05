@@ -2,7 +2,7 @@ import React from "react";
 import { Stack } from "expo-router";
 
 const BudgetLayout = () => {
-  const flag = true;
+  const flag = false;
 
   return flag ? (
     <Stack screenOptions={{ headerShown: false }}>

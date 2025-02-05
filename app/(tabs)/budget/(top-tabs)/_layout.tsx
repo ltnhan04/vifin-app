@@ -21,7 +21,7 @@ const BudgetTabs = () => {
       <MaterialTopTabs
         screenOptions={{
           tabBarActiveTintColor: "#6BBFFF",
-          tabBarInactiveTintColor: "#71717A",
+          tabBarInactiveTintColor: "#fff",
           tabBarStyle: {
             backgroundColor: "#081657",
           },

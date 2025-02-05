@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { PieChart } from "react-native-gifted-charts";
 import Badge from "@/components/ui/Badge";
-import { getColorForValue } from "@/utils/get-color";
+import { getColorForValue, lightenColor } from "@/utils/get-color";
 import { formatCurrency } from "@/utils/format-currency";
 
 const TargetItem = ({ percentage }: { percentage: number }) => {
@@ -13,13 +13,14 @@ const TargetItem = ({ percentage }: { percentage: number }) => {
     },
     {
       value: 100 - percentage,
-      color: "#D3D3D3",
+      color: lightenColor(getColorForValue(percentage), 35),
     },
   ];
   return (
     <View className="flex flex-row items-center gap-x-4 mt-4">
-      <View className="">
+      <View>
         <PieChart
+          isAnimated
           donut
           radius={30}
           innerRadius={20}

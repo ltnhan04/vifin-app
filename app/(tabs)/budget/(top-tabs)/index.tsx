@@ -1,11 +1,18 @@
-import { View, Text } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import React from "react";
+import BudgetProgress from "@/components/ui/BudgetProgress";
 
 const ThisWeekScreen = () => {
   return (
-    <View>
-      <Text>ThisWeekScreen</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerClassName="p-6 min-h-screen bg-white"
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <BudgetProgress spent={500000} limit={600000} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
