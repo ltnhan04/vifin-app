@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { ProgressBar } from "react-native-paper";
 import { formatCurrency } from "@/utils/format-currency";
-import { getColorForValue } from "@/utils/get-color";
+import { getColorForValue, lightenColor } from "@/utils/get-color";
 import icons from "@/constants/icons";
 
 const ExpenseData = ({
@@ -62,7 +62,7 @@ const ExpenseData = ({
               height: 10,
               borderRadius: 5,
               marginTop: 8,
-              backgroundColor: "#f0f0f0",
+              backgroundColor: lightenColor(getColorForValue(percentage)),
             }}
           />
           <View className="flex-row justify-between mt-1">

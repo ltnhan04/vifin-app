@@ -11,7 +11,6 @@ import { Controller } from "react-hook-form";
 import { FormDataProps } from "@/types/form";
 
 const FormField: React.FC<FormDataProps> = ({
-  type,
   name,
   label,
   icon,
@@ -37,7 +36,7 @@ const FormField: React.FC<FormDataProps> = ({
             <TextInput
               editable={!isDisabled}
               secureTextEntry={isSecure}
-              keyboardType={type}
+              keyboardType={"default"}
               placeholder={placeholder}
               maxLength={100}
               value={value}

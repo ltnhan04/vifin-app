@@ -1,5 +1,7 @@
 import icons from "@/constants/icons";
 import { CategoryType } from "@/types/category";
+import { OptionItem } from "@/components/ui/ModalDropdown";
+
 export const languages = [
   { label: "English", value: "en" },
   { label: "Vietnamese", value: "vn" },
@@ -168,5 +170,56 @@ export const categories: CategoryType[] = [
     label: "Uncategorized Expense",
     value: "uncategorized-expense",
     parentIcon: icons.uncategorizedExpense,
+  },
+];
+
+export const walletData: OptionItem[] = [
+  {
+    icon: icons.walletIcon,
+    label: "Momo Wallet",
+    value: 500000,
+  },
+  {
+    icon: icons.walletIcon,
+    label: "Meme Wallet",
+    value: 200000,
+  },
+];
+
+export const category: OptionItem[] = [
+  {
+    icon: icons.expense,
+    label: "Expense",
+    value: "expense",
+  },
+  { icon: icons.dollar, label: "Income", value: "income" },
+];
+
+export const transactionsData = [
+  {
+    date: "2",
+    day: "Saturday",
+    monthYear: "Feb 2025",
+    totalAmount: -200000,
+    transactions: [
+      {
+        id: 1,
+        category: "Food & Beverage",
+        amount: 75000,
+        icon: icons.foodBeverage,
+      },
+      {
+        id: 2,
+        category: "Transportation",
+        amount: 55000,
+        icon: icons.transportation,
+      },
+      {
+        id: 3,
+        category: "Shopping",
+        amount: 70000,
+        icon: icons.shopping,
+      },
+    ],
   },
 ];

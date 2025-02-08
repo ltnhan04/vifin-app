@@ -13,7 +13,10 @@ const BudgetData = ({
   days?: string;
 }) => (
   <View className="flex flex-col justify-center items-center">
-    <Text style={{ color: primaryColor }} className="text-base font-rubik-bold">
+    <Text
+      style={{ color: primaryColor }}
+      className="text-base font-rubik-bold max-w-40 w-full"
+    >
       {title}
     </Text>
     <Text

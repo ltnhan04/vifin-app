@@ -54,8 +54,10 @@ import uncategorizedExpense from "@/assets/icons/uncategorized-expense.png";
 import vehicalMaintenance from "@/assets/icons/vehicle-maintainance.png";
 import waterBill from "@/assets/icons/water-bill.png";
 import target from "@/assets/icons/targeted.png";
+import expense from "@/assets/icons/expense.png";
 
 export default {
+  expense,
   arrowDown,
   target,
   hello,

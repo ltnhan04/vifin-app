@@ -18,7 +18,7 @@ const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
   };
 
   return (
-    <View className="w-full flex flex-col items-center justify-center">
+    <View className="flex flex-col items-center justify-center w-full">
       <PieChart
         semiCircle
         radius={180}
@@ -31,13 +31,13 @@ const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
         centerLabelComponent={() => (
           <View className="flex flex-col items-center">
             <Text
-              className="font-rubik-medium text-xl"
+              className="font-rubik-medium text-2xl"
               style={{ color: getTextColor() }}
             >
               Total Spending
             </Text>
             <Text
-              className="font-rubik-bold text-xl"
+              className="font-rubik-bold text-lg mt-1"
               style={{ color: getTextColor() }}
             >
               {formatCurrency(spent, "VND")}
@@ -45,9 +45,9 @@ const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
           </View>
         )}
       />
-      <View className="flex flex-row items-center gap-x-4 mt-4">
+      <View className="flex flex-row items-center justify-between w-full px-2 mt-4">
         <BudgetData
-          title="Limit budget"
+          title="Budget"
           primaryColor={getTextColor()}
           amount={limit}
         />

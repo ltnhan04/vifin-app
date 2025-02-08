@@ -5,7 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import { Provider } from "react-redux";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PersistGate } from "redux-persist/integration/react";
+import { Provider as PaperProvider } from "react-native-paper";
 import { store, persistor } from "../redux/store";
 
 import SplashScreen from "@/app/splash-screen";
@@ -38,19 +40,23 @@ export default function RootLayout() {
   ) : (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(onboarding)" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="splash-screen" />
-        </Stack>
-        <StatusBar style="inverted" />
-        <Toast />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <PaperProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="index" />
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(onboarding)" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="splash-screen" />
+            </Stack>
+            <StatusBar style="inverted" />
+            <Toast />
+          </PaperProvider>
+        </GestureHandlerRootView>
       </PersistGate>
     </Provider>
   );

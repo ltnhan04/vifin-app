@@ -72,7 +72,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="transactions/index"
+          name="transactions"
           options={{
             title: "Transactions",
             headerShown: false,
