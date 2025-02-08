@@ -55,8 +55,12 @@ import vehicalMaintenance from "@/assets/icons/vehicle-maintainance.png";
 import waterBill from "@/assets/icons/water-bill.png";
 import target from "@/assets/icons/targeted.png";
 import expense from "@/assets/icons/expense.png";
+import pieChart from "@/assets/icons/pie-chart.png";
+import columnChart from "@/assets/icons/growth.png";
 
 export default {
+  pieChart,
+  columnChart,
   expense,
   arrowDown,
   target,

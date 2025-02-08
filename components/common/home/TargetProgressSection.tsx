@@ -1,7 +1,8 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import icons from "@/constants/icons";
 import TargetItem from "@/components/ui/TargetItem";
+import { router } from "expo-router";
 
 const TargetProgressSection = () => {
   return (
@@ -17,9 +18,14 @@ const TargetProgressSection = () => {
             Target Progress
           </Text>
         </View>
-        <Text className="font-rubik-light text-primary-brighterBlue text-sm">
-          See All
-        </Text>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => router.push("/(tabs)/budget/(top-tabs)")}
+        >
+          <Text className="font-rubik-light text-primary-brighterBlue text-sm">
+            See All
+          </Text>
+        </TouchableOpacity>
       </View>
       <TargetItem percentage={76.8} />
       <TargetItem percentage={48} />

@@ -223,3 +223,26 @@ export const transactionsData = [
     ],
   },
 ];
+
+export const chartList = [
+  { icon: icons.columnChart },
+  { icon: icons.pieChart },
+];
+
+export const columnData = [
+  { value: 500000, label: "4" },
+  { value: 200000, label: "5" },
+  { value: 400000, label: "6" },
+  { value: 400000, label: "7" },
+  { value: 500000, label: "8" },
+  { value: 500000, label: "9" },
+  { value: 250000, label: "10" },
+];
+
+export const pieData = [
+  { value: 40, color: "#AED581", text: "40%", icon: icons.homeMaintenance },
+  { value: 28, color: "#81D4FA", text: "28%", icon: icons.shopping },
+  { value: 17, color: "#FFAB91", text: "17%", icon: icons.entertainment },
+  { value: 10, color: "#CE93D8", text: "10%", icon: icons.giftDonations },
+  { value: 5, color: "#FFF59D", text: "5%", icon: icons.medicalCheckup },
+];
