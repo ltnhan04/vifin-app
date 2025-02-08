@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import TopItem from "@/components/ui/TopItem";
@@ -8,9 +8,15 @@ import { formatCurrency } from "@/utils/format-currency";
 
 type ReportProps = {
   type: "expense" | "income";
+  handleOpenBottomSheet: () => void;
+  handleSelectCategory: (category: "income" | "expense") => void;
 };
 
-const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
+const SummaryReportSection: React.FC<ReportProps> = ({
+  type,
+  handleOpenBottomSheet,
+  handleSelectCategory,
+}) => {
   return (
     <View className="px-6 py-4 mt-6 border border-primary-brightBlue rounded-xl">
       <View className="flex flex-row items-center justify-between">
@@ -24,9 +30,19 @@ const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
             {type === "expense" ? "Spending" : "Income"} Report
           </Text>
         </View>
-        <Text className="font-rubik-light text-primary-brighterBlue text-sm">
-          See Reports
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            handleOpenBottomSheet();
+            if (type === "expense") {
+              handleSelectCategory("expense");
+            } else handleSelectCategory("income");
+          }}
+          activeOpacity={0.7}
+        >
+          <Text className="font-rubik-light text-primary-brighterBlue text-sm">
+            See Reports
+          </Text>
+        </TouchableOpacity>
       </View>
       <View className="mt-3">
         <SwitchTab item={["Week", "Month"]} />
