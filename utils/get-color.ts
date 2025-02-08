@@ -1,9 +1,15 @@
+import tinycolor from "tinycolor2";
+
 export const getColorForValue = (value: number) => {
   if (value <= 50) {
-    return "#A3E635";
+    return "#22C55E";
   } else if (value <= 75) {
-    return "#FACC15";
+    return "#F59E0B";
   } else {
-    return "#FB923C";
+    return "#EF4444";
   }
+};
+
+export const lightenColor = (color: string, amount = 30) => {
+  return tinycolor(color).lighten(amount).toHexString();
 };

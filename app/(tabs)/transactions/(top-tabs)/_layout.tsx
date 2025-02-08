@@ -1,4 +1,3 @@
-import React from "react";
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
@@ -15,7 +14,7 @@ export const MaterialTopTabs = withLayoutContext<
   MaterialTopTabNavigationEventMap
 >(Navigator);
 
-const BudgetTabs = () => {
+const TransactionLayout = () => {
   return (
     <>
       <MaterialTopTabs
@@ -49,4 +48,4 @@ const BudgetTabs = () => {
   );
 };
 
-export default BudgetTabs;
+export default TransactionLayout;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -9,20 +9,15 @@ import {
   Text,
   KeyboardAvoidingView,
 } from "react-native";
+
 import ButtonSubmit from "@/components/ui/Button";
+import SwitchTab from "@/components/ui/SwitchSelector";
 import Icon from "react-native-vector-icons/Ionicons";
 import androidSafeArea from "@/utils/android-safe-area";
 import icons from "@/constants/icons";
 import images from "@/constants/images";
 
-const categoryTabs = [
-  { id: 1, label: "Income", value: "income" },
-  { id: 2, label: "Expense", value: "expense" },
-];
-
 const AddCategory = () => {
-  const [categoryValue, setCategoryValue] = useState({ value: "", id: 1 });
-
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
       <SafeAreaView style={androidSafeArea.androidSafeArea}>
@@ -69,31 +64,8 @@ const AddCategory = () => {
                   resizeMode="contain"
                   className="w-12 h-12"
                 />
-                <View className="flex-row items-center bg-blue-50 rounded-lg">
-                  {categoryTabs.map((tab) => (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      key={tab.id}
-                      onPress={() =>
-                        setCategoryValue({ value: tab.value, id: tab.id })
-                      }
-                      className={`px-3 py-1 rounded-md transition-all duration-300 ease-linear ${
-                        categoryValue.id === tab.id
-                          ? "bg-blue-600"
-                          : "bg-transparent"
-                      }`}
-                    >
-                      <Text
-                        className={`font-semibold text-base ${
-                          categoryValue.id === tab.id
-                            ? "text-white"
-                            : "text-blue-600"
-                        }`}
-                      >
-                        {tab.label}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
+                <View className="w-full">
+                  <SwitchTab item={["Expense", "Income"]} setWidth={200} />
                 </View>
               </View>
 

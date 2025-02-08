@@ -66,9 +66,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({ selectedItem }) => {
             <Text className="font-rubik-semibold text-xl text-secondary-gray-200">
               Select category
             </Text>
-            <View>
-              <Icon name="chevron-forward-outline" size={20} />
-            </View>
+            <Icon name="chevron-forward-outline" size={20} />
           </TouchableOpacity>
         );
       case "amount":

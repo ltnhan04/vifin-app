@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const TransactionScreen = () => {
+const ThisMonth = () => {
   return (
     <View>
-      <Text>TransactionScreen</Text>
+      <Text>ThisMonth</Text>
     </View>
   );
 };
 
-export default TransactionScreen;
+export default ThisMonth;

@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Image,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -72,7 +73,10 @@ const SignUp = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={`${Platform.OS === "android" ? "height" : "padding"}`}
+    >
       <SafeAreaView style={androidSafeArea.androidSafeArea}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <ScrollView

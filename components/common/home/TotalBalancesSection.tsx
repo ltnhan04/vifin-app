@@ -21,7 +21,7 @@ const TotalBalancesSection = () => {
         <MaskedView
           maskElement={
             <Text className=" text-xl font-rubik-medium text-left">
-              {isHide ? "***********" : formatCurrency(300000, "VND")}
+              {isHide ? "***********" : formatCurrency(30000000, "VND")}
             </Text>
           }
         >

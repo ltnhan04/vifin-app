@@ -4,6 +4,7 @@ import {
   ScrollView,
   SafeAreaView,
   Image,
+  Platform,
   KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -15,11 +16,15 @@ import androidSafeArea from "@/utils/android-safe-area";
 
 export default function Signin() {
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+      style={{ flex: 1 }}
+      behavior={`${Platform.OS === "android" ? "height" : "padding"}`}
+    >
       <SafeAreaView style={androidSafeArea.androidSafeArea}>
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <ScrollView
-            contentContainerClassName="px-6 py-10"
+            contentContainerStyle={{ flexGrow: 1, padding: 24 }}
             showsVerticalScrollIndicator={false}
           >
             <View>

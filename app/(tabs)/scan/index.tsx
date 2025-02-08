@@ -32,7 +32,7 @@ const ScanScreen = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
       const jsonResponse = await response.json();
       setResult(jsonResponse);
@@ -47,7 +47,7 @@ const ScanScreen = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [9, 16],
       quality: 1,
     });
 
@@ -58,16 +58,14 @@ const ScanScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      className="flex-1 bg-gray-900"
-      style={androidSafeArea.androidSafeArea}
-    >
+    <SafeAreaView style={androidSafeArea.androidSafeArea}>
       <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
             alignItems: "center",
             justifyContent: "center",
+            padding: 24,
           }}
         >
           <View className="w-full flex items-center">

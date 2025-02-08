@@ -2,9 +2,8 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import TopItem from "@/components/ui/TopItem";
-import icons from "@/constants/icons";
 import SwitchTab from "@/components/ui/SwitchSelector";
-import { switchItem } from "@/constants/data";
+import icons from "@/constants/icons";
 import { formatCurrency } from "@/utils/format-currency";
 
 type ReportProps = {
@@ -30,7 +29,7 @@ const SummaryReportSection: React.FC<ReportProps> = ({ type }) => {
         </Text>
       </View>
       <View className="mt-3">
-        <SwitchTab itemTab={switchItem} />
+        <SwitchTab item={["Week", "Month"]} />
         <View className="mt-4">
           <Text className="text-white text-2xl font-rubik-bold">
             {formatCurrency(250000, "VND")}
