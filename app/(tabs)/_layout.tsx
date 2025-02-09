@@ -1,16 +1,12 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Tabs, useSegments } from "expo-router";
-import { useAppSelector } from "@/redux/hooks";
 import Icon from "react-native-vector-icons/Ionicons";
-import icons from "@/constants/icons";
 import usePageToHide from "@/utils/usePageToHide";
 import TabIcon from "@/components/ui/TabIcon";
 
 const TabsLayout = () => {
-  const { user } = useAppSelector((state) => state.auth);
-
   const segment = useSegments();
   const pageToHide = usePageToHide();
   const page = segment[segment.length - 1];
@@ -35,38 +31,11 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name="home/index"
+          name="home"
           options={{
             title: "Home",
+            headerShown: false,
             headerTitle: "",
-            headerBackground: () => (
-              <View className="bg-primary-dark" style={{ flex: 1 }}></View>
-            ),
-            headerLeft: () => {
-              return (
-                <View className="flex flex-row items-center px-6">
-                  <Image
-                    source={icons.hello}
-                    className="size-7"
-                    resizeMode="contain"
-                  />
-                  <Text className="text-white font-rubik-medium text-xl ml-2">
-                    Welcome to{" "}
-                    <Text className="text-primary-brightBlue">ViFin</Text>
-                    <Text className="font-rubik-bold">
-                      , {user?.displayName}
-                    </Text>
-                  </Text>
-                </View>
-              );
-            },
-            headerRight: () => (
-              <Image
-                source={icons.bell}
-                resizeMode="contain"
-                className="size-7 mr-6"
-              />
-            ),
             tabBarIcon: ({ focused }) => (
               <TabIcon focused={focused} title="Home" icon={"home"} />
             ),
