@@ -1,7 +1,8 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import MyWalletItem from "@/components/ui/MyWalletItem";
 import icons from "@/constants/icons";
+import { router } from "expo-router";
 
 const MyWalletSection = () => {
   return (
@@ -17,9 +18,14 @@ const MyWalletSection = () => {
             My Wallet
           </Text>
         </View>
-        <Text className="font-rubik-light text-primary-brighterBlue text-sm">
-          See All
-        </Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.push("/(tabs)/home/(wallet)")}
+        >
+          <Text className="font-rubik-light text-primary-brighterBlue text-sm">
+            See All
+          </Text>
+        </TouchableOpacity>
       </View>
       <View className="w-full border-[0.2px] my-2 border-y-secondary-gray-200"></View>
 

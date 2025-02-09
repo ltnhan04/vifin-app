@@ -5,7 +5,7 @@ import { formatCurrency } from "@/utils/format-currency";
 
 const MyWalletItem = ({ name, price }: { name: string; price: number }) => {
   return (
-    <View className="flex flex-row items-center justify-between mt-1">
+    <View className="flex flex-row items-center justify-between mt-1 ">
       <View className="flex flex-row items-center gap-x-3">
         <Image
           source={icons.walletIcon}
@@ -13,8 +13,8 @@ const MyWalletItem = ({ name, price }: { name: string; price: number }) => {
         />
         <Text className="text-white font-rubik-medium ">{name}</Text>
       </View>
-      <Text className="text-white font-rubik-medium ">
-        {formatCurrency(price, "VND")}{" "}
+      <Text className="text-white font-rubik-medium">
+        {formatCurrency(price, "VND")}
       </Text>
     </View>
   );
