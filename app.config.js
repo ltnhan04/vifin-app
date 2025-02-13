@@ -43,6 +43,7 @@ export default {
       [
         "expo-router",
         {
+          origin: "https://acme.com",
           asyncRoutes: {
             web: true,
             android: true,
