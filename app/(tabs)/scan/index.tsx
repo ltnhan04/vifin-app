@@ -32,7 +32,7 @@ const ScanScreen = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       const jsonResponse = await response.json();
       setResult(jsonResponse);
@@ -47,7 +47,6 @@ const ScanScreen = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
-      aspect: [9, 16],
       quality: 1,
     });
 
