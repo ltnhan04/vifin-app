@@ -24,14 +24,14 @@ const Settings = () => {
           <Image
             className="w-48 h-48 rounded-full border-2 border-primary-brighterBlue shadow-xl shadow-primary-brighterBlue"
             src={
-              user?.photoURL
-                ? user.photoURL
+              user?.avatar
+                ? user.avatar
                 : "https://www.iconarchive.com/download/i104802/papirus-team/papirus-status/avatar-default.512.png"
             }
           />
         </View>
         <Text className="text-center my-3 text-white font-rubik-extrabold text-2xl">
-          {user?.displayName}
+          {user?.full_name}
         </Text>
         <View className="flex flex-row justify-center gap-x-4 items-start">
           <Image

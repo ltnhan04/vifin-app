@@ -1,27 +1,53 @@
 import { useState, useEffect } from "react";
 import { router } from "expo-router";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser, clearUser } from "@/redux/features/auth/authSlice";
+import type { CustomerType } from "@/types/customer";
 
 const AuthListener = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
+  const { user: storedData } = useAppSelector((state) => state.auth);
   const [initializing, setInitializing] = useState(true);
 
   const onAuthStateChanged = async (user: FirebaseAuthTypes.User | null) => {
     if (user) {
-      const tokenResult = await user.getIdTokenResult();
-      const expirationTime = new Date(tokenResult.expirationTime);
-      if (expirationTime < new Date()) {
-        dispatch(clearUser());
-        router.push("/(auth)/sign-in");
+      const providerData = user.providerData.find((data) =>
+        ["password", "google.com"].includes(data.providerId)
+      );
+
+      if (providerData) {
+        const userData: CustomerType = {
+          full_name: providerData.displayName || "",
+          avatar: providerData.photoURL || "",
+          gender: storedData?.gender || "male",
+          email: providerData.email || "",
+          customerId: user.uid,
+          provider: providerData.providerId,
+        };
+
+        try {
+          const tokenResult = await user.getIdTokenResult();
+          console.log(tokenResult.token);
+          const tokenExpiration = new Date(tokenResult.expirationTime);
+          const currentTime = new Date();
+
+          if (tokenExpiration < currentTime) {
+            dispatch(clearUser());
+            router.push("/(auth)/sign-in");
+          } else {
+            dispatch(setUser({ user: userData, token: tokenResult.token }));
+            router.replace("/(tabs)/home");
+          }
+        } catch (error) {
+          console.error("Error fetching token:", error);
+          dispatch(clearUser());
+          router.replace("/(auth)/sign-in");
+        }
       } else {
-        dispatch(setUser({ user: user, token: tokenResult.token }));
-        router.replace("/(tabs)/home");
+        dispatch(clearUser());
+        router.replace("/(auth)/sign-in");
       }
-    } else {
-      dispatch(clearUser());
-      router.replace("/(auth)/sign-in");
     }
     if (initializing) setInitializing(false);
   };

@@ -1,6 +1,6 @@
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import type { CustomerType } from "@/types/customer";
 
 export type AuthType = {
   token: string;
-  user: FirebaseAuthTypes.User | null;
+  user: CustomerType | null;
 };
