@@ -17,7 +17,7 @@ const RadioSection: React.FC<RadioProps> = ({ name, control }) => {
         value: "female",
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -31,7 +31,7 @@ const RadioSection: React.FC<RadioProps> = ({ name, control }) => {
           radioButtons={radioButtons}
           onPress={(selectedId) => {
             const selectedBtn = radioButtons.find(
-              (btn) => btn.id === selectedId,
+              (btn) => btn.id === selectedId
             );
             onChange(selectedBtn?.value);
           }}

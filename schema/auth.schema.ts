@@ -9,7 +9,7 @@ export const signInSchema = z
       .max(100, "Password must not exceed 100 characters")
       .regex(
         /[!@#$%^&*(),.?":{}|<>]/,
-        "Password must include at least one special character",
+        "Password must include at least one special character"
       )
       .regex(/[A-Z]/, "Password must be at least one uppercase character"),
   })
@@ -21,6 +21,7 @@ export const signUpSchema = z
       .string()
       .min(2, "Name must be at least 2 characters")
       .max(50, "Name must not exceed 50 characters"),
+    gender: z.enum(["male", "female"]),
     email: z.string().email("Email is not valid!"),
     password: z
       .string()
@@ -28,7 +29,7 @@ export const signUpSchema = z
       .max(100, "Password must not exceed 100 characters")
       .refine(
         (val) => /[!@#$%^&*(),.?":{}|<>]/.test(val) && /[A-Z]/.test(val),
-        "Password must include at least one special character and one uppercase character",
+        "Password must include at least one special character and one uppercase character"
       ),
     confirmPassword: z
       .string()

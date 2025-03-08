@@ -1,6 +1,10 @@
-import { Control } from "react-hook-form";
-import { ProfileType } from "@/schema/profile.schema";
-interface RadioProps {
+interface RadioPropsBase<T extends FieldValues> {
   name: "gender";
-  control: Control<ProfileType>;
+  control: Control<T>;
+  type: "signUp" | "profile";
 }
+
+type SignUpRadioProps = RadioPropsBase<SignUpType> & { type: "signUp" };
+type ProfileRadioProps = RadioPropsBase<ProfileType> & { type: "profile" };
+
+export type RadioProps = SignUpRadioProps | ProfileRadioProps;

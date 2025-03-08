@@ -67,7 +67,7 @@ const Profile = () => {
           onPress: () => {},
           style: "cancel",
         },
-      ],
+      ]
     );
   };
 
@@ -105,7 +105,7 @@ const Profile = () => {
           <Text className="font-rubik-medium text-lg text-secondary-gray">
             Gender
           </Text>
-          <RadioSection name="gender" control={control} />
+          <RadioSection name="gender" control={control} type="profile" />
         </View>
         {!isEdited ? (
           <ButtonSubmit

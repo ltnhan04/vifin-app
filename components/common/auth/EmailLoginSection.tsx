@@ -82,6 +82,7 @@ const EmailLoginSection = () => {
         placeholder="Enter your email"
         label="Email"
         name="email"
+        testId="email_id"
       />
       <FormField
         control={control}
@@ -94,6 +95,7 @@ const EmailLoginSection = () => {
         label="Password"
         name="password"
         icon={isShowingPassword ? "eye-slash" : "eye"}
+        testId="password_id"
       />
       <Button
         background="#6BBDE3"

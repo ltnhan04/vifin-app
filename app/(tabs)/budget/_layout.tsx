@@ -26,7 +26,7 @@ const BudgetLayout = () => {
     }
   };
 
-  const flag = false;
+  const flag = true;
 
   return flag ? (
     <Stack screenOptions={{ headerShown: false }}>

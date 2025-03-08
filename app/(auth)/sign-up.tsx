@@ -25,6 +25,7 @@ import FormField from "@/components/ui/FormField";
 import Button from "@/components/ui/Button";
 import GoogleLoginSection from "@/components/common/auth/GoogleLoginSection";
 import androidSafeArea from "@/utils/android-safe-area";
+import RadioSection from "@/components/common/settings/RadioSection";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ const SignUp = () => {
     defaultValues: {
       email: "",
       password: "",
+      gender: "male",
       confirmPassword: "",
     },
   });
@@ -65,7 +67,7 @@ const SignUp = () => {
           const newUser = {
             full_name: data.name,
             avatar: providerData.photoURL,
-            gender: "male",
+            gender: data.gender,
             email: providerData?.email,
             provider: providerData.providerId,
           };
@@ -131,6 +133,12 @@ const SignUp = () => {
                   label="Name"
                   name="name"
                 />
+                <View>
+                  <Text className="font-rubik-medium text-lg text-secondary-gray">
+                    Gender
+                  </Text>
+                  <RadioSection name="gender" control={control} type="signUp" />
+                </View>
                 <FormField
                   control={control}
                   isDisabled={isLoading}
