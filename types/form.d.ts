@@ -17,6 +17,7 @@ export type FormDataProps = {
   error: FieldError<signInType | signUpType | ProfileType> | undefined;
   placeholder: string;
   name: ValidFieldName;
+  testId?: string
 
   handleShowingPassword?: () => void;
   control: Control<signInType | signUpType | ProfileType>;

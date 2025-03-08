@@ -6,6 +6,7 @@ import { configureReanimatedLogger } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { store, persistor } from "../redux/store";
 import AuthListener from "@/utils/AuthListener";
 
@@ -14,6 +15,9 @@ import SplashScreen from "@/app/splash-screen";
 import "./global.css";
 
 export default function RootLayout() {
+  GoogleSignin.configure({
+    webClientId: process.env.EXPO_PUBLIC_CLIENT_ID,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),

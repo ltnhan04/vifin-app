@@ -37,7 +37,7 @@ const HomeScreen = () => {
         {...props}
       />
     ),
-    []
+    [],
   );
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -54,7 +54,7 @@ const HomeScreen = () => {
                 <Text className="text-white font-rubik-medium text-xl ml-2">
                   Welcome to{" "}
                   <Text className="text-primary-brightBlue">ViFin</Text>
-                  <Text className="font-rubik-bold">, {user?.displayName}</Text>
+                  <Text className="font-rubik-bold">, {user?.full_name}</Text>
                 </Text>
               </View>
               <Image

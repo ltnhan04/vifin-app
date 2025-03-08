@@ -10,11 +10,14 @@ import {
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import auth from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useCreateNewCustomerMutation } from "@/redux/features/customer/customerApi";
 
 import { signUpSchema, SignUpType } from "@/schema/auth.schema";
 import images from "@/constants/images";
@@ -22,14 +25,15 @@ import FormField from "@/components/ui/FormField";
 import Button from "@/components/ui/Button";
 import GoogleLoginSection from "@/components/common/auth/GoogleLoginSection";
 import androidSafeArea from "@/utils/android-safe-area";
+import RadioSection from "@/components/common/settings/RadioSection";
 
 const SignUp = () => {
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [createNewCustomer] = useCreateNewCustomerMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const [isShowingPassword, setIsShowingPassword] = useState<{
     [key: string]: boolean;
   }>({});
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     control,
@@ -41,6 +45,7 @@ const SignUp = () => {
     defaultValues: {
       email: "",
       password: "",
+      gender: "male",
       confirmPassword: "",
     },
   });
@@ -51,14 +56,34 @@ const SignUp = () => {
       const { email, password } = data;
       const createUser = await auth().createUserWithEmailAndPassword(
         email,
-        password,
+        password
       );
-      Toast.show({
-        type: "success",
-        text1: "Sign Up Successfully!",
-      });
+
       if (createUser.user) {
-        router.push("/(tabs)/home");
+        const providerData = createUser.user.providerData.find(
+          (value) => value.providerId
+        );
+        if (providerData) {
+          const newUser = {
+            full_name: data.name,
+            avatar: providerData.photoURL,
+            gender: data.gender,
+            email: providerData?.email,
+            provider: providerData.providerId,
+          };
+          const tokenResult = await createUser.user.getIdTokenResult();
+          const response = await createNewCustomer(newUser).unwrap();
+          dispatch(
+            setUser({
+              token: tokenResult.token,
+              user: { ...response.data, customerId: response.data._id },
+            })
+          );
+          Toast.show({
+            type: "success",
+            text1: "Sign Up Successfully!",
+          });
+        }
       }
     } catch (error: any) {
       const err = error as FirebaseError;
@@ -108,6 +133,12 @@ const SignUp = () => {
                   label="Name"
                   name="name"
                 />
+                <View>
+                  <Text className="font-rubik-medium text-lg text-secondary-gray">
+                    Gender
+                  </Text>
+                  <RadioSection name="gender" control={control} type="signUp" />
+                </View>
                 <FormField
                   control={control}
                   isDisabled={isLoading}

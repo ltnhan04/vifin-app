@@ -20,6 +20,7 @@ const FormField: React.FC<FormDataProps> = ({
   handleShowingPassword,
   control,
   placeholder,
+  testId,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
@@ -46,6 +47,7 @@ const FormField: React.FC<FormDataProps> = ({
                 onBlur();
               }}
               onChangeText={onChange}
+              testID={testId}
               style={[
                 styles.textInput,
                 isFocused && styles.textInputFocused,

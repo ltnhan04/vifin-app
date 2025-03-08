@@ -9,11 +9,16 @@ import type { SelectedItemType } from "@/types/budget";
 
 interface SelectedItemProps {
   selectedItem: SelectedItemType;
+  onChange?: (value: number) => void;
+  value?: number;
 }
 
-const SelectedItem: React.FC<SelectedItemProps> = ({ selectedItem }) => {
+const SelectedItem: React.FC<SelectedItemProps> = ({
+  selectedItem,
+  onChange,
+  value,
+}) => {
   const router = useRouter();
-  const [value, setValue] = useState<string>();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const handleConfirm = (date: Date) => {
@@ -77,12 +82,12 @@ const SelectedItem: React.FC<SelectedItemProps> = ({ selectedItem }) => {
               Amount
             </Text>
             <MoneyTextInput
-              value={value}
+              value={value?.toString()}
               placeholder="0"
-              className="text-base font-semibold"
+              className="text-2xl font-semibold"
               maxLength={16}
-              onChangeText={(extracted) => {
-                setValue(extracted);
+              onChangeText={(_formatted, extracted) => {
+                if (onChange && extracted) onChange(Number(extracted));
               }}
               suffix={`${currency ? "đ" : "$"}`}
               groupingSeparator=","

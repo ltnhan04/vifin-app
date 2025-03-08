@@ -27,7 +27,7 @@ const LogoutSection = () => {
           style: "destructive",
         },
       ],
-      { cancelable: false },
+      { cancelable: false }
     );
   };
   const handleLogout = async () => {

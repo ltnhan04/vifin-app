@@ -3,65 +3,76 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  Image,
-  TextInput,
-  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React from "react";
-import Icon from "react-native-vector-icons/Ionicons";
+import { useCreateNewWalletMutation } from "@/redux/features/wallet/walletApi";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import androidSafeArea from "@/utils/android-safe-area";
-import icons from "@/constants/icons";
-import { units } from "@/constants/data";
-import Dropdown from "@/components/ui/Dropdown";
+import ButtonSubmit from "@/components/ui/Button";
+import { WalletType, walletSchema } from "@/schema/wallet.schema";
+import InputWalletName from "@/components/common/wallet/InputWalletName";
+import SelectCurrencyUnit from "@/components/common/wallet/SelectCurrencyUnit";
+import InputWalletAmount from "@/components/common/wallet/InputWalletAmount";
 
 const CreateWallet = () => {
+  const [createNewWallet, { isLoading }] = useCreateNewWalletMutation();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<WalletType>({
+    resolver: zodResolver(walletSchema),
+    defaultValues: {
+      symbol: "",
+      wallet_name: "",
+      currency_unit: "VND",
+      amount: 0,
+    },
+  });
+
+  const onSubmit: SubmitHandler<WalletType> = async (data) => {
+    try {
+      const response = await createNewWallet(data).unwrap();
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error creating wallet:", error);
+    }
+  };
+
   return (
-    <SafeAreaView style={androidSafeArea.androidSafeArea}>
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          paddingHorizontal: 24,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View>
-          <View className="flex-row items-center gap-x-2 border-b border-gray-300 pb-3 mb-4">
-            <TouchableOpacity
-              activeOpacity={0.7}
-              className="relative border-r border-gray-300 pr-8"
-            >
-              <View className="w-12 h-12 rounded-full bg-blue-100 justify-center items-center">
-                <Image
-                  source={icons.entertainment}
-                  className="w-12 h-12 rounded-full"
-                />
-              </View>
-              <Icon
-                className="absolute top-1/2 right-2 transform -translate-y-1/2"
-                name="caret-down-outline"
-                size={16}
-              />
-            </TouchableOpacity>
-            <View className="flex-1">
-              <TextInput
-                keyboardType="default"
-                maxLength={50}
-                className="w-full text-xl font-semibold text-gray-800"
-                placeholder="Wallet Name"
-                placeholderTextColor="#999"
-              />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <SafeAreaView style={androidSafeArea.androidSafeArea}>
+        <ScrollView
+          contentContainerClassName="px-6 pb-6 h-full"
+          style={{ flex: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="flex flex-col justify-between" style={{ flex: 1 }}>
+            <View>
+              <InputWalletName control={control} errors={errors} />
+              <SelectCurrencyUnit control={control} errors={errors} />
+              <InputWalletAmount control={control} errors={errors} />
             </View>
-          </View>
-          <View className="flex-row items-center gap-x-2 border-b border-gray-300 pb-3 mb-4">
-            <Icon
-              name="cash"
-              size={40}
-              className="pr-8 border-gray-300 border-r"
+
+            <ButtonSubmit
+              title="Save"
+              isLoading={isLoading}
+              isDisabled={isLoading}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={handleSubmit(onSubmit)}
             />
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
