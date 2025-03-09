@@ -8,9 +8,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 const InputWalletAmount = ({
   control,
   errors,
+  disabled,
 }: {
   control: Control<WalletType>;
   errors: FieldErrors<WalletType>;
+  disabled: boolean;
 }) => {
   return (
     <View>
@@ -19,6 +21,7 @@ const InputWalletAmount = ({
         control={control}
         render={({ field: { onChange, value } }) => (
           <SelectedItem
+            isLoading={disabled}
             selectedItem="amount"
             onChange={onChange}
             value={value}

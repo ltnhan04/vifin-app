@@ -11,12 +11,14 @@ interface SelectedItemProps {
   selectedItem: SelectedItemType;
   onChange?: (value: number) => void;
   value?: number;
+  isLoading?: boolean;
 }
 
 const SelectedItem: React.FC<SelectedItemProps> = ({
   selectedItem,
   onChange,
   value,
+  isLoading,
 }) => {
   const router = useRouter();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -65,7 +67,9 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             className="flex flex-row justify-between"
             activeOpacity={0.7}
             onPress={() =>
-              router.push("/(tabs)/budget/modal/(category)/selected-categories")
+              router.push(
+                "/(root)/(tabs)/budget/modal/(category)/selected-categories"
+              )
             }
           >
             <Text className="font-rubik-semibold text-xl text-secondary-gray-200">
@@ -92,6 +96,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
               suffix={`${currency ? "đ" : "$"}`}
               groupingSeparator=","
               fractionSeparator="."
+              editable={!isLoading}
             />
           </View>
         );

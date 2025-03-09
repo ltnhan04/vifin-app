@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
@@ -10,6 +9,8 @@ import React from "react";
 import { useCreateNewWalletMutation } from "@/redux/features/wallet/walletApi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Toast from "react-native-toast-message";
+import { router } from "expo-router";
 
 import androidSafeArea from "@/utils/android-safe-area";
 import ButtonSubmit from "@/components/ui/Button";
@@ -37,7 +38,13 @@ const CreateWallet = () => {
   const onSubmit: SubmitHandler<WalletType> = async (data) => {
     try {
       const response = await createNewWallet(data).unwrap();
-      console.log("Response:", response.data);
+      if (response.data) {
+        Toast.show({
+          type: "success",
+          text1: response.message,
+        });
+      }
+      router.back();
     } catch (error) {
       console.error("Error creating wallet:", error);
     }
@@ -48,19 +55,27 @@ const CreateWallet = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={androidSafeArea.androidSafeArea}>
+      <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
         <ScrollView
-          contentContainerClassName="px-6 pb-6 h-full"
-          style={{ flex: 1 }}
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+            paddingBottom: 24,
+            height: "100%",
+          }}
           showsVerticalScrollIndicator={false}
         >
-          <View className="flex flex-col justify-between" style={{ flex: 1 }}>
-            <View>
-              <InputWalletName control={control} errors={errors} />
-              <SelectCurrencyUnit control={control} errors={errors} />
-              <InputWalletAmount control={control} errors={errors} />
-            </View>
-
+          <InputWalletName
+            disabled={isLoading}
+            control={control}
+            errors={errors}
+          />
+          <SelectCurrencyUnit control={control} errors={errors} />
+          <InputWalletAmount
+            disabled={isLoading}
+            control={control}
+            errors={errors}
+          />
+          <View style={{ marginTop: "auto" }}>
             <ButtonSubmit
               title="Save"
               isLoading={isLoading}

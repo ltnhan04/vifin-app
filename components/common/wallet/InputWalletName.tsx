@@ -15,9 +15,11 @@ import type { WalletType } from "@/schema/wallet.schema";
 const InputWalletName = ({
   control,
   errors,
+  disabled,
 }: {
   control: Control<WalletType>;
   errors: FieldErrors<WalletType>;
+  disabled: boolean;
 }) => {
   const pickImage = async (onChange: (value: string) => void) => {
     const permissionResult =
@@ -51,10 +53,13 @@ const InputWalletName = ({
         render={({ field: { onChange, value } }) => (
           <TouchableOpacity
             activeOpacity={0.7}
+            disabled={disabled}
             className="relative border-r border-gray-300 pr-8"
             onPress={() => pickImage(onChange)}
           >
-            <View className="w-14 h-14 rounded-full bg-blue-100 justify-center items-center overflow-hidden">
+            <View
+              className={`w-14 h-14 rounded-full ${errors.symbol ? "border-4 border-secondary-red" : ""} bg-blue-100 justify-center items-center overflow-hidden`}
+            >
               {value ? (
                 <Image
                   source={{ uri: value }}
@@ -62,7 +67,7 @@ const InputWalletName = ({
                 />
               ) : (
                 <Image
-                  source={icons.entertainment}
+                  source={icons.wallet}
                   className="w-14 h-14 rounded-full"
                 />
               )}
@@ -83,6 +88,7 @@ const InputWalletName = ({
             <TextInput
               keyboardType="default"
               maxLength={50}
+              editable={!disabled}
               className="w-full text-xl font-semibold text-gray-800"
               placeholder="Enter wallet name"
               placeholderTextColor="#999"
@@ -92,7 +98,6 @@ const InputWalletName = ({
             />
             {errors.wallet_name && (
               <View className="flex-row items-center gap-x-1">
-                <Icon name="alert-circle-outline" size={16} color="#EF4444" />
                 <Text className="text-red-500 text-sm">
                   {errors.wallet_name.message}
                 </Text>

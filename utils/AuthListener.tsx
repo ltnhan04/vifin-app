@@ -27,26 +27,26 @@ const AuthListener = ({ children }: { children: React.ReactNode }) => {
         };
 
         try {
-          const tokenResult = await user.getIdTokenResult();
+          const tokenResult = await user.getIdTokenResult(true);
           console.log(tokenResult.token);
           const tokenExpiration = new Date(tokenResult.expirationTime);
           const currentTime = new Date();
 
           if (tokenExpiration < currentTime) {
             dispatch(clearUser());
-            router.push("/(auth)/sign-in");
+            router.push("/(root)/(auth)/sign-in");
           } else {
             dispatch(setUser({ user: userData, token: tokenResult.token }));
-            router.replace("/(tabs)/home");
+            router.replace("/(root)/(tabs)/home");
           }
         } catch (error) {
           console.error("Error fetching token:", error);
           dispatch(clearUser());
-          router.replace("/(auth)/sign-in");
+          router.replace("/(root)/(auth)/sign-in");
         }
       } else {
         dispatch(clearUser());
-        router.replace("/(auth)/sign-in");
+        router.replace("/(root)/(auth)/sign-in");
       }
     }
     if (initializing) setInitializing(false);

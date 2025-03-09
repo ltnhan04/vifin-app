@@ -7,8 +7,10 @@ import splash from "@/assets/images/splash.png";
 import emptyBox from "@/assets/images/empty-box.png";
 import expenseIncome from "@/assets/images/income-expense.png";
 import inheritance from "@/assets/images/inheritance.png";
+import emptyWallet from "@/assets/images/empty_wallet.png";
 
 export default {
+  emptyWallet,
   avatar,
   noResult,
   signIn,

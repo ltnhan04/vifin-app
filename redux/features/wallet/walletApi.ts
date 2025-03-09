@@ -31,46 +31,82 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: ["Wallet"],
     }),
-
-    getWallets: builder.mutation<ResponseListWallet, void>({
+    getWallet: builder.query<ResponseWalletType, { id: string }>({
+      query: ({ id }) => ({
+        url: `/v1/wallet/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Wallet"],
+    }),
+    getWallets: builder.query<ResponseListWallet, void>({
       query: () => ({
         url: "/v1/wallet",
         method: "GET",
       }),
+      providesTags: ["Wallet"],
     }),
     updateWallet: builder.mutation<
       ResponseWalletType,
       { id: string; newWallet: Partial<WalletType> }
     >({
-      query: ({ id, newWallet }) => ({
-        url: `/v1/wallet/${id}`,
-        method: "PUT",
-        body: newWallet,
-      }),
+      query: ({ id, newWallet }) => {
+        const formData = new FormData();
+        if (newWallet.wallet_name) {
+          formData.append("wallet_name", newWallet.wallet_name);
+        }
+        if (newWallet.currency_unit) {
+          formData.append("currency_unit", newWallet.currency_unit);
+        }
+        if (newWallet.amount !== undefined) {
+          formData.append("amount", newWallet.amount.toString());
+        }
+
+        if (newWallet.symbol) {
+          const { fileName, type } = getFileInfo(newWallet.symbol);
+          formData.append("symbol", {
+            uri: newWallet.symbol,
+            name: fileName,
+            type: type,
+          } as any);
+        }
+        return {
+          url: `/v1/wallet/${id}`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Wallet"],
     }),
+
     deleteWallet: builder.mutation<ResponseWalletType, { id: string }>({
       query: ({ id }) => ({
         url: `/v1/wallet/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Wallet"],
     }),
-    getBudgetInWallet: builder.mutation<
+    getBudgetInWallet: builder.query<
       ResponseBudgetInWallet,
       { walletId: string }
     >({
       query: ({ walletId }) => ({
-        url: `/v1/wallet/${walletId}`,
+        url: `/v1/wallet/budget/${walletId}`,
         method: "GET",
       }),
+      providesTags: (_result, _error, { walletId }) => [
+        { type: "Wallet", id: walletId },
+      ],
     }),
   }),
 });
 
 export const {
   useCreateNewWalletMutation,
-  useGetWalletsMutation,
+  useGetWalletsQuery,
+  useGetWalletQuery,
   useUpdateWalletMutation,
   useDeleteWalletMutation,
-  useGetBudgetInWalletMutation,
+  useGetBudgetInWalletQuery,
 } = walletApi;
