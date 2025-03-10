@@ -18,6 +18,7 @@ import { WalletType, walletSchema } from "@/schema/wallet.schema";
 import InputWalletName from "@/components/common/wallet/InputWalletName";
 import SelectCurrencyUnit from "@/components/common/wallet/SelectCurrencyUnit";
 import InputWalletAmount from "@/components/common/wallet/InputWalletAmount";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CreateWallet = () => {
   const [createNewWallet, { isLoading }] = useCreateNewWalletMutation();
@@ -55,38 +56,40 @@ const CreateWallet = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: 24,
-            paddingBottom: 24,
-            height: "100%",
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          <InputWalletName
-            disabled={isLoading}
-            control={control}
-            errors={errors}
-          />
-          <SelectCurrencyUnit control={control} errors={errors} />
-          <InputWalletAmount
-            disabled={isLoading}
-            control={control}
-            errors={errors}
-          />
-          <View style={{ marginTop: "auto" }}>
-            <ButtonSubmit
-              title="Save"
-              isLoading={isLoading}
-              isDisabled={isLoading}
-              background="#6BBFFF"
-              textColor="white"
-              handleOnPress={handleSubmit(onSubmit)}
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+        <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              paddingBottom: 24,
+              height: "100%",
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            <InputWalletName
+              disabled={isLoading}
+              control={control}
+              errors={errors}
             />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+            <SelectCurrencyUnit control={control} errors={errors} />
+            <InputWalletAmount
+              disabled={isLoading}
+              control={control}
+              errors={errors}
+            />
+            <View style={{ marginTop: "auto" }}>
+              <ButtonSubmit
+                title="Save"
+                isLoading={isLoading}
+                isDisabled={isLoading}
+                background="#6BBFFF"
+                textColor="white"
+                handleOnPress={handleSubmit(onSubmit)}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
     </KeyboardAvoidingView>
   );
 };

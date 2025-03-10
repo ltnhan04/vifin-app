@@ -1,7 +1,9 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
+import Toast from "react-native-toast-message";
+import { useDeleteCategoryMutation } from "@/redux/features/category/categoryApi";
 
 const SubCategoryItem = ({
   symbol,
@@ -14,8 +16,37 @@ const SubCategoryItem = ({
   isSubOwner: boolean;
   _id: string;
 }) => {
+  const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
+
   const handleDelete = (categoryId: string) => {
-    console.log(`Delete category with ID: ${categoryId}`);
+    Alert.alert(
+      "Confirm Deletion",
+      `Are you sure you want to delete the subcategory "${name}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              await deleteCategory({ id: categoryId }).unwrap();
+              Toast.show({
+                type: "success",
+                text1: "Subcategory has been deleted successfully!",
+              });
+            } catch (error) {
+              Alert.alert(
+                "Error",
+                "Failed to delete subcategory. Please try again."
+              );
+            }
+          },
+          style: "destructive",
+        },
+      ]
+    );
   };
 
   return (
@@ -48,8 +79,15 @@ const SubCategoryItem = ({
               <Icon name="create-outline" size={24} color="yellow" />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => handleDelete(_id)}>
-              <Icon name="trash-outline" size={24} color="red" />
+            <TouchableOpacity
+              onPress={() => handleDelete(_id)}
+              disabled={isLoading}
+            >
+              <Icon
+                name="trash-outline"
+                size={24}
+                color={isLoading ? "gray" : "red"}
+              />
             </TouchableOpacity>
           </View>
         )}

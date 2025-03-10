@@ -75,6 +75,7 @@ const InputWalletName = ({
             <Icon
               className="absolute top-1/2 right-2 transform -translate-y-1/2"
               name="caret-down-outline"
+              color={"#fff"}
               size={16}
             />
           </TouchableOpacity>
@@ -89,9 +90,9 @@ const InputWalletName = ({
               keyboardType="default"
               maxLength={50}
               editable={!disabled}
-              className="w-full text-xl font-semibold text-gray-800"
+              className="w-full text-xl font-semibold text-white"
               placeholder="Enter wallet name"
-              placeholderTextColor="#999"
+              placeholderTextColor="#fff"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}

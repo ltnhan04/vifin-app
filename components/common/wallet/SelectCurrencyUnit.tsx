@@ -13,14 +13,19 @@ const SelectCurrencyUnit = ({
 }) => {
   return (
     <View className="flex-row items-center gap-x-4 border-b border-gray-300 pb-4 mb-4">
-      <Icon name="cash" size={40} className="pr-8 border-gray-300 border-r" />
+      <Icon
+        name="cash"
+        size={40}
+        color={"#fff"}
+        className="pr-8 border-gray-300 border-r"
+      />
       <Controller
         name="currency_unit"
         control={control}
         render={({ field: { value } }) => (
           <View className="flex flex-col items-start">
-            <Text className="text-lg text-gray-600">Currency Units</Text>
-            <Text className="font-medium text-xl">{value}</Text>
+            <Text className="text-lg text-white">Currency Units</Text>
+            <Text className="font-medium text-xl text-white">{value}</Text>
           </View>
         )}
       />

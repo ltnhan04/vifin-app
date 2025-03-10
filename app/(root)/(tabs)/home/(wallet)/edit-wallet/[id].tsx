@@ -21,6 +21,7 @@ import InputWalletName from "@/components/common/wallet/InputWalletName";
 import SelectCurrencyUnit from "@/components/common/wallet/SelectCurrencyUnit";
 import InputWalletAmount from "@/components/common/wallet/InputWalletAmount";
 import Loading from "@/app/loading";
+import { LinearGradient } from "expo-linear-gradient";
 
 const EditWallet = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -88,52 +89,54 @@ const EditWallet = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: 24,
-            paddingBottom: 24,
-            height: "100%",
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          <InputWalletName
-            disabled={isUpdating || !isEditing}
-            control={control}
-            errors={errors}
-          />
-          <SelectCurrencyUnit control={control} errors={errors} />
-          <InputWalletAmount
-            disabled={isUpdating || !isEditing}
-            control={control}
-            errors={errors}
-          />
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+        <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              paddingBottom: 24,
+              height: "100%",
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            <InputWalletName
+              disabled={isUpdating || !isEditing}
+              control={control}
+              errors={errors}
+            />
+            <SelectCurrencyUnit control={control} errors={errors} />
+            <InputWalletAmount
+              disabled={isUpdating || !isEditing}
+              control={control}
+              errors={errors}
+            />
 
-          {isEditing ? (
-            <View style={{ marginTop: "auto" }}>
-              <ButtonSubmit
-                title="Save Changes"
-                isLoading={isUpdating}
-                isDisabled={isUpdating}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
-              />
-            </View>
-          ) : (
-            <View style={{ marginTop: "auto" }}>
-              <ButtonSubmit
-                title="Update Wallet"
-                isLoading={false}
-                isDisabled={false}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={() => setIsEditing(true)}
-              />
-            </View>
-          )}
-        </ScrollView>
-      </SafeAreaView>
+            {isEditing ? (
+              <View style={{ marginTop: "auto" }}>
+                <ButtonSubmit
+                  title="Save Changes"
+                  isLoading={isUpdating}
+                  isDisabled={isUpdating}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={handleSubmit(onSubmit)}
+                />
+              </View>
+            ) : (
+              <View style={{ marginTop: "auto" }}>
+                <ButtonSubmit
+                  title="Update Wallet"
+                  isLoading={false}
+                  isDisabled={false}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={() => setIsEditing(true)}
+                />
+              </View>
+            )}
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
     </KeyboardAvoidingView>
   );
 };

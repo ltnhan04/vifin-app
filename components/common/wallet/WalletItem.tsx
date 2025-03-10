@@ -67,7 +67,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
         />
         <View>
           <Text
-            className="text-black font-rubik-medium text-xl"
+            className="text-white font-rubik-medium text-xl"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={{ maxWidth: 150 }}
@@ -75,7 +75,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
             {walletName}
           </Text>
 
-          <Text className="text-black font-rubik-medium text-lg">
+          <Text className="text-white font-rubik-medium text-lg">
             {formatCurrency(amount, "VND")}
           </Text>
         </View>
