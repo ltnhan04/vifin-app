@@ -7,8 +7,8 @@ export default {
     icon: "./assets/images/icon.png",
     scheme: "vifin",
     splash: {
-      image: "./assets/images/splash.png",
-      resizeMode: "contain",
+      image: "./assets/images/adaptive-icon.png",
+      resizeMode: "cover",
       backgroundColor: "#081657",
     },
     userInterfaceStyle: "automatic",

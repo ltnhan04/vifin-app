@@ -1,26 +1,56 @@
 import React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  Text,
-  KeyboardAvoidingView,
-} from "react-native";
-
+import { ScrollView, View, KeyboardAvoidingView } from "react-native";
+import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useCreateCategoryMutation } from "@/redux/features/category/categoryApi";
+import { CategoryType, categorySchema } from "@/schema/category.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppSelector } from "@/redux/hooks";
 import ButtonSubmit from "@/components/ui/Button";
-import SwitchTab from "@/components/ui/SwitchSelector";
-import Icon from "react-native-vector-icons/Ionicons";
-import androidSafeArea from "@/utils/android-safe-area";
-import icons from "@/constants/icons";
-import images from "@/constants/images";
+import Toast from "react-native-toast-message";
+import InputCategoryName from "@/components/common/category/InputCategoryName";
+import SelectTransactionType from "@/components/common/category/SelectTransactionType";
+import SelectParentCategory from "@/components/common/category/SelectParentCategory";
 
 const AddCategory = () => {
+  const customerId = useAppSelector((state) => state.auth.user?.customerId);
+  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CategoryType>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: {
+      symbol: "",
+      name: "",
+      createdBy: "",
+      parent_id: null,
+      transaction_type: "expense",
+    },
+  });
+
+  const onSubmit: SubmitHandler<CategoryType> = async (data) => {
+    try {
+      const response = await createCategory({
+        ...data,
+        createdBy: customerId,
+      }).unwrap();
+      if (response.data) {
+        Toast.show({
+          type: "success",
+          text1: response.message,
+        });
+      }
+      router.back();
+    } catch (error) {
+      console.error("Error creating category:", error);
+    }
+  };
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <SafeAreaView style={androidSafeArea.androidSafeArea}>
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={{
             paddingHorizontal: 24,
@@ -28,76 +58,31 @@ const AddCategory = () => {
             height: "100%",
           }}
         >
-          <View className="flex flex-col justify-between" style={{ flex: 1 }}>
-            <View>
-              <View className="flex-row items-center gap-x-2 border-b border-gray-300 pb-3 mb-4">
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  className="relative border-r border-gray-300 pr-8"
-                >
-                  <View className="w-12 h-12 rounded-full bg-blue-100 justify-center items-center">
-                    <Image
-                      source={icons.entertainment}
-                      className="w-12 h-12 rounded-full"
-                    />
-                  </View>
-                  <Icon
-                    className="absolute top-1/2 right-2 transform -translate-y-1/2"
-                    name="caret-down-outline"
-                    size={16}
-                  />
-                </TouchableOpacity>
-                <View className="flex-1">
-                  <TextInput
-                    keyboardType="default"
-                    maxLength={50}
-                    className="w-full text-xl font-semibold text-gray-800"
-                    placeholder="Category Name"
-                    placeholderTextColor="#999"
-                  />
-                </View>
-              </View>
-
-              <View className="flex-row items-center gap-x-8 mb-4 border-b pb-3 border-gray-300">
-                <Image
-                  source={images.expenseIncome}
-                  resizeMode="contain"
-                  className="w-12 h-12"
-                />
-                <View className="w-full">
-                  <SwitchTab item={["Expense", "Income"]} setWidth={200} />
-                </View>
-              </View>
-
-              <TouchableOpacity className="flex-row items-center gap-x-8 border-b border-gray-300 pb-3">
-                <Image
-                  source={images.inheritance}
-                  resizeMode="contain"
-                  className="w-12 h-12"
-                />
-                <View className="flex-row items-center justify-between flex-1">
-                  <View>
-                    <Text className="text-sm text-gray-600">
-                      Parent category
-                    </Text>
-                    <Text className="text-xl font-semibold text-gray-500">
-                      Select category
-                    </Text>
-                  </View>
-                  <Icon name="chevron-forward-outline" size={20} color="#555" />
-                </View>
-              </TouchableOpacity>
+          <View
+            className="flex flex-col justify-between mt-4"
+            style={{ flex: 1 }}
+          >
+            <View className="flex flex-col gap-y-2">
+              <InputCategoryName
+                control={control}
+                errors={errors}
+                disabled={isLoading}
+              />
+              <SelectTransactionType control={control} />
+              <SelectParentCategory control={control} />
             </View>
+
             <ButtonSubmit
               title="Save"
-              isDisabled={true}
+              isLoading={isLoading}
+              isDisabled={isLoading}
               background="#6BBFFF"
               textColor="white"
-              handleOnPress={() => {}}
+              handleOnPress={handleSubmit(onSubmit)}
             />
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </LinearGradient>
     </KeyboardAvoidingView>
   );
 };

@@ -44,6 +44,18 @@ const CategoryLayout = () => {
           },
         }}
       />
+      <Stack.Screen
+        name="edit-category/[id]"
+        options={{
+          headerTitle: "Edit Category",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "Rubik",
+            fontWeight: 700,
+            fontSize: 18,
+          },
+        }}
+      />
     </Stack>
   );
 };

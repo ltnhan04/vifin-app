@@ -6,13 +6,13 @@ import { router } from "expo-router";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 
 const MyWalletSection = () => {
-  const { data } = useGetWalletsQuery();
+  const { data, isLoading, isFetching } = useGetWalletsQuery();
   const wallets = data?.data?.slice(0, 3) || [];
 
   useEffect(() => {
-    if (wallets.length === 0) {
+    if (!isLoading && !isFetching && wallets.length === 0) {
       Alert.alert(
-        "No Wallet Found",
+        "You have no wallet",
         "You need to create a wallet to continue using the app.",
         [
           {
@@ -24,7 +24,7 @@ const MyWalletSection = () => {
         { cancelable: false }
       );
     }
-  }, [wallets.length]);
+  }, [isLoading, isFetching, wallets.length]);
 
   return (
     <View className="px-6 py-4 border border-primary-brightBlue rounded-xl">
@@ -51,7 +51,11 @@ const MyWalletSection = () => {
 
       <View className="w-full border-[0.2px] my-2 border-y-secondary-gray-200"></View>
 
-      {wallets.length > 0 ? (
+      {isLoading || isFetching ? (
+        <View className="flex items-center">
+          <Text className="text-base text-center text-white">Loading...</Text>
+        </View>
+      ) : wallets.length > 0 ? (
         wallets.map((item, index) => (
           <MyWalletItem
             key={index}
