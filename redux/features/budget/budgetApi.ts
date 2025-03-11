@@ -10,6 +10,19 @@ export const budgetApi = baseApi.injectEndpoints({
         body: newBudget,
       }),
     }),
+    updateBudget: builder.mutation<
+      ResponseBudgetType,
+      { id: string; newBudget: Partial<Omit<BudgetType, "_id">> }
+    >({
+      query: ({ id, newBudget }) => ({
+        url: `/v1/budget/${id}`,
+        method: "PUT",
+        body: newBudget,
+      }),
+    }),
+    // deleteBudget: builder.mutation({
+
+    // })
   }),
 });
 
