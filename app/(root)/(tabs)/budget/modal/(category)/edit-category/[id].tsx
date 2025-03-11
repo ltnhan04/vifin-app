@@ -15,6 +15,7 @@ import SelectParentCategory from "@/components/common/category/SelectParentCateg
 import ButtonSubmit from "@/components/ui/Button";
 import Toast from "react-native-toast-message";
 import Loading from "@/app/loading";
+import { transactionsData } from "@/constants/data";
 
 const EditCategory = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -50,7 +51,7 @@ const EditCategory = () => {
         name: data.data.name || "",
         createdBy: data.data.createdBy || "",
         parent_id: data.data.parent_id || null,
-        transaction_type: data.data.transaction_type || "expense",
+        transaction_type: data.data.transaction_type,
       });
     }
   }, [data, reset, isEditing]);
@@ -106,7 +107,10 @@ const EditCategory = () => {
                 errors={errors}
                 disabled={!isEditing || isUpdating}
               />
-              <SelectTransactionType control={control} />
+              <SelectTransactionType
+                transactionType={data?.data.transaction_type as string}
+                control={control}
+              />
               <SelectParentCategory control={control} />
             </View>
 

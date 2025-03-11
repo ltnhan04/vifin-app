@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 
 interface SwitchTabsProps {
@@ -6,24 +6,17 @@ interface SwitchTabsProps {
   setWidth?: number;
   selectedValue?: string;
   onValueChange?: (value: string) => void;
+  initialValue?: number;
 }
 
 const SwitchTab: React.FC<SwitchTabsProps> = ({
   item,
   setWidth,
-  selectedValue,
   onValueChange,
+  initialValue,
 }) => {
-  const defaultIndex = item.indexOf("Expense");
-  const [selectedIndex, setSelectedIndex] = useState(defaultIndex);
-
-  useEffect(() => {
-    if (selectedValue) {
-      setSelectedIndex(item.indexOf(selectedValue));
-    } else {
-      onValueChange?.(item[defaultIndex]);
-    }
-  }, [selectedValue]);
+  const [selectedIndex, setSelectedIndex] = useState(initialValue);
+  console.log(selectedIndex);
 
   return (
     <SegmentedControl

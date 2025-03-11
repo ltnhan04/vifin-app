@@ -1,15 +1,30 @@
 import { baseApi } from "@/redux/api/baseApi";
-import type { ResponseBudgetType, BudgetType } from "@/types/budget";
+import type {
+  ResponseBudgetType,
+  BudgetType,
+  IResponseBudget,
+} from "@/types/budget";
 
 export const budgetApi = baseApi.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
-    createBudget: builder.mutation<ResponseBudgetType, BudgetType>({
-      query: (newBudget) => ({
+    getBudgets: builder.query<IResponseBudget, void>({
+      query: () => ({
         url: `/v1/budget`,
-        method: "POST",
-        body: newBudget,
+        method: "GET",
       }),
+      providesTags: ["Budget"],
     }),
+    createBudget: builder.mutation<ResponseBudgetType, Omit<BudgetType, "_id">>(
+      {
+        query: (newBudget) => ({
+          url: `/v1/budget`,
+          method: "POST",
+          body: newBudget,
+        }),
+        invalidatesTags: ["Budget"],
+      }
+    ),
     updateBudget: builder.mutation<
       ResponseBudgetType,
       { id: string; newBudget: Partial<Omit<BudgetType, "_id">> }
@@ -19,11 +34,21 @@ export const budgetApi = baseApi.injectEndpoints({
         method: "PUT",
         body: newBudget,
       }),
+      invalidatesTags: ["Budget"],
     }),
-    // deleteBudget: builder.mutation({
-
-    // })
+    deleteBudget: builder.mutation<IResponseBudget, { id: string }>({
+      query: ({ id }) => ({
+        url: `/v1/budget/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Budget"],
+    }),
   }),
 });
 
-export const { useCreateBudgetMutation } = budgetApi;
+export const {
+  useCreateBudgetMutation,
+  useDeleteBudgetMutation,
+  useGetBudgetsQuery,
+  useUpdateBudgetMutation,
+} = budgetApi;

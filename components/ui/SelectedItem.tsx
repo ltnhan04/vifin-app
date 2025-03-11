@@ -1,28 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
+import { router } from "expo-router";
 import { MoneyTextInput } from "@alexzunik/react-native-money-input";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useGetCategoryQuery } from "@/redux/features/category/categoryApi";
+import { useAppSelector } from "@/redux/hooks";
 import icons from "@/constants/icons";
-import type { SelectedItemType } from "@/types/budget";
-
-interface SelectedItemProps {
-  selectedItem: SelectedItemType;
-  onChange?: (value: number) => void;
-  value?: number;
-  isLoading?: boolean;
-}
+import type { SelectedItemProps } from "@/types/selected-item";
 
 const SelectedItem: React.FC<SelectedItemProps> = ({
   selectedItem,
   onChange,
+  onChangText,
   value,
   isLoading,
 }) => {
-  const router = useRouter();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
+  const selectedCategoryId = useAppSelector(
+    (state) => state.category.selectedCategoryId
+  );
+  const { data } = useGetCategoryQuery(
+    {
+      id: selectedCategoryId as string,
+    },
+    { skip: !selectedCategoryId }
+  );
+  const categoryName = selectedCategoryId ? data?.data.name : null;
+  const symbol = selectedCategoryId ? data?.data.symbol : null;
+  useEffect(() => {
+    if (onChangText && selectedCategoryId) {
+      onChangText(selectedCategoryId);
+    }
+  }, [selectedCategoryId]);
   const handleConfirm = (date: Date) => {
     console.log("A date has been picked: ", date);
     setDatePickerVisibility(false);
@@ -33,7 +43,14 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
       case "category":
         return (
           <View className="w-[15%]">
-            <View className="size-12 bg-secondary-gray-100 border-2 border-black rounded-full"></View>
+            <View className="size-14 bg-secondary-gray-100 border-2 border-black rounded-full overflow-hidden">
+              {symbol ? (
+                <Image
+                  source={{ uri: symbol }}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ) : null}
+            </View>
           </View>
         );
       case "amount":
@@ -68,12 +85,12 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             activeOpacity={0.7}
             onPress={() =>
               router.push(
-                "/(root)/(tabs)/budget/modal/(category)/selected-categories"
+                "/(root)/(tabs)/budget/modal/(category)/list-category"
               )
             }
           >
             <Text className="font-rubik-semibold text-xl text-white">
-              Select category
+              {selectedCategoryId ? categoryName : "Select category"}
             </Text>
             <Icon color={"white"} name="chevron-forward-outline" size={20} />
           </TouchableOpacity>

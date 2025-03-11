@@ -3,6 +3,11 @@ import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  setSelectedCategory,
+  clearSelectedCategory,
+} from "@/redux/features/category/categorySlice";
 import { useDeleteCategoryMutation } from "@/redux/features/category/categoryApi";
 
 const ParentCategoryItem = ({
@@ -16,8 +21,11 @@ const ParentCategoryItem = ({
   isOwner: boolean;
   _id: string;
 }) => {
+  const dispatch = useAppDispatch();
+  const selectedCategoryId = useAppSelector(
+    (state) => state.category.selectedCategoryId
+  );
   const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
-
   const handleDelete = (categoryId: string) => {
     Alert.alert(
       "Confirm Deletion",
@@ -48,19 +56,36 @@ const ParentCategoryItem = ({
       ]
     );
   };
+  const handleSelectedCategoryId = () => {
+    if (selectedCategoryId === _id) {
+      dispatch(clearSelectedCategory());
+    } else {
+      dispatch(setSelectedCategory(_id));
+    }
+    router.back();
+  };
 
   return (
     <TouchableOpacity
-      className="flex flex-row items-center py-2 rounded-lg"
+      className={`flex flex-row items-center p-2 rounded-lg `}
       activeOpacity={0.8}
+      onPress={handleSelectedCategoryId}
     >
       <Image
         className="size-14 rounded-full border-2 border-[#4FAAFF]"
         source={{ uri: symbol }}
       />
-      <Text className="ml-4 text-xl font-rubik-medium text-gray-200">
-        {name}
-      </Text>
+      <View className="flex-row items-center">
+        <Text className="ml-4 text-xl font-medium text-gray-200">{name}</Text>
+        {selectedCategoryId === _id && (
+          <Icon
+            name="checkmark-circle"
+            size={24}
+            color="#6BBFFF"
+            className="ml-2"
+          />
+        )}
+      </View>
 
       {isOwner && (
         <View className="flex-row ml-auto gap-x-4">

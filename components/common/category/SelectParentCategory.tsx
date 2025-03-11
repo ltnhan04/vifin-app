@@ -2,10 +2,10 @@ import { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Control, Controller } from "react-hook-form";
+import { CategoryType } from "@/schema/category.schema";
 import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi";
 import images from "@/constants/images";
 import ParentCategories from "@/components/common/category/ParentCategories";
-import { CategoryType } from "@/schema/category.schema";
 
 const SelectParentCategory = ({
   control,
@@ -44,7 +44,7 @@ const SelectParentCategory = ({
         </View>
       </TouchableOpacity>
 
-      <Modal visible={modalVisible} animationType="slide">
+      <Modal visible={modalVisible} animationType="fade">
         <ParentCategories
           control={control}
           onClose={() => setModalVisible(false)}

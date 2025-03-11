@@ -35,7 +35,7 @@ const WalletScreen = () => {
                 className="w-80"
                 source={images.emptyWallet}
               />
-              <Text className="text-xl absolute left-0 top-[70%] right-0 text-center text-white">
+              <Text className="text-2xl absolute left-0 top-[70%] right-0 text-center text-white">
                 No wallets available
               </Text>
             </View>

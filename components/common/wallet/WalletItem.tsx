@@ -58,16 +58,16 @@ const WalletItem: React.FC<WalletItemProps> = ({
   };
 
   return (
-    <View className="flex flex-row justify-between items-center mt-4">
+    <View className="flex flex-row justify-between items-center mt-6">
       <View className="flex flex-row items-center gap-x-3">
         <Image
           source={{ uri: walletIcon }}
           resizeMode="cover"
-          className="size-14 bg-primary-dark rounded-full"
+          className="size-16 bg-primary-dark rounded-full"
         />
         <View>
           <Text
-            className="text-white font-rubik-medium text-xl"
+            className="text-white font-rubik-medium text-2xl"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={{ maxWidth: 150 }}
@@ -75,7 +75,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
             {walletName}
           </Text>
 
-          <Text className="text-white font-rubik-medium text-lg">
+          <Text className="text-white font-rubik-medium text-xl">
             {formatCurrency(amount, "VND")}
           </Text>
         </View>

@@ -18,9 +18,9 @@ const MyWalletItem = ({
           source={{ uri: symbol }}
           className="size-12 bg-primary-dark rounded-full"
         />
-        <Text className="text-white font-rubik-medium ">{name}</Text>
+        <Text className="text-white font-rubik-medium text-lg">{name}</Text>
       </View>
-      <Text className="text-white font-rubik-medium">
+      <Text className="text-white font-rubik-medium text-lg">
         {formatCurrency(price, "VND")}
       </Text>
     </View>

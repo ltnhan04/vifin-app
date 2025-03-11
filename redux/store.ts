@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { baseApi } from "@/redux/api/baseApi";
 
 import authReducer from "./features/auth/authSlice";
+import categoryReducer from "./features/category/categorySlice";
 
 const persistConfig = {
   key: "root",
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  category: categoryReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
