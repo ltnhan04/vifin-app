@@ -1,10 +1,10 @@
 import { FlatList, SafeAreaView, View, Text, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import androidSafeArea from "@/utils/android-safe-area";
 import WalletItem from "@/components/common/wallet/WalletItem";
 import Loading from "@/app/loading";
 import images from "@/constants/images";
-import { LinearGradient } from "expo-linear-gradient";
 
 const WalletScreen = () => {
   const { data, isFetching, isLoading } = useGetWalletsQuery();
@@ -20,7 +20,6 @@ const WalletScreen = () => {
           data={data?.data || []}
           keyExtractor={(_item, index) => index.toString()}
           contentContainerStyle={{ paddingHorizontal: 24 }}
-          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <WalletItem
               _id={item._id}
