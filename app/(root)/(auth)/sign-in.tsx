@@ -47,7 +47,7 @@ export default function Signin() {
                 <Text className=" font-rubik text-lg text-secondary-gray text-center mt-6">
                   Don’t have an account?{" "}
                   <Link
-                    href={"/(auth)/sign-up"}
+                    href={"/(root)/(auth)/sign-up"}
                     className=" font-rubik-bold text-primary-brightBlue"
                   >
                     Sign Up

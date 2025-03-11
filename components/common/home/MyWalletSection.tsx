@@ -1,13 +1,34 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect } from "react";
 import MyWalletItem from "@/components/ui/MyWalletItem";
 import icons from "@/constants/icons";
 import { router } from "expo-router";
+import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 
 const MyWalletSection = () => {
+  const { data, isLoading, isFetching } = useGetWalletsQuery();
+  const wallets = data?.data?.slice(0, 3) || [];
+
+  useEffect(() => {
+    if (!isLoading && !isFetching && wallets.length === 0) {
+      Alert.alert(
+        "You have no wallet",
+        "You need to create a wallet to continue using the app.",
+        [
+          {
+            text: "Create Wallet",
+            onPress: () =>
+              router.push("/(root)/(tabs)/home/(wallet)/create-wallet"),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }, [isLoading, isFetching, wallets.length]);
+
   return (
-    <View className="px-6 py-4 border border-primary-brightBlue rounded-xl mt-6">
-      <View className="flex flex-row item-center justify-between">
+    <View className="px-6 py-4 border border-primary-brightBlue rounded-xl">
+      <View className="flex flex-row items-center justify-between">
         <View className="flex flex-row items-center">
           <Image
             source={icons.wallet}
@@ -20,17 +41,36 @@ const MyWalletSection = () => {
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => router.push("/(tabs)/home/(wallet)")}
+          onPress={() => router.push("/(root)/(tabs)/home/(wallet)")}
         >
           <Text className="font-rubik-light text-primary-brighterBlue text-sm">
             See All
           </Text>
         </TouchableOpacity>
       </View>
+
       <View className="w-full border-[0.2px] my-2 border-y-secondary-gray-200"></View>
 
-      <MyWalletItem name="Momo Wallet" price={50000} />
-      <MyWalletItem name="Meme Wallet" price={50000} />
+      {isLoading || isFetching ? (
+        <View className="flex items-center">
+          <Text className="text-base text-center text-white">Loading...</Text>
+        </View>
+      ) : wallets.length > 0 ? (
+        wallets.map((item, index) => (
+          <MyWalletItem
+            key={index}
+            price={Number(item.amount)}
+            symbol={item.symbol}
+            name={item.wallet_name}
+          />
+        ))
+      ) : (
+        <View className="flex items-center">
+          <Text className="text-base text-center text-white">
+            No wallets available
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

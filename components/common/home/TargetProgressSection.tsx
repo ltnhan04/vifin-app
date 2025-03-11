@@ -20,7 +20,7 @@ const TargetProgressSection = () => {
         </View>
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => router.push("/(tabs)/budget/(top-tabs)")}
+          onPress={() => router.push("/(root)/(tabs)/budget/(top-tabs)")}
         >
           <Text className="font-rubik-light text-primary-brighterBlue text-sm">
             See All

@@ -17,7 +17,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import androidSafeArea from "@/utils/android-safe-area";
 import icons from "@/constants/icons";
 
-import TotalBalancesSection from "@/components/common/home/TotalBalancesSection";
 import MyWalletSection from "@/components/common/home/MyWalletSection";
 import SummaryReportSection from "@/components/common/home/SummaryReportSection";
 import TargetProgressSection from "@/components/common/home/TargetProgressSection";
@@ -37,7 +36,7 @@ const HomeScreen = () => {
         {...props}
       />
     ),
-    [],
+    []
   );
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -63,7 +62,6 @@ const HomeScreen = () => {
                 className="size-7"
               />
             </View>
-            <TotalBalancesSection />
             <MyWalletSection />
             <SummaryReportSection
               type={"expense"}

@@ -1,24 +1,25 @@
 import {
   View,
-  TouchableOpacity,
-  Image,
-  TextInput,
   Text,
+  TouchableOpacity,
+  TextInput,
+  Image,
   Alert,
 } from "react-native";
-import { Controller, FieldErrors, Control } from "react-hook-form";
+import React from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 import * as ImagePicker from "expo-image-picker";
 import icons from "@/constants/icons";
-import Icon from "react-native-vector-icons/Ionicons";
-import type { WalletType } from "@/schema/wallet.schema";
+import { CategoryType } from "@/schema/category.schema";
 
-const InputWalletName = ({
+const InputCategoryName = ({
   control,
   errors,
   disabled,
 }: {
-  control: Control<WalletType>;
-  errors: FieldErrors<WalletType>;
+  control: Control<CategoryType>;
+  errors: FieldErrors<CategoryType>;
   disabled: boolean;
 }) => {
   const pickImage = async (onChange: (value: string) => void) => {
@@ -46,7 +47,7 @@ const InputWalletName = ({
     }
   };
   return (
-    <View className="flex-row items-center gap-x-4 border-b border-gray-300 pb-4 mb-4">
+    <View className="flex-row items-center gap-x-2 border-b border-gray-500 pb-5 mb-4">
       <Controller
         name="symbol"
         control={control}
@@ -54,7 +55,7 @@ const InputWalletName = ({
           <TouchableOpacity
             activeOpacity={0.7}
             disabled={disabled}
-            className="relative border-r border-gray-300 pr-8"
+            className="relative border-r border-gray-500 pr-8"
             onPress={() => pickImage(onChange)}
           >
             <View
@@ -67,7 +68,7 @@ const InputWalletName = ({
                 />
               ) : (
                 <Image
-                  source={icons.wallet}
+                  source={icons.uncategorizedExpense}
                   className="w-14 h-14 rounded-full"
                 />
               )}
@@ -82,7 +83,7 @@ const InputWalletName = ({
         )}
       />
       <Controller
-        name="wallet_name"
+        name="name"
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <View className="flex-1">
@@ -91,16 +92,16 @@ const InputWalletName = ({
               maxLength={50}
               editable={!disabled}
               className="w-full text-xl font-semibold text-white"
-              placeholder="Enter wallet name"
+              placeholder="Category name"
               placeholderTextColor="#fff"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
             />
-            {errors.wallet_name && (
+            {errors.name && (
               <View className="flex-row items-center gap-x-1">
                 <Text className="text-red-500 text-sm">
-                  {errors.wallet_name.message}
+                  {errors.name.message}
                 </Text>
               </View>
             )}
@@ -111,4 +112,4 @@ const InputWalletName = ({
   );
 };
 
-export default InputWalletName;
+export default InputCategoryName;

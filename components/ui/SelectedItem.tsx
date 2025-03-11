@@ -11,12 +11,14 @@ interface SelectedItemProps {
   selectedItem: SelectedItemType;
   onChange?: (value: number) => void;
   value?: number;
+  isLoading?: boolean;
 }
 
 const SelectedItem: React.FC<SelectedItemProps> = ({
   selectedItem,
   onChange,
   value,
+  isLoading,
 }) => {
   const router = useRouter();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -37,7 +39,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
       case "amount":
         return (
           <View className="w-[15%]">
-            <View className="bg-secondary-gray-100 rounded-md border-2 border-black py-1">
+            <View className="bg-secondary-gray-100 rounded-md border-2 border-white py-1">
               <Text className="text-center font-semibold text-black">VND</Text>
             </View>
           </View>
@@ -45,7 +47,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
       case "dueDate":
         return (
           <View className="w-[15%]">
-            <Icon name="calendar-number-outline" size={30} />
+            <Icon color={"white"} name="calendar-number-outline" size={30} />
           </View>
         );
       case "wallet":
@@ -65,26 +67,29 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             className="flex flex-row justify-between"
             activeOpacity={0.7}
             onPress={() =>
-              router.push("/(tabs)/budget/modal/(category)/selected-categories")
+              router.push(
+                "/(root)/(tabs)/budget/modal/(category)/selected-categories"
+              )
             }
           >
-            <Text className="font-rubik-semibold text-xl text-secondary-gray-200">
+            <Text className="font-rubik-semibold text-xl text-white">
               Select category
             </Text>
-            <Icon name="chevron-forward-outline" size={20} />
+            <Icon color={"white"} name="chevron-forward-outline" size={20} />
           </TouchableOpacity>
         );
       case "amount":
         const currency = "VND";
         return (
           <View className="flex flex-col justify-between ml-2">
-            <Text className="font-rubik-semibold text-sm text-secondary-gray-200">
+            <Text className="font-rubik-semibold text-sm text-white">
               Amount
             </Text>
             <MoneyTextInput
               value={value?.toString()}
               placeholder="0"
-              className="text-2xl font-semibold"
+              placeholderTextColor={"white"}
+              className="text-2xl font-semibold text-white"
               maxLength={16}
               onChangeText={(_formatted, extracted) => {
                 if (onChange && extracted) onChange(Number(extracted));
@@ -92,6 +97,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
               suffix={`${currency ? "đ" : "$"}`}
               groupingSeparator=","
               fractionSeparator="."
+              editable={!isLoading}
             />
           </View>
         );
@@ -103,11 +109,15 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
               activeOpacity={0.7}
               onPress={() => setDatePickerVisibility(true)}
             >
-              <Text className="font-rubik-medium text-base text-secondary-gray-200">
+              <Text className="font-rubik-medium text-base text-white">
                 This Month (1/02 - 28/02)
               </Text>
               <View>
-                <Icon name="chevron-forward-outline" size={20} />
+                <Icon
+                  color={"white"}
+                  name="chevron-forward-outline"
+                  size={20}
+                />
               </View>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -124,11 +134,11 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             className="flex flex-row justify-between"
             activeOpacity={0.7}
           >
-            <Text className="font-rubik-medium text-xl text-secondary-gray-200">
+            <Text className="font-rubik-medium text-xl text-white">
               Meme Wallet
             </Text>
             <View>
-              <Icon name="chevron-forward-outline" size={20} />
+              <Icon name="chevron-forward-outline" color={"white"} size={20} />
             </View>
           </TouchableOpacity>
         );

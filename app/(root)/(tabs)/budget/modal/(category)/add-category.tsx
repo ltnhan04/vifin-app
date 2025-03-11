@@ -1,0 +1,90 @@
+import React from "react";
+import { ScrollView, View, KeyboardAvoidingView } from "react-native";
+import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useCreateCategoryMutation } from "@/redux/features/category/categoryApi";
+import { CategoryType, categorySchema } from "@/schema/category.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppSelector } from "@/redux/hooks";
+import ButtonSubmit from "@/components/ui/Button";
+import Toast from "react-native-toast-message";
+import InputCategoryName from "@/components/common/category/InputCategoryName";
+import SelectTransactionType from "@/components/common/category/SelectTransactionType";
+import SelectParentCategory from "@/components/common/category/SelectParentCategory";
+
+const AddCategory = () => {
+  const customerId = useAppSelector((state) => state.auth.user?.customerId);
+  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CategoryType>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: {
+      symbol: "",
+      name: "",
+      createdBy: "",
+      parent_id: null,
+      transaction_type: "expense",
+    },
+  });
+
+  const onSubmit: SubmitHandler<CategoryType> = async (data) => {
+    try {
+      const response = await createCategory({
+        ...data,
+        createdBy: customerId,
+      }).unwrap();
+      if (response.data) {
+        Toast.show({
+          type: "success",
+          text1: response.message,
+        });
+      }
+      router.back();
+    } catch (error) {
+      console.error("Error creating category:", error);
+    }
+  };
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+            paddingBottom: 16,
+            height: "100%",
+          }}
+        >
+          <View
+            className="flex flex-col justify-between mt-4"
+            style={{ flex: 1 }}
+          >
+            <View className="flex flex-col gap-y-2">
+              <InputCategoryName
+                control={control}
+                errors={errors}
+                disabled={isLoading}
+              />
+              <SelectTransactionType control={control} />
+              <SelectParentCategory control={control} />
+            </View>
+
+            <ButtonSubmit
+              title="Save"
+              isLoading={isLoading}
+              isDisabled={isLoading}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </ScrollView>
+      </LinearGradient>
+    </KeyboardAvoidingView>
+  );
+};
+
+export default AddCategory;

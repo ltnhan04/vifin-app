@@ -196,7 +196,7 @@ const SignUp = () => {
                 <Text className=" font-rubik text-lg text-secondary-gray text-center mt-6">
                   Have an account?{" "}
                   <Link
-                    href={"/(auth)/sign-in"}
+                    href={"/(root)/(auth)/sign-in"}
                     className=" font-rubik-bold text-primary-brightBlue"
                   >
                     Sign In
