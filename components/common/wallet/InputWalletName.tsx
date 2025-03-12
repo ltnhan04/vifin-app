@@ -51,34 +51,41 @@ const InputWalletName = ({
         name="symbol"
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={disabled}
-            className="relative border-r border-gray-300 pr-8"
-            onPress={() => pickImage(onChange)}
-          >
-            <View
-              className={`w-14 h-14 rounded-full ${errors.symbol ? "border-4 border-secondary-red" : ""} bg-blue-100 justify-center items-center overflow-hidden`}
+          <View>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={disabled}
+              className="relative border-r border-gray-300 pr-8"
+              onPress={() => pickImage(onChange)}
             >
-              {value ? (
-                <Image
-                  source={{ uri: value }}
-                  className="w-14 h-14 rounded-full"
-                />
-              ) : (
-                <Image
-                  source={icons.wallet}
-                  className="w-14 h-14 rounded-full"
-                />
-              )}
-            </View>
-            <Icon
-              className="absolute top-1/2 right-2 transform -translate-y-1/2"
-              name="caret-down-outline"
-              color={"#fff"}
-              size={16}
-            />
-          </TouchableOpacity>
+              <View
+                className={`w-14 h-14 rounded-full ${errors.symbol ? "border-4 border-secondary-red" : ""} bg-blue-100 justify-center items-center overflow-hidden`}
+              >
+                {value ? (
+                  <Image
+                    source={{ uri: value }}
+                    className="w-14 h-14 rounded-full"
+                  />
+                ) : (
+                  <Image
+                    source={icons.wallet}
+                    className="w-14 h-14 rounded-full"
+                  />
+                )}
+              </View>
+              <Icon
+                className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                name="caret-down-outline"
+                color={errors.symbol ? "red" : "#fff"}
+                size={16}
+              />
+            </TouchableOpacity>
+            {errors.symbol && (
+              <Text className="text-red-500 text-xs font-medium mt-1">
+                {errors.symbol.message}
+              </Text>
+            )}
+          </View>
         )}
       />
       <Controller

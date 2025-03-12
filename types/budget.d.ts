@@ -17,7 +17,7 @@ export type BudgetType = {
   dueDate: Date;
   amount: number;
   usage?: number;
-  repeat_type?: string;
+  repeat_type?: "custom" | "weekly" | "monthly" | "yearly";
   is_repeated: boolean;
   is_completed: boolean;
   createdAt?: string;

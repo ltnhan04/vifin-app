@@ -16,7 +16,6 @@ const SwitchTab: React.FC<SwitchTabsProps> = ({
   initialValue,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(initialValue);
-  console.log(selectedIndex);
 
   return (
     <SegmentedControl

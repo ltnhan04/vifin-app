@@ -10,7 +10,7 @@ const SelectTransactionType = ({
   transactionType,
 }: {
   control: Control<CategoryType>;
-  transactionType: string;
+  transactionType?: string;
 }) => {
   return (
     <View className="flex-row items-center gap-x-8 mb-4 border-b pb-5 border-gray-500">

@@ -4,7 +4,7 @@ export const walletSchema = z
   .object({
     symbol: z
       .string()
-      .url("Symbol must be a valid URL")
+      .url("Empty symbol!")
       .regex(
         /\.(jpg|jpeg|png|gif)$/i,
         "Symbol must be an image (jpg, jpeg, png, gif)"

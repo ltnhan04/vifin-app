@@ -1,27 +1,33 @@
 import {
   View,
-  Text,
-  Switch,
   ScrollView,
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useCreateBudgetMutation } from "@/redux/features/budget/budgetApi";
-import SelectedItem from "@/components/ui/SelectedItem";
 import { budgetSchema, BudgetType } from "@/schema/budget.schema";
 import ButtonSubmit from "@/components/ui/Button";
 import androidSafeArea from "@/utils/android-safe-area";
 import SelectCategory from "@/components/common/budget/SelectCategoryInBudget";
+import InputBudgetAmount from "@/components/common/budget/InputBudgetAmount";
+import RepeatBudget from "@/components/common/budget/RepeatBudget";
+import DatePickerBottom from "@/components/common/budget/DatePickerBottom";
+import SelectDateRangeBudget from "@/components/common/budget/SelectDateRangeBudget";
+import SelectWalletInBudget from "@/components/common/budget/SelectWalletInBudget";
+import WalletPickerBottom from "@/components/common/budget/WalletPickerBottom";
 
 const AddBudget = () => {
-  const [isReminder, setIsReminder] = useState(false);
+  const bottomRef = useRef<BottomSheet>(null);
+  const walletRef = useRef<BottomSheet>(null);
   const [createBudget, { isLoading }] = useCreateBudgetMutation();
   const {
     control,
@@ -33,14 +39,13 @@ const AddBudget = () => {
       category_id: "",
       wallet_id: "",
       startDate: new Date(),
-      dueDate: new Date(),
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 7)),
       amount: 0,
-      repeatType: "weekly",
+      repeat_type: "weekly",
       is_repeated: true,
       is_completed: false,
     },
   });
-
   const onSubmit: SubmitHandler<BudgetType> = async (data) => {
     try {
       const response = await createBudget(data).unwrap();
@@ -55,55 +60,58 @@ const AddBudget = () => {
       console.error("Error creating wallet:", error);
     }
   };
-
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={`${Platform.OS === "ios" ? "padding" : "height"}`}
-    >
-      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-        <SafeAreaView style={androidSafeArea.androidSafeArea}>
-          <ScrollView
-            contentContainerClassName="px-6 pb-6 h-full"
-            style={{ flex: 1 }}
-          >
-            <View className="flex flex-col justify-between" style={{ flex: 1 }}>
-              <View className="flex flex-col gap-y-3">
-                <SelectCategory control={control} errors={errors} />
-                <SelectedItem selectedItem="amount" />
-                <SelectedItem selectedItem="dueDate" />
-                <SelectedItem selectedItem="wallet" />
-                <View className="flex flex-row items-center justify-between border-b border-secondary-gray-100 py-4">
-                  <View>
-                    <Text className="font-rubik-semibold text-base text-white">
-                      Repeat this budget
-                    </Text>
-                    <Text className="font-rubik-medium text-sm text-secondary-gray-100">
-                      Budget will renew automatically.
-                    </Text>
-                  </View>
-                  <Switch
-                    trackColor={{ false: "#767577", true: "#6BBFFF" }}
-                    thumbColor={isReminder ? "#fff" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={(prevState) => setIsReminder(!!prevState)}
-                    value={isReminder}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={`${Platform.OS === "ios" ? "padding" : "height"}`}
+      >
+        <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+          <SafeAreaView style={androidSafeArea.androidSafeArea}>
+            <ScrollView
+              contentContainerClassName="px-6 pb-6 h-full"
+              style={{ flex: 1 }}
+            >
+              <View
+                className="flex flex-col justify-between"
+                style={{ flex: 1 }}
+              >
+                <View className="flex flex-col gap-y-3">
+                  <SelectCategory control={control} errors={errors} />
+                  <InputBudgetAmount
+                    control={control}
+                    disabled={isLoading}
+                    errors={errors}
                   />
+
+                  <SelectDateRangeBudget
+                    expand={() => bottomRef.current?.expand()}
+                    control={control}
+                    errors={errors}
+                  />
+                  <SelectWalletInBudget
+                    expand={() => walletRef.current?.expand()}
+                    control={control}
+                    errors={errors}
+                  />
+                  <RepeatBudget control={control} />
                 </View>
+                <ButtonSubmit
+                  title="Save"
+                  isLoading={false}
+                  isDisabled={false}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={handleSubmit(onSubmit)}
+                />
               </View>
-              <ButtonSubmit
-                title="Save"
-                isLoading={false}
-                isDisabled={true}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+            </ScrollView>
+          </SafeAreaView>
+          <DatePickerBottom bottomRef={bottomRef} control={control} />
+          <WalletPickerBottom bottomRef={walletRef} control={control} />
+        </LinearGradient>
+      </KeyboardAvoidingView>
+    </GestureHandlerRootView>
   );
 };
 

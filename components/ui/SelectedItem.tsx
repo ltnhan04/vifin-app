@@ -1,43 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 import { MoneyTextInput } from "@alexzunik/react-native-money-input";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { useGetCategoryQuery } from "@/redux/features/category/categoryApi";
-import { useAppSelector } from "@/redux/hooks";
+
 import icons from "@/constants/icons";
 import type { SelectedItemProps } from "@/types/selected-item";
 
 const SelectedItem: React.FC<SelectedItemProps> = ({
   selectedItem,
   onChange,
-  onChangText,
   value,
   isLoading,
+  openBottomSheet,
+  selectedDateRange,
+  symbol,
+  categoryName,
+  walletName,
 }) => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const selectedCategoryId = useAppSelector(
-    (state) => state.category.selectedCategoryId
-  );
-  const { data } = useGetCategoryQuery(
-    {
-      id: selectedCategoryId as string,
-    },
-    { skip: !selectedCategoryId }
-  );
-  const categoryName = selectedCategoryId ? data?.data.name : null;
-  const symbol = selectedCategoryId ? data?.data.symbol : null;
-  useEffect(() => {
-    if (onChangText && selectedCategoryId) {
-      onChangText(selectedCategoryId);
-    }
-  }, [selectedCategoryId]);
-  const handleConfirm = (date: Date) => {
-    console.log("A date has been picked: ", date);
-    setDatePickerVisibility(false);
-  };
-
   const contentLeft = () => {
     switch (selectedItem) {
       case "category":
@@ -90,7 +70,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             }
           >
             <Text className="font-rubik-semibold text-xl text-white">
-              {selectedCategoryId ? categoryName : "Select category"}
+              {categoryName ? categoryName : "Select category"}
             </Text>
             <Icon color={"white"} name="chevron-forward-outline" size={20} />
           </TouchableOpacity>
@@ -122,27 +102,15 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
         return (
           <>
             <TouchableOpacity
-              className="flex flex-row justify-between"
+              className="flex flex-row justify-between items-center"
               activeOpacity={0.7}
-              onPress={() => setDatePickerVisibility(true)}
+              onPress={openBottomSheet}
             >
               <Text className="font-rubik-medium text-base text-white">
-                This Month (1/02 - 28/02)
+                {selectedDateRange ? selectedDateRange : "Select Date Range"}
               </Text>
-              <View>
-                <Icon
-                  color={"white"}
-                  name="chevron-forward-outline"
-                  size={20}
-                />
-              </View>
+              <Icon color={"white"} name="chevron-forward-outline" size={20} />
             </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={() => setDatePickerVisibility(false)}
-            />
           </>
         );
       case "wallet":
@@ -150,9 +118,10 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
           <TouchableOpacity
             className="flex flex-row justify-between"
             activeOpacity={0.7}
+            onPress={openBottomSheet}
           >
             <Text className="font-rubik-medium text-xl text-white">
-              Meme Wallet
+              {walletName ? walletName : "Select wallet"}
             </Text>
             <View>
               <Icon name="chevron-forward-outline" color={"white"} size={20} />
