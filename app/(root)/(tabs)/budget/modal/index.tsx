@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -24,8 +25,9 @@ import DatePickerBottom from "@/components/common/budget/DatePickerBottom";
 import SelectDateRangeBudget from "@/components/common/budget/SelectDateRangeBudget";
 import SelectWalletInBudget from "@/components/common/budget/SelectWalletInBudget";
 import WalletPickerBottom from "@/components/common/budget/WalletPickerBottom";
+import Icon from "react-native-vector-icons/Ionicons";
 
-const AddBudget = () => {
+const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
   const bottomRef = useRef<BottomSheet>(null);
   const walletRef = useRef<BottomSheet>(null);
   const [createBudget, { isLoading }] = useCreateBudgetMutation();
@@ -77,6 +79,16 @@ const AddBudget = () => {
                 style={{ flex: 1 }}
               >
                 <View className="flex flex-col gap-y-3">
+                  {handleCloseModal && (
+                    <View className="w-full bg-primary-dark">
+                      <TouchableOpacity
+                        onPress={handleCloseModal}
+                        className="self-end"
+                      >
+                        <Icon name="close-outline" size={28} color={"white"} />
+                      </TouchableOpacity>
+                    </View>
+                  )}
                   <SelectCategory control={control} errors={errors} />
                   <InputBudgetAmount
                     control={control}
@@ -98,8 +110,8 @@ const AddBudget = () => {
                 </View>
                 <ButtonSubmit
                   title="Save"
-                  isLoading={false}
-                  isDisabled={false}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
                   background="#6BBFFF"
                   textColor="white"
                   handleOnPress={handleSubmit(onSubmit)}

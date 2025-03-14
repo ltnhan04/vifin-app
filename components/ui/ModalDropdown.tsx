@@ -8,19 +8,14 @@ import {
 } from "react-native";
 import React from "react";
 import { formatCurrency } from "@/utils/format-currency";
-
-export interface OptionItem {
-  icon?: HTMLImageElement;
-  label: string;
-  value: string | number;
-}
+import { IWallet } from "@/types/wallet";
 
 interface ModalDropdownProps {
   showDropdown: boolean;
   handleDropdownState: () => void;
-  handleSelectedOptions: (optionValue: OptionItem) => void;
+  handleSelectedOptions: (optionValue: IWallet) => void;
   dropdownFor: "category" | "wallet";
-  data: OptionItem[];
+  data: IWallet[];
 }
 
 const ModalDropdown: React.FC<ModalDropdownProps> = ({
@@ -48,14 +43,16 @@ const ModalDropdown: React.FC<ModalDropdownProps> = ({
                 }}
               >
                 <Image
-                  source={item.icon}
-                  className="w-8 h-8 mr-2"
+                  source={{ uri: item.symbol }}
+                  className="w-14 h-14 mr-2 rounded-full"
                   resizeMode="contain"
                 />
                 <View className="justify-center">
-                  <Text className="text-base font-medium">{item.label}</Text>
-                  <Text className="text-sm text-gray-500">
-                    {formatCurrency(item.value as number, "VND")}
+                  <Text className="text-xl font-medium">
+                    {item.wallet_name}
+                  </Text>
+                  <Text className="text-base text-gray-500">
+                    {formatCurrency(Number(item.amount), "VND")}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -82,11 +79,13 @@ const ModalDropdown: React.FC<ModalDropdownProps> = ({
                 }}
               >
                 <Image
-                  source={item.icon}
+                  source={{ uri: item.symbol }}
                   className="w-8 h-8 mr-2"
                   resizeMode="contain"
                 />
-                <Text className="text-base font-medium">{item.label}</Text>
+                <Text className="text-base font-medium">
+                  {item.wallet_name}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>

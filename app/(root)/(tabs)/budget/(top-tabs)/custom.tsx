@@ -1,16 +1,16 @@
 import { SafeAreaView, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useGetBudgetByRepeatTypeQuery } from "@/redux/features/budget/budgetApi";
 import { useAppSelector } from "@/redux/hooks";
 import BudgetProgress from "@/components/ui/BudgetProgress";
 import Loading from "@/app/loading";
 
-const ThisWeekScreen = () => {
+const CustomScreen = () => {
   const walletId = useAppSelector((state) => state.wallet.selectedWalletId);
   const { data, isLoading, isFetching } = useGetBudgetByRepeatTypeQuery(
     {
       walletId: walletId as string,
-      repeat_type: "weekly",
+      repeat_type: "custom",
     },
     { skip: !walletId }
   );
@@ -30,4 +30,4 @@ const ThisWeekScreen = () => {
   );
 };
 
-export default ThisWeekScreen;
+export default CustomScreen;

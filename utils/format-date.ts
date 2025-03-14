@@ -1,3 +1,5 @@
+import { DueDate } from "@/types/budget";
+
 export const formatDate = (date: Date | null) =>
   date
     ? date.toLocaleDateString("en-GB", {
@@ -7,8 +9,12 @@ export const formatDate = (date: Date | null) =>
         timeZone: "Asia/Ho_Chi_Minh",
       })
     : "Select Date";
-export const adjustToHoChiMinhTime = (date: Date) => {
-  return new Date(
-    date.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })
-  );
+
+export const formatDueDate = (dueDate: DueDate): string => {
+  const date = new Date(dueDate._seconds * 1000);
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 };

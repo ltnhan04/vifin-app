@@ -6,6 +6,7 @@ import { baseApi } from "@/redux/api/baseApi";
 
 import authReducer from "./features/auth/authSlice";
 import categoryReducer from "./features/category/categorySlice";
+import walletReducer from "./features/wallet/walletSlice";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
+  wallet: walletReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
@@ -28,6 +30,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
+      immutableCheck: { warnAfter: 100 },
     }).concat(baseApi.middleware),
 });
 

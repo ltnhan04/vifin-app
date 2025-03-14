@@ -26,7 +26,7 @@ const BudgetTabs = () => {
             backgroundColor: "#081657",
           },
           tabBarLabelStyle: {
-            fontSize: 13,
+            fontSize: 12,
             fontWeight: "bold",
             textTransform: "uppercase",
             marginTop: 16,
@@ -44,6 +44,7 @@ const BudgetTabs = () => {
           options={{ title: "This Month" }}
         />
         <MaterialTopTabs.Screen name="year" options={{ title: "This Year" }} />
+        <MaterialTopTabs.Screen name="custom" options={{ title: "Custom" }} />
       </MaterialTopTabs>
     </>
   );

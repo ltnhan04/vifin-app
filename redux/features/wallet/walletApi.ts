@@ -87,18 +87,6 @@ export const walletApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Wallet"],
     }),
-    getBudgetInWallet: builder.query<
-      ResponseBudgetInWallet,
-      { walletId: string }
-    >({
-      query: ({ walletId }) => ({
-        url: `/v1/wallet/budget/${walletId}`,
-        method: "GET",
-      }),
-      providesTags: (_result, _error, { walletId }) => [
-        { type: "Wallet", id: walletId },
-      ],
-    }),
   }),
 });
 
@@ -108,5 +96,4 @@ export const {
   useGetWalletQuery,
   useUpdateWalletMutation,
   useDeleteWalletMutation,
-  useGetBudgetInWalletQuery,
 } = walletApi;

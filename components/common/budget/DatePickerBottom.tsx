@@ -76,16 +76,13 @@ const DatePickerBottom = ({
     onChangeDue: (date: Date) => void,
     onChangeRepeatType: (repeat_type: "custom") => void
   ) => {
-    const adjustedDate = new Date(
-      date.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })
-    );
     if (isPickingStartDate) {
-      onChangeStart(adjustedDate);
+      onChangeStart(date);
       setIsPickingStartDate(false);
       setDatePickerVisibility(false);
       setTimeout(() => setDatePickerVisibility(true), 100);
     } else {
-      onChangeDue(adjustedDate);
+      onChangeDue(date);
       onChangeRepeatType("custom");
       setDatePickerVisibility(false);
       bottomRef.current?.close();
@@ -94,7 +91,7 @@ const DatePickerBottom = ({
   return (
     <BottomSheet
       ref={bottomRef}
-      snapPoints={["46%"]}
+      snapPoints={["52%"]}
       index={-1}
       backdropComponent={renderBackdrop}
       enablePanDownToClose
@@ -181,6 +178,19 @@ const DatePickerBottom = ({
                           {startDate && dueDate
                             ? `${formatDate(startDate)} - ${formatDate(dueDate)}`
                             : "Custom Date Range"}
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          onChangeStart(null);
+                          onChangeDue(null);
+                          onChangeRepeatType("custom");
+                          bottomRef.current?.close();
+                        }}
+                        className="bg-secondary-red py-3 px-4 rounded-lg mb-2 w-full items-center"
+                      >
+                        <Text className="text-base font-medium text-white">
+                          None
                         </Text>
                       </TouchableOpacity>
 

@@ -3,6 +3,7 @@ import type {
   ResponseBudgetType,
   BudgetType,
   IResponseBudget,
+  IResponseGetBudgetByRepeatType,
 } from "@/types/budget";
 
 export const budgetApi = baseApi.injectEndpoints({
@@ -11,6 +12,16 @@ export const budgetApi = baseApi.injectEndpoints({
     getBudgets: builder.query<IResponseBudget, void>({
       query: () => ({
         url: `/v1/budget`,
+        method: "GET",
+      }),
+      providesTags: ["Budget"],
+    }),
+    getBudgetByRepeatType: builder.query<
+      IResponseGetBudgetByRepeatType,
+      { walletId: string; repeat_type: string }
+    >({
+      query: ({ walletId, repeat_type }) => ({
+        url: `/v1/budget/filter?walletId=${walletId}&repeat_type=${repeat_type}`,
         method: "GET",
       }),
       providesTags: ["Budget"],
@@ -51,4 +62,5 @@ export const {
   useDeleteBudgetMutation,
   useGetBudgetsQuery,
   useUpdateBudgetMutation,
+  useGetBudgetByRepeatTypeQuery,
 } = budgetApi;
