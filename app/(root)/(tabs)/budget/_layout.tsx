@@ -3,7 +3,6 @@ import { Stack, useSegments } from "expo-router";
 import { View, TouchableOpacity, Image, Text } from "react-native";
 import icons from "@/constants/icons";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useGetBudgetsQuery } from "@/redux/features/budget/budgetApi";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setSelectedWallet } from "@/redux/features/wallet/walletSlice";
@@ -13,10 +12,10 @@ import { IWallet } from "@/types/wallet";
 
 const BudgetLayout = () => {
   const dispatch = useAppDispatch();
-  const isMountedRef = useRef(false);
+  const isMountedRef = useRef(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [walletData, setWalletData] = useState<IWallet | null>(null);
-  const { data, isLoading, isFetching } = useGetBudgetsQuery();
+
   const {
     data: wallets,
     isLoading: isWalletLoading,
@@ -28,10 +27,11 @@ const BudgetLayout = () => {
 
   useEffect(() => {
     if (wallets?.data?.length && !walletData) {
-      setWalletData(wallets.data[0]);
-      setSelectedWallet(wallets.data[0]._id);
+      const firstWallet = wallets.data[0];
+      setWalletData(firstWallet);
+      dispatch(setSelectedWallet(firstWallet._id));
     }
-  }, [wallets]);
+  }, [wallets, walletData, dispatch]);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -40,27 +40,30 @@ const BudgetLayout = () => {
     };
   }, []);
 
-  if (isLoading || isFetching || isWalletFetching || isWalletLoading) {
+  const handleWalletSelect = (wallet: IWallet) => {
+    if (!isMountedRef.current) return;
+    setWalletData(wallet);
+    dispatch(setSelectedWallet(wallet._id));
+    setShowDropdown(false);
+  };
+
+  if (isWalletFetching || isWalletLoading) {
     return <Loading />;
   }
 
-  const handleWalletSelect = (wallet: IWallet) => {
-    setWalletData(wallet);
-    dispatch(setSelectedWallet(wallet._id));
-    if (isMountedRef.current) {
-      setShowDropdown(false);
-    }
-  };
+  if (!wallets?.data || wallets.data.length === 0) {
+    return (
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="modal"
+          options={{ presentation: "modal", animation: "fade_from_bottom" }}
+        />
+      </Stack>
+    );
+  }
 
-  return data?.data.length === 0 ? (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen
-        name="modal"
-        options={{ presentation: "modal", animation: "fade_from_bottom" }}
-      />
-    </Stack>
-  ) : (
+  return (
     <>
       <Stack
         screenOptions={{
@@ -79,9 +82,7 @@ const BudgetLayout = () => {
               <TouchableOpacity
                 className="flex-row items-center gap-x-2"
                 onPress={() => {
-                  if (isMountedRef.current) {
-                    setShowDropdown((prev) => !prev);
-                  }
+                  if (isMountedRef.current) setShowDropdown((prev) => !prev);
                 }}
               >
                 <Image

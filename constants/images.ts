@@ -9,8 +9,10 @@ import expenseIncome from "@/assets/images/income-expense.png";
 import inheritance from "@/assets/images/inheritance.png";
 import emptyWallet from "@/assets/images/empty_wallet.png";
 import noBudget from "@/assets/images/no-budget.png";
+import noCategory from "@/assets/images/no-category.png";
 
 export default {
+  noCategory,
   noBudget,
   emptyWallet,
   avatar,

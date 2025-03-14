@@ -16,6 +16,9 @@ import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import { BudgetType } from "@/schema/budget.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import Icon from "react-native-vector-icons/Ionicons";
+import NoWallet from "@/components/ui/NoWallet";
+import images from "@/constants/images";
+import { router } from "expo-router";
 
 const WalletPickerBottom = ({
   bottomRef,
@@ -104,6 +107,34 @@ const WalletPickerBottom = ({
                       />
                     )}
                   </TouchableOpacity>
+                )}
+                ListEmptyComponent={() => (
+                  <View className="flex flex-col items-center justify-center">
+                    <Image
+                      source={images.emptyWallet}
+                      resizeMode="contain"
+                      className="w-40 h-40"
+                    />
+                    <Text className="text-base text-secondary-gray-200 font-semibold">
+                      No wallets set yet! 📉
+                    </Text>
+                    <Text className="text-sm text-secondary-gray-200 text-center px-8 mt-2">
+                      Stay on track with your finances. Start by adding a wallet
+                      now! 🚀
+                    </Text>
+                    <TouchableOpacity
+                      className="mt-6 bg-primary px-4 py-3 rounded-lg bg-primary-brighterBlue shadow-lg"
+                      onPress={() =>
+                        router.push(
+                          "/(root)/(tabs)/home/(wallet)/create-wallet"
+                        )
+                      }
+                    >
+                      <Text className="text-white text-sm font-bold">
+                        Add Wallet
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 )}
               />
             )}

@@ -8,6 +8,7 @@ import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi";
 import Loading from "@/app/loading";
 import SubCategoryItem from "@/components/common/category/SubCategoryItem";
 import ParentCategoryItem from "@/components/common/category/ParentCategoryItem";
+import NoWallet from "@/components/ui/NoWallet";
 
 const ListCategory = () => {
   const { data, isFetching, isLoading } = useGetCategoriesQuery();
@@ -17,9 +18,6 @@ const ListCategory = () => {
     return <Loading />;
   }
 
-  if (isFetching || isLoading) {
-    return <Loading />;
-  }
   return (
     <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
       <View className="px-6">
@@ -72,6 +70,7 @@ const ListCategory = () => {
               </View>
             );
           }}
+          ListEmptyComponent={() => <NoWallet />}
         />
       </View>
     </LinearGradient>

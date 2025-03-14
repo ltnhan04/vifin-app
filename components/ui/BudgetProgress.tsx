@@ -65,7 +65,6 @@ const BudgetProgress = ({
           primaryColor={getTextColor()}
           amount={totalLimit - totalSpent}
         />
-        <BudgetData title="Due day" primaryColor={getTextColor()} days="4" />
       </View>
       <View className="flex flex-row justify-end w-full">
         <NewLimitBtn bgColor={chartColor} />

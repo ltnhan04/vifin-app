@@ -49,7 +49,7 @@ export const categoryApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Category"],
+      invalidatesTags: ["Category", "Budget"],
     }),
     updateCategory: builder.mutation<
       IResponseChildrenCategory,
@@ -78,7 +78,7 @@ export const categoryApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Category"],
+      invalidatesTags: ["Category", "Budget"],
     }),
     deleteCategory: builder.mutation<IResponseChildrenCategory, { id: string }>(
       {
@@ -86,7 +86,7 @@ export const categoryApi = baseApi.injectEndpoints({
           url: `/v1/category/${id}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["Category"],
+        invalidatesTags: ["Category", "Budget"],
       }
     ),
   }),

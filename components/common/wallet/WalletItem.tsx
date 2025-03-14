@@ -2,7 +2,9 @@ import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { useAppDispatch } from "@/redux/hooks";
 import { useDeleteWalletMutation } from "@/redux/features/wallet/walletApi";
+import { clearSelectedWallet } from "@/redux/features/wallet/walletSlice";
 import Toast from "react-native-toast-message";
 import { formatCurrency } from "@/utils/format-currency";
 import Loading from "@/app/loading";
@@ -20,9 +22,10 @@ const WalletItem: React.FC<WalletItemProps> = ({
   walletName,
   amount,
 }) => {
-  const [deleteWallet, { isSuccess }] = useDeleteWalletMutation();
   const router = useRouter();
-  if (isSuccess) {
+  const dispatch = useAppDispatch();
+  const [deleteWallet, { isLoading }] = useDeleteWalletMutation();
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -40,6 +43,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
           onPress: async () => {
             try {
               await deleteWallet({ id: _id }).unwrap();
+              dispatch(clearSelectedWallet());
               Toast.show({
                 type: "success",
                 text1: "Wallet has been deleted successfully!",
@@ -95,7 +99,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
           onPress={confirmDelete}
           className="flex flex-row items-center gap-x-2 px-3 py-2 bg-secondary-red rounded-lg"
           activeOpacity={0.8}
-          disabled={isSuccess}
+          disabled={isLoading}
         >
           <Icon name="trash-outline" color={"#fff"} size={20} />
         </TouchableOpacity>

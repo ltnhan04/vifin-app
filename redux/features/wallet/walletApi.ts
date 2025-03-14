@@ -31,7 +31,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet"],
+      invalidatesTags: ["Wallet", "Budget"],
     }),
     getWallet: builder.query<ResponseWalletType, { id: string }>({
       query: ({ id }) => ({
@@ -77,7 +77,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet"],
+      invalidatesTags: ["Wallet", "Budget"],
     }),
 
     deleteWallet: builder.mutation<ResponseWalletType, { id: string }>({
@@ -85,7 +85,7 @@ export const walletApi = baseApi.injectEndpoints({
         url: `/v1/wallet/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Wallet"],
+      invalidatesTags: ["Wallet", "Budget"],
     }),
   }),
 });
