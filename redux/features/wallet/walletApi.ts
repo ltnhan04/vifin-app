@@ -3,7 +3,6 @@ import type {
   WalletType,
   ResponseListWallet,
   ResponseWalletType,
-  ResponseBudgetInWallet,
 } from "@/types/wallet";
 import { getFileInfo } from "@/utils/getFileInfo";
 
@@ -31,7 +30,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet", "Budget"],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
     getWallet: builder.query<ResponseWalletType, { id: string }>({
       query: ({ id }) => ({
@@ -77,7 +76,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet", "Budget"],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
 
     deleteWallet: builder.mutation<ResponseWalletType, { id: string }>({
@@ -85,7 +84,7 @@ export const walletApi = baseApi.injectEndpoints({
         url: `/v1/wallet/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Wallet", "Budget"],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
   }),
 });

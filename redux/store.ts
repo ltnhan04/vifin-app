@@ -7,6 +7,7 @@ import { baseApi } from "@/redux/api/baseApi";
 import authReducer from "./features/auth/authSlice";
 import categoryReducer from "./features/category/categorySlice";
 import walletReducer from "./features/wallet/walletSlice";
+import transactionReducer from "./features/transaction/transactionSlice";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   category: categoryReducer,
   wallet: walletReducer,
+  transaction: transactionReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 

@@ -18,3 +18,39 @@ export const formatDueDate = (dueDate: DueDate): string => {
     year: "numeric",
   });
 };
+
+export const formatChartDate = (
+  date: Date,
+  type: "week" | "month" | "year"
+) => {
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Ho_Chi_Minh",
+  };
+
+  switch (type) {
+    case "week":
+      return date.toLocaleDateString("en-GB", {
+        ...options,
+        day: "2-digit",
+        month: "short",
+      });
+    case "month":
+      return date.toLocaleDateString("en-GB", {
+        ...options,
+        month: "short",
+        year: "numeric",
+      });
+    case "year":
+      return date.toLocaleDateString("en-GB", {
+        ...options,
+        year: "numeric",
+      });
+    default:
+      return date.toLocaleDateString("en-GB", {
+        ...options,
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+  }
+};

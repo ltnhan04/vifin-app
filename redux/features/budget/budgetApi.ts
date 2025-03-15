@@ -33,7 +33,7 @@ export const budgetApi = baseApi.injectEndpoints({
           method: "POST",
           body: newBudget,
         }),
-        invalidatesTags: ["Budget"],
+        invalidatesTags: ["Budget", "Transaction"],
       }
     ),
     updateBudget: builder.mutation<
@@ -45,14 +45,14 @@ export const budgetApi = baseApi.injectEndpoints({
         method: "PUT",
         body: newBudget,
       }),
-      invalidatesTags: ["Budget"],
+      invalidatesTags: ["Budget", "Transaction"],
     }),
     deleteBudget: builder.mutation<IResponseBudget, { id: string }>({
       query: ({ id }) => ({
         url: `/v1/budget/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Budget"],
+      invalidatesTags: ["Budget", "Transaction"],
     }),
   }),
 });

@@ -1,41 +1,80 @@
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import { formatCurrency } from "@/utils/format-currency";
-import CollapsibleTransactionItem from "@/components/ui/CollapsibleTransactionItem";
-import { transactionsData } from "@/constants/data";
+import {
+  useRecentTransactionQuery,
+  useGetTransactionByWeekQuery,
+} from "@/redux/features/transaction/transactionApi";
+import Loading from "@/app/loading";
+import { useAppSelector } from "@/redux/hooks";
+import androidSafeArea from "@/utils/android-safe-area";
+import BarCharVisualize from "@/components/ui/BarChartVisualize";
+import { ITransactionType } from "@/types/transaction";
+import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
 
-const TransactionScreen = () => {
+const ThisWeek = () => {
+  const walletId = useAppSelector((state) => state.wallet.selectedWalletId);
+  const transactionType = useAppSelector(
+    (state) => state.transaction.selectedTransaction
+  );
+  const { data: recentTransactions, isFetching: isFetchingRecent } =
+    useRecentTransactionQuery(
+      { walletId: walletId as string, limit: 10 },
+      { skip: !walletId, refetchOnMountOrArgChange: true }
+    );
+
+  const { data: transactionsByWeek, isFetching: isFetchingWeek } =
+    useGetTransactionByWeekQuery(
+      { walletId: walletId as string, type: transactionType?.value as string },
+      { skip: !walletId || !transactionType }
+    );
+
+  const isLoading = isFetchingRecent || isFetchingWeek;
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-        <ScrollView contentContainerClassName="p-6">
-          <View className="flex flex-row items-center w-full justify-between ">
-            <Text className="text-white text-base font-semibold">
-              Total expense this time:
-            </Text>
-            <Text className="text-white text-base font-bold">
-              {formatCurrency(50000, "VND")}
-            </Text>
+    <SafeAreaView
+      style={[
+        androidSafeArea.androidSafeArea,
+        { backgroundColor: "#081657", flex: 1 },
+      ]}
+    >
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        {transactionsByWeek &&
+        transactionsByWeek?.data?.transactionsByDay?.length > 0 ? (
+          <View className="mb-6">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <BarCharVisualize
+                timeRange="week"
+                transactionType={transactionType as ITransactionType}
+                transactions={transactionsByWeek}
+              />
+            </ScrollView>
           </View>
-          <View className="mt-6">
-            {transactionsData.map((item, index) => (
-              <CollapsibleTransactionItem key={index} {...item} />
-            ))}
-            {transactionsData.map((item, index) => (
-              <CollapsibleTransactionItem key={index} {...item} />
-            ))}
-            {transactionsData.map((item, index) => (
-              <CollapsibleTransactionItem key={index} {...item} />
-            ))}
-            {transactionsData.map((item, index) => (
-              <CollapsibleTransactionItem key={index} {...item} />
-            ))}
-          </View>
-        </ScrollView>
-      </LinearGradient>
+        ) : (
+          <Text className="text-white text-center mt-4">
+            No transactions for this week
+          </Text>
+        )}
+
+        <View className="mt-4">
+          <Text className="text-xl font-bold text-white mb-4">
+            Recent Transactions
+          </Text>
+          {recentTransactions && recentTransactions.data.length > 0 ? (
+            recentTransactions.data.map((transaction, index) => (
+              <RecentTransactionItem key={index} transaction={transaction} />
+            ))
+          ) : (
+            <Text className="text-white text-center mt-2">
+              No recent transactions
+            </Text>
+          )}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default TransactionScreen;
+export default ThisWeek;

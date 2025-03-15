@@ -13,3 +13,9 @@ export const getColorForValue = (value: number) => {
 export const lightenColor = (color: string, amount = 30) => {
   return tinycolor(color).lighten(amount).toHexString();
 };
+
+export const getBarColor = (transactionType: string) => {
+  const barColor = transactionType === "income" ? "#4CAF50" : "#F44336";
+  const gradientColor = transactionType === "income" ? "#2E7D32" : "#D32F2F";
+  return { barColor, gradientColor };
+};

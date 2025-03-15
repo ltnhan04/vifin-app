@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Stack, useSegments } from "expo-router";
 import { View, TouchableOpacity, Image, Text } from "react-native";
-import icons from "@/constants/icons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setSelectedWallet } from "@/redux/features/wallet/walletSlice";
 import ModalDropdown from "@/components/ui/ModalDropdown";
 import Loading from "@/app/loading";
+import icons from "@/constants/icons";
 import { IWallet } from "@/types/wallet";
 
 const BudgetLayout = () => {
@@ -104,7 +104,9 @@ const BudgetLayout = () => {
       <ModalDropdown
         showDropdown={showDropdown}
         handleDropdownState={() => setShowDropdown(false)}
-        handleSelectedOptions={handleWalletSelect}
+        handleSelectedOptions={(option) =>
+          handleWalletSelect(option as IWallet)
+        }
         dropdownFor="wallet"
         data={wallets?.data || []}
       />
