@@ -11,13 +11,14 @@ export const transactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     recentTransaction: builder.query<
       IResponseRecentTransaction,
-      { walletId: string; limit: number }
+      { walletId: string; type: string; limit: number }
     >({
-      query: ({ walletId, limit }) => ({
-        url: `/v1/transactions?walletId=${walletId}&limit=${limit}`,
-        method: "GET",
-      }),
-      providesTags: ["Transaction"],
+      query: ({ walletId, type, limit }) => {
+        return {
+          url: `/v1/transactions?walletId=${walletId}&type=${type}&limit=${limit}`,
+          method: "GET",
+        };
+      },
       keepUnusedDataFor: 0,
     }),
     getTransactionByWeek: builder.query<

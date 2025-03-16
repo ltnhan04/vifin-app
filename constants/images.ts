@@ -10,8 +10,12 @@ import inheritance from "@/assets/images/inheritance.png";
 import emptyWallet from "@/assets/images/empty_wallet.png";
 import noBudget from "@/assets/images/no-budget.png";
 import noCategory from "@/assets/images/no-category.png";
+import noTransaction from "@/assets/images/no-transaction.png";
+import noData from "@/assets/images/no-data.png";
 
 export default {
+  noTransaction,
+  noData,
   noCategory,
   noBudget,
   emptyWallet,

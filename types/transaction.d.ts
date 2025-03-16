@@ -3,13 +3,6 @@ export interface ITransactionType {
   value: string;
   icon: any;
 }
-export interface CollapsibleTransactionItemProps {
-  date: string;
-  day: string;
-  monthYear: string;
-  totalAmount: number;
-  transactions: TransactionItem[];
-}
 
 export interface TransactionItem {
   id: number;
@@ -19,11 +12,11 @@ export interface TransactionItem {
 }
 
 export interface IResponseTransactionByYear {
-  data: Data;
+  data: ITransactionByYear;
   message: string;
 }
 
-export interface ITransactionByDay {
+export interface ITransactionByYear {
   totalAmount: number;
   transactionsByYear: IListTransactionsByYear[];
 }

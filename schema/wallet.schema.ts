@@ -2,13 +2,7 @@ import z from "zod";
 
 export const walletSchema = z
   .object({
-    symbol: z
-      .string()
-      .url("Empty symbol!")
-      .regex(
-        /\.(jpg|jpeg|png|gif)$/i,
-        "Symbol must be an image (jpg, jpeg, png, gif)"
-      ),
+    symbol: z.string(),
     amount: z.number(),
     currency_unit: z.enum(["VND", "USD"]),
     wallet_name: z

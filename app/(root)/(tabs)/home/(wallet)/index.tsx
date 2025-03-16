@@ -1,10 +1,9 @@
-import { FlatList, SafeAreaView, View, Text, Image } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import androidSafeArea from "@/utils/android-safe-area";
 import WalletItem from "@/components/common/wallet/WalletItem";
 import Loading from "@/app/loading";
-import images from "@/constants/images";
 import NoWallet from "@/components/ui/NoWallet";
 
 const WalletScreen = () => {

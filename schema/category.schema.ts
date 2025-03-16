@@ -2,13 +2,7 @@ import z from "zod";
 
 export const categorySchema = z
   .object({
-    symbol: z
-      .string()
-      .url("Empty symbol!")
-      .regex(
-        /\.(jpg|jpeg|png|gif)$/i,
-        "Symbol must be an image (jpg, jpeg, png, gif)"
-      ),
+    symbol: z.string(),
     transaction_type: z
       .string()
       .transform((val) => val.toLowerCase())

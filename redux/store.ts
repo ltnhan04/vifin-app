@@ -26,7 +26,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  devTools: false,
+  devTools: true,
   // enhancers: (getDefaultEnhancers) =>
   //   getDefaultEnhancers().concat(devToolsEnhancer()),
   middleware: (getDefaultMiddleware) =>

@@ -1,5 +1,5 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   useRecentTransactionQuery,
   useGetTransactionByMonthQuery,
@@ -7,34 +7,55 @@ import {
 import Loading from "@/app/loading";
 import { useAppSelector } from "@/redux/hooks";
 import androidSafeArea from "@/utils/android-safe-area";
-import BarCharVisualize from "@/components/ui/BarChartVisualize";
-import { ITransactionType } from "@/types/transaction";
 import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
+import images from "@/constants/images";
+import { BarChart } from "react-native-gifted-charts";
+import { formatChartDate } from "@/utils/format-date";
+import { getBarColor } from "@/utils/get-color";
+import { formatCurrency } from "@/utils/format-currency";
 
 const ThisMonth = () => {
+  const [indexBar, setIndexBar] = useState(0);
+
   const walletId = useAppSelector((state) => state.wallet.selectedWalletId);
   const transactionType = useAppSelector(
     (state) => state.transaction.selectedTransaction
   );
 
-  const { data: recentTransactions, isFetching: isFetchingRecent } =
-    useRecentTransactionQuery(
-      { walletId: walletId as string, limit: 10 },
-      { skip: !walletId, refetchOnMountOrArgChange: true }
-    );
+  const {
+    data: recentTransactions,
+    isFetching: isFetchingRecent,
+    refetch,
+  } = useRecentTransactionQuery(
+    {
+      walletId: walletId as string,
+      type: transactionType?.value as string,
+      limit: 10,
+    },
+    {
+      skip: !transactionType?.value,
+      refetchOnMountOrArgChange: true,
+    }
+  );
+  useEffect(() => {
+    if (walletId) {
+      refetch();
+    }
+  }, [walletId, refetch]);
 
   const { data: transactionsByMonth, isFetching: isFetchingMonth } =
     useGetTransactionByMonthQuery(
       { walletId: walletId as string, type: transactionType?.value as string },
       { skip: !walletId || !transactionType }
     );
-  let count = 0;
-  console.log("Test", ++count, transactionsByMonth?.data);
 
   const isLoading = isFetchingRecent || isFetchingMonth;
   if (isLoading) {
     return <Loading />;
   }
+  const { barColor, gradientColor } = getBarColor(
+    transactionType?.value as string
+  );
 
   return (
     <SafeAreaView
@@ -48,17 +69,56 @@ const ThisMonth = () => {
         transactionsByMonth?.data?.transactionsByMonth?.length > 0 ? (
           <View className="mb-6">
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <BarCharVisualize
-                timeRange="month"
-                transactionType={transactionType as ITransactionType}
-                transactions={transactionsByMonth}
+              <BarChart
+                data={transactionsByMonth.data.transactionsByMonth.map(
+                  (item: { total: number; month: string }) => {
+                    return {
+                      value: item.total,
+                      label: formatChartDate(new Date(item.month), "month"),
+                      frontColor: barColor,
+                      topLabelComponent: () => (
+                        <Text className="text-white text-[12px] font-bold text-center mb-1">
+                          {formatCurrency(item.total, "VND")}
+                        </Text>
+                      ),
+                    };
+                  }
+                )}
+                isAnimated
+                barWidth={56}
+                spacing={20}
+                showYAxisIndices
+                yAxisThickness={0.4}
+                xAxisThickness={1}
+                maxValue={
+                  (transactionsByMonth.data.totalAmount || 100000) * 1.2
+                }
+                height={280}
+                barBorderRadius={6}
+                noOfSections={4}
+                yAxisTextStyle={{ color: "white", fontSize: 12 }}
+                xAxisLabelTextStyle={{ color: "white", fontSize: 12 }}
+                yAxisColor={"#6BBFFF"}
+                xAxisColor={"#6BBFFF"}
+                showGradient
+                gradientColor={gradientColor}
+                rulesColor={"#6BBFFF"}
+                onPress={setIndexBar}
+                activeOpacity={0.8}
               />
             </ScrollView>
           </View>
         ) : (
-          <Text className="text-white text-center mt-4">
-            No transactions for this month
-          </Text>
+          <View className="flex flex-col items-center justify-center">
+            <Image
+              resizeMode="contain"
+              className="w-64 h-64"
+              source={images.noData}
+            />
+            <Text className="text-white text-center">
+              No transactions for this month
+            </Text>
+          </View>
         )}
 
         <View className="mt-4">
@@ -70,9 +130,16 @@ const ThisMonth = () => {
               <RecentTransactionItem key={index} transaction={transaction} />
             ))
           ) : (
-            <Text className="text-white text-center mt-2">
-              No recent transactions
-            </Text>
+            <View className="flex flex-col items-center">
+              <Image
+                resizeMode="contain"
+                className="w-64 h-64"
+                source={images.noTransaction}
+              />
+              <Text className="text-white text-center">
+                No recent transactions
+              </Text>
+            </View>
           )}
         </View>
       </ScrollView>

@@ -35,7 +35,7 @@ const ListCategory = () => {
         <FlatList
           data={data?.data}
           keyExtractor={(item) => item._id}
-          contentContainerStyle={{ paddingBottom: 16 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
             const isOwner = item.createdBy === customerId;
