@@ -2,13 +2,7 @@ import z from "zod";
 
 export const categorySchema = z
   .object({
-    symbol: z
-      .string()
-      .url("Symbol must be a valid URL")
-      .regex(
-        /\.(jpg|jpeg|png|gif)$/i,
-        "Symbol must be an image (jpg, jpeg, png, gif)"
-      ),
+    symbol: z.string(),
     transaction_type: z
       .string()
       .transform((val) => val.toLowerCase())
@@ -19,8 +13,8 @@ export const categorySchema = z
     createdBy: z.string(),
     name: z
       .string()
-      .min(3, "Category name must be at least 3 characters long")
-      .max(50, "Category name must not exceed 50 characters")
+      .min(3, "Category must be at least 3 characters long")
+      .max(50, "Category must not exceed 50 characters")
       .trim(),
   })
   .strict();

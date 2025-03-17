@@ -7,8 +7,10 @@ import { CategoryType } from "@/schema/category.schema";
 
 const SelectTransactionType = ({
   control,
+  transactionType,
 }: {
   control: Control<CategoryType>;
+  transactionType?: string;
 }) => {
   return (
     <View className="flex-row items-center gap-x-8 mb-4 border-b pb-5 border-gray-500">
@@ -21,11 +23,11 @@ const SelectTransactionType = ({
         <Controller
           name="transaction_type"
           control={control}
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange } }) => (
             <SwitchTab
+              initialValue={transactionType === "income" ? 1 : 0}
               item={["Expense", "Income"]}
               setWidth={200}
-              selectedValue={value}
               onValueChange={onChange}
             />
           )}

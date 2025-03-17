@@ -4,13 +4,17 @@ import MyWalletItem from "@/components/ui/MyWalletItem";
 import icons from "@/constants/icons";
 import { router } from "expo-router";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
+import { useAppSelector } from "@/redux/hooks";
 
 const MyWalletSection = () => {
-  const { data, isLoading, isFetching } = useGetWalletsQuery();
+  const { user } = useAppSelector((state) => state.auth);
+  const { data, isLoading, isFetching } = useGetWalletsQuery(undefined, {
+    skip: !user,
+  });
   const wallets = data?.data?.slice(0, 3) || [];
 
   useEffect(() => {
-    if (!isLoading && !isFetching && wallets.length === 0) {
+    if (user && !isLoading && !isFetching && wallets.length === 0) {
       Alert.alert(
         "You have no wallet",
         "You need to create a wallet to continue using the app.",
@@ -21,10 +25,10 @@ const MyWalletSection = () => {
               router.push("/(root)/(tabs)/home/(wallet)/create-wallet"),
           },
         ],
-        { cancelable: false }
+        { cancelable: true }
       );
     }
-  }, [isLoading, isFetching, wallets.length]);
+  }, [user, isLoading, isFetching, wallets.length]);
 
   return (
     <View className="px-6 py-4 border border-primary-brightBlue rounded-xl">

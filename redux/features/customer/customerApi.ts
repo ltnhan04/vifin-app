@@ -2,6 +2,7 @@ import { baseApi } from "@/redux/api/baseApi";
 import type { CustomerType, ResponseCustomerType } from "@/types/customer";
 
 export const customerApi = baseApi.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     createNewCustomer: builder.mutation<
       ResponseCustomerType,
@@ -12,12 +13,14 @@ export const customerApi = baseApi.injectEndpoints({
         method: "POST",
         body: newCustomer,
       }),
+      invalidatesTags: ["Customer"],
     }),
     getCustomer: builder.query<ResponseCustomerType, string>({
       query: (customerId) => ({
         url: `/v1/customer/${customerId}`,
         method: "GET",
       }),
+      providesTags: ["Customer"],
     }),
   }),
 });

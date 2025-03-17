@@ -12,7 +12,6 @@ interface ReportSectionProps {
 
 const ReportSection: React.FC<ReportSectionProps> = ({ chartType }) => {
   const [indexBar, setIndexBar] = useState(0);
-  console.log(indexBar);
   return chartType === 0 ? (
     <View className="mt-4">
       <View className="flex flex-row items-center justify-between">

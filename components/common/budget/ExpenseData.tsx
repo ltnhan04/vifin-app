@@ -3,19 +3,27 @@ import React from "react";
 import { ProgressBar } from "react-native-paper";
 import { formatCurrency } from "@/utils/format-currency";
 import { getColorForValue, lightenColor } from "@/utils/get-color";
-import icons from "@/constants/icons";
+import { DueDate } from "@/types/budget";
+import { formatDueDate } from "@/utils/format-date";
+import { calculateExpense } from "@/utils/calculate";
 
 const ExpenseData = ({
   currentAmount,
   goalAmount,
+  categoryName,
+  dueDate,
+  symbol,
 }: {
   currentAmount: number;
   goalAmount: number;
+  categoryName: string;
+  dueDate: DueDate;
+  symbol: string;
 }) => {
-  const remainingAmount = goalAmount - currentAmount;
-  const progress = currentAmount / goalAmount;
-  const percentage = Math.round(progress * 100);
-
+  const { percentage, remainingAmount, progress } = calculateExpense(
+    goalAmount,
+    currentAmount
+  );
   return (
     <View
       className="px-4 py-4 rounded-2xl bg-white border border-gray-200"
@@ -28,7 +36,7 @@ const ExpenseData = ({
     >
       <View className="flex-row items-center">
         <Image
-          source={icons.shopping}
+          source={{ uri: symbol }}
           className="w-14 h-14 rounded-full bg-gray-200 p-2"
           resizeMode="contain"
         />
@@ -38,10 +46,10 @@ const ExpenseData = ({
               className="text-base font-semibold"
               style={{ color: getColorForValue(percentage) }}
             >
-              Shopping
+              {categoryName}
             </Text>
             <Text className="text-sm text-gray-500 mt-1">
-              Due day: 31/03/2024
+              Due day: {formatDueDate(dueDate)}
             </Text>
           </View>
           <View className="flex-row justify-between items-center mt-2">

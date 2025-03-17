@@ -1,39 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
+import { router } from "expo-router";
 import { MoneyTextInput } from "@alexzunik/react-native-money-input";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import icons from "@/constants/icons";
-import type { SelectedItemType } from "@/types/budget";
 
-interface SelectedItemProps {
-  selectedItem: SelectedItemType;
-  onChange?: (value: number) => void;
-  value?: number;
-  isLoading?: boolean;
-}
+import icons from "@/constants/icons";
+import type { SelectedItemProps } from "@/types/selected-item";
 
 const SelectedItem: React.FC<SelectedItemProps> = ({
   selectedItem,
   onChange,
   value,
   isLoading,
+  openBottomSheet,
+  selectedDateRange,
+  symbol,
+  categoryName,
+  walletName,
 }) => {
-  const router = useRouter();
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  const handleConfirm = (date: Date) => {
-    console.log("A date has been picked: ", date);
-    setDatePickerVisibility(false);
-  };
-
   const contentLeft = () => {
     switch (selectedItem) {
       case "category":
         return (
           <View className="w-[15%]">
-            <View className="size-12 bg-secondary-gray-100 border-2 border-black rounded-full"></View>
+            <View className="size-14 bg-secondary-gray-100 border-2 border-black rounded-full overflow-hidden">
+              {symbol ? (
+                <Image
+                  source={{ uri: symbol }}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ) : null}
+            </View>
           </View>
         );
       case "amount":
@@ -68,12 +65,12 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             activeOpacity={0.7}
             onPress={() =>
               router.push(
-                "/(root)/(tabs)/budget/modal/(category)/selected-categories"
+                "/(root)/(tabs)/budget/modal/(category)/list-category"
               )
             }
           >
             <Text className="font-rubik-semibold text-xl text-white">
-              Select category
+              {categoryName ? categoryName : "Select category"}
             </Text>
             <Icon color={"white"} name="chevron-forward-outline" size={20} />
           </TouchableOpacity>
@@ -105,27 +102,15 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
         return (
           <>
             <TouchableOpacity
-              className="flex flex-row justify-between"
+              className="flex flex-row justify-between items-center"
               activeOpacity={0.7}
-              onPress={() => setDatePickerVisibility(true)}
+              onPress={openBottomSheet}
             >
               <Text className="font-rubik-medium text-base text-white">
-                This Month (1/02 - 28/02)
+                {selectedDateRange ? selectedDateRange : "Select Date Range"}
               </Text>
-              <View>
-                <Icon
-                  color={"white"}
-                  name="chevron-forward-outline"
-                  size={20}
-                />
-              </View>
+              <Icon color={"white"} name="chevron-forward-outline" size={20} />
             </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={() => setDatePickerVisibility(false)}
-            />
           </>
         );
       case "wallet":
@@ -133,9 +118,10 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
           <TouchableOpacity
             className="flex flex-row justify-between"
             activeOpacity={0.7}
+            onPress={openBottomSheet}
           >
             <Text className="font-rubik-medium text-xl text-white">
-              Meme Wallet
+              {walletName ? walletName : "Select wallet"}
             </Text>
             <View>
               <Icon name="chevron-forward-outline" color={"white"} size={20} />

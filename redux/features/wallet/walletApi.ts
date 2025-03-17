@@ -3,7 +3,6 @@ import type {
   WalletType,
   ResponseListWallet,
   ResponseWalletType,
-  ResponseBudgetInWallet,
 } from "@/types/wallet";
 import { getFileInfo } from "@/utils/getFileInfo";
 
@@ -31,7 +30,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet"],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
     getWallet: builder.query<ResponseWalletType, { id: string }>({
       query: ({ id }) => ({
@@ -77,7 +76,7 @@ export const walletApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ["Wallet"],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
 
     deleteWallet: builder.mutation<ResponseWalletType, { id: string }>({
@@ -85,19 +84,7 @@ export const walletApi = baseApi.injectEndpoints({
         url: `/v1/wallet/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Wallet"],
-    }),
-    getBudgetInWallet: builder.query<
-      ResponseBudgetInWallet,
-      { walletId: string }
-    >({
-      query: ({ walletId }) => ({
-        url: `/v1/wallet/budget/${walletId}`,
-        method: "GET",
-      }),
-      providesTags: (_result, _error, { walletId }) => [
-        { type: "Wallet", id: walletId },
-      ],
+      invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
   }),
 });
@@ -108,5 +95,4 @@ export const {
   useGetWalletQuery,
   useUpdateWalletMutation,
   useDeleteWalletMutation,
-  useGetBudgetInWalletQuery,
 } = walletApi;

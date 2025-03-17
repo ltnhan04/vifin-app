@@ -12,7 +12,7 @@ const CategoryLayout = () => {
       }}
     >
       <Stack.Screen
-        name="selected-categories"
+        name="list-category"
         options={{
           headerTitle: "Select Category",
           headerTitleAlign: "center",
