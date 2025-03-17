@@ -46,68 +46,79 @@ const InputCategoryName = ({
       onChange(uri);
     }
   };
+
   return (
-    <View className="flex-row items-center gap-x-2 border-b border-gray-500 pb-5 mb-4">
-      <Controller
-        name="symbol"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={disabled}
-            className="relative border-r border-gray-500 pr-8"
-            onPress={() => pickImage(onChange)}
-          >
-            <View
-              className={`w-14 h-14 rounded-full ${errors.symbol ? "border-4 border-secondary-red" : ""} bg-blue-100 justify-center items-center overflow-hidden`}
-            >
-              {value ? (
-                <Image
-                  source={{ uri: value }}
-                  className="w-14 h-14 rounded-full"
+    <View className="mb-4">
+      <View className="flex-row items-center gap-x-2 border-b border-gray-500 pb-4">
+        <Controller
+          name="symbol"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <View className="flex flex-col items-left">
+              <TouchableOpacity
+                activeOpacity={0.7}
+                disabled={disabled}
+                className="relative border-r border-gray-500 pr-8"
+                onPress={() => pickImage(onChange)}
+              >
+                <View
+                  className={`w-14 h-14 rounded-full ${
+                    errors.symbol ? "border-4 border-secondary-red" : ""
+                  } bg-blue-100 justify-center items-center overflow-hidden`}
+                >
+                  {value ? (
+                    <Image
+                      source={{ uri: value }}
+                      className="w-14 h-14 rounded-full"
+                    />
+                  ) : (
+                    <Image
+                      source={icons.uncategorizedExpense}
+                      className="w-14 h-14 rounded-full"
+                    />
+                  )}
+                </View>
+                <Icon
+                  className="absolute top-1/2 right-2 transform -translate-y-1/2"
+                  name="caret-down-outline"
+                  color={errors.symbol ? "red" : "#fff"}
+                  size={16}
                 />
-              ) : (
-                <Image
-                  source={icons.uncategorizedExpense}
-                  className="w-14 h-14 rounded-full"
-                />
+              </TouchableOpacity>
+              {errors.symbol && (
+                <Text className="text-red-500 text-xs font-medium mt-1">
+                  {errors.symbol.message}
+                </Text>
               )}
             </View>
-            <Icon
-              className="absolute top-1/2 right-2 transform -translate-y-1/2"
-              name="caret-down-outline"
-              color={"#fff"}
-              size={16}
-            />
-          </TouchableOpacity>
-        )}
-      />
-      <Controller
-        name="name"
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <View className="flex-1">
-            <TextInput
-              keyboardType="default"
-              maxLength={50}
-              editable={!disabled}
-              className="w-full text-xl font-semibold text-white"
-              placeholder="Category name"
-              placeholderTextColor="#fff"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-            {errors.name && (
-              <View className="flex-row items-center gap-x-1">
-                <Text className="text-red-500 text-sm">
+          )}
+        />
+
+        <Controller
+          name="name"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View className="flex-1">
+              <TextInput
+                keyboardType="default"
+                maxLength={50}
+                editable={!disabled}
+                className="w-full text-xl font-semibold text-white"
+                placeholder="Category name"
+                placeholderTextColor="#fff"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+              {errors.name && (
+                <Text className="text-red-500 text-sm mt-1">
                   {errors.name.message}
                 </Text>
-              </View>
-            )}
-          </View>
-        )}
-      />
+              )}
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };

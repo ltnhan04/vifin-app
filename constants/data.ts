@@ -1,6 +1,6 @@
 import icons from "@/constants/icons";
 import { CategoryType } from "@/types/category";
-import { OptionItem } from "@/components/ui/ModalDropdown";
+import { ITransactionType } from "@/types/transaction";
 
 export const languages = [
   { label: "English", value: "en" },
@@ -173,7 +173,7 @@ export const categories: CategoryType[] = [
   },
 ];
 
-export const walletData: OptionItem[] = [
+export const walletData = [
   {
     icon: icons.walletIcon,
     label: "Momo Wallet",
@@ -186,7 +186,7 @@ export const walletData: OptionItem[] = [
   },
 ];
 
-export const category: OptionItem[] = [
+export const transactionType: ITransactionType[] = [
   {
     icon: icons.expense,
     label: "Expense",

@@ -44,9 +44,7 @@ const ParentCategories = ({
                 const isSelected = value === item._id;
                 return (
                   <TouchableOpacity
-                    className={`flex flex-row items-center py-3 px-4 rounded-lg mb-2 ${
-                      isSelected ? "bg-primary-blue" : ""
-                    }`}
+                    className={`flex flex-row items-center py-3 px-4 rounded-lg mb-2 `}
                     activeOpacity={0.8}
                     onPress={() => {
                       if (isSelected) {
@@ -68,7 +66,7 @@ const ParentCategories = ({
                       <Icon
                         name="checkmark-circle"
                         size={24}
-                        color="#fff"
+                        color="#6BBFFF"
                         style={{ marginLeft: "auto" }}
                       />
                     )}

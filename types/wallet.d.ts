@@ -12,15 +12,15 @@ export interface WalletType {
 }
 
 export interface ResponseListWallet {
-  data: Data[];
+  data: IWallet[];
   message: string;
 }
 export interface ResponseWalletType {
-  data: Data;
+  data: IWallet;
   message: string;
 }
 
-export interface Data {
+export interface IWallet {
   symbol: string;
   wallet_name: string;
   customer_id: string;
@@ -39,8 +39,8 @@ export interface ResponseBudgetInWallet {
 export interface Budget {
   category_id: string;
   wallet_id: string;
-  startDate: string;
-  dueDate: string;
+  startDate: CreatedAt;
+  dueDate: CreatedAt;
   amount: number;
   repeat_type: string;
   is_repeated: boolean;

@@ -6,11 +6,20 @@ import { formatCurrency } from "@/utils/format-currency";
 import BudgetData from "@/components/common/budget/BudgetData";
 import NewLimitBtn from "@/components/common/budget/NewLimitBtn";
 import ExpenseData from "@/components/common/budget/ExpenseData";
+import { IBudgetByRepeatType } from "@/types/budget";
+import NoBudget from "@/components/ui/NoBudget";
+import { calculateBudget } from "@/utils/calculate";
 
-const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
-  const percentage = (spent / limit) * 100;
+const BudgetProgress = ({
+  budgetData = [],
+}: {
+  budgetData: IBudgetByRepeatType[];
+}) => {
+  if (!budgetData || budgetData.length === 0) {
+    return <NoBudget />;
+  }
+  const { totalLimit, totalSpent, percentage } = calculateBudget(budgetData);
   const chartColor = getColorForValue(percentage);
-
   const getTextColor = () => {
     if (percentage > 75) return "#B91C1C";
     if (percentage < 30) return "#15803D";
@@ -40,7 +49,7 @@ const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
               className="font-rubik-bold text-lg mt-1"
               style={{ color: getTextColor() }}
             >
-              {formatCurrency(spent, "VND")}
+              {formatCurrency(totalSpent, "VND")}
             </Text>
           </View>
         )}
@@ -49,21 +58,28 @@ const BudgetProgress = ({ spent, limit }: { spent: number; limit: number }) => {
         <BudgetData
           title="Budget"
           primaryColor={getTextColor()}
-          amount={limit}
+          amount={totalLimit}
         />
         <BudgetData
           title="Remain money"
           primaryColor={getTextColor()}
-          amount={limit - spent}
+          amount={totalLimit - totalSpent}
         />
-        <BudgetData title="Due day" primaryColor={getTextColor()} days="4" />
       </View>
       <View className="flex flex-row justify-end w-full">
         <NewLimitBtn bgColor={chartColor} />
       </View>
       <View className="w-full mt-4 flex flex-col gap-y-4">
-        <ExpenseData currentAmount={500000} goalAmount={700000} />
-        <ExpenseData currentAmount={90000} goalAmount={100000} />
+        {budgetData.map((budget) => (
+          <ExpenseData
+            key={budget._id}
+            currentAmount={budget.usage}
+            goalAmount={budget.amount}
+            categoryName={budget.category.name}
+            dueDate={budget.dueDate}
+            symbol={budget.category.symbol}
+          />
+        ))}
       </View>
     </View>
   );

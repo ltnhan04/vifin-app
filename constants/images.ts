@@ -8,8 +8,16 @@ import emptyBox from "@/assets/images/empty-box.png";
 import expenseIncome from "@/assets/images/income-expense.png";
 import inheritance from "@/assets/images/inheritance.png";
 import emptyWallet from "@/assets/images/empty_wallet.png";
+import noBudget from "@/assets/images/no-budget.png";
+import noCategory from "@/assets/images/no-category.png";
+import noTransaction from "@/assets/images/no-transaction.png";
+import noData from "@/assets/images/no-data.png";
 
 export default {
+  noTransaction,
+  noData,
+  noCategory,
+  noBudget,
   emptyWallet,
   avatar,
   noResult,

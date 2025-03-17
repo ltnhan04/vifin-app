@@ -8,8 +8,9 @@ import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi";
 import Loading from "@/app/loading";
 import SubCategoryItem from "@/components/common/category/SubCategoryItem";
 import ParentCategoryItem from "@/components/common/category/ParentCategoryItem";
+import NoWallet from "@/components/ui/NoWallet";
 
-const SelectedCategories = () => {
+const ListCategory = () => {
   const { data, isFetching, isLoading } = useGetCategoriesQuery();
   const customerId = useAppSelector((state) => state.auth.user?.customerId);
 
@@ -19,14 +20,14 @@ const SelectedCategories = () => {
 
   return (
     <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-      <View className="px-6 py-4">
+      <View className="px-6">
         <TouchableOpacity
           className="flex flex-row items-center mb-4"
           activeOpacity={0.7}
           onPress={() => router.push("/budget/modal/add-category")}
         >
           <Icon name="add-circle" size={30} color={"#4FAAFF"} />
-          <Text className="font-rubik-bold text-lg text-[#4FAAFF] ml-3">
+          <Text className="font-bold text-xl text-[#4FAAFF] ml-3">
             New Category
           </Text>
         </TouchableOpacity>
@@ -34,7 +35,7 @@ const SelectedCategories = () => {
         <FlatList
           data={data?.data}
           keyExtractor={(item) => item._id}
-          contentContainerStyle={{ paddingBottom: 16 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
             const isOwner = item.createdBy === customerId;
@@ -69,10 +70,11 @@ const SelectedCategories = () => {
               </View>
             );
           }}
+          ListEmptyComponent={() => <NoWallet />}
         />
       </View>
     </LinearGradient>
   );
 };
 
-export default SelectedCategories;
+export default ListCategory;

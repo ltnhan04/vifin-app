@@ -2,7 +2,9 @@ import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { useAppDispatch } from "@/redux/hooks";
 import { useDeleteWalletMutation } from "@/redux/features/wallet/walletApi";
+import { clearSelectedWallet } from "@/redux/features/wallet/walletSlice";
 import Toast from "react-native-toast-message";
 import { formatCurrency } from "@/utils/format-currency";
 import Loading from "@/app/loading";
@@ -20,9 +22,10 @@ const WalletItem: React.FC<WalletItemProps> = ({
   walletName,
   amount,
 }) => {
-  const [deleteWallet, { isSuccess }] = useDeleteWalletMutation();
   const router = useRouter();
-  if (isSuccess) {
+  const dispatch = useAppDispatch();
+  const [deleteWallet, { isLoading }] = useDeleteWalletMutation();
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -40,6 +43,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
           onPress: async () => {
             try {
               await deleteWallet({ id: _id }).unwrap();
+              dispatch(clearSelectedWallet());
               Toast.show({
                 type: "success",
                 text1: "Wallet has been deleted successfully!",
@@ -58,16 +62,16 @@ const WalletItem: React.FC<WalletItemProps> = ({
   };
 
   return (
-    <View className="flex flex-row justify-between items-center mt-4">
+    <View className="flex flex-row justify-between items-center mt-6">
       <View className="flex flex-row items-center gap-x-3">
         <Image
           source={{ uri: walletIcon }}
           resizeMode="cover"
-          className="size-14 bg-primary-dark rounded-full"
+          className="size-16 bg-primary-dark rounded-full"
         />
         <View>
           <Text
-            className="text-white font-rubik-medium text-xl"
+            className="text-white font-rubik-medium text-2xl"
             numberOfLines={1}
             ellipsizeMode="tail"
             style={{ maxWidth: 150 }}
@@ -75,7 +79,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
             {walletName}
           </Text>
 
-          <Text className="text-white font-rubik-medium text-lg">
+          <Text className="text-white font-rubik-medium text-xl">
             {formatCurrency(amount, "VND")}
           </Text>
         </View>
@@ -95,7 +99,7 @@ const WalletItem: React.FC<WalletItemProps> = ({
           onPress={confirmDelete}
           className="flex flex-row items-center gap-x-2 px-3 py-2 bg-secondary-red rounded-lg"
           activeOpacity={0.8}
-          disabled={isSuccess}
+          disabled={isLoading}
         >
           <Icon name="trash-outline" color={"#fff"} size={20} />
         </TouchableOpacity>

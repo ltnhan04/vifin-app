@@ -3,9 +3,6 @@ appId: "com.nhanluong.vifinapp"
 - launchApp
 - waitForAnimationToEnd
 
-# - tapOn: '@nhanluong/vifin-app'
-- tapOn: 'http://10.21.8.243.8081'
-
 - tapOn: "Email"
 - inputText: "l@gmail.com"
 
