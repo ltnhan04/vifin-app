@@ -31,7 +31,6 @@ const ScanScreen = () => {
       const processedImage = await TextRecognition.recognize(imagePath);
       const clearSpace = processedImage.text.replace(/\s+/g, " ").trim();
       setRecognizedText(clearSpace);
-
       const response = await expenseClassification({ text: clearSpace });
       if (response.data) {
         setReceipt(response.data.data);
@@ -111,7 +110,13 @@ const ScanScreen = () => {
             </View>
           )}
 
-          {receipt && <ReceiptUI {...receipt} />}
+          {receipt && (
+            <ReceiptUI
+              resetReceipt={resetState}
+              receipt={receipt}
+              onUpdateReceipt={(updatedData) => setReceipt(updatedData)}
+            />
+          )}
 
           {!loading && image && !receipt && (
             <View className="mt-5">
@@ -120,7 +125,7 @@ const ScanScreen = () => {
                 className="w-60 h-60 rounded-lg border-2 border-white"
               />
               {recognizedText ? (
-                <View className="mt-5 bg-white bg-opacity-80 p-4 rounded-md w-full">
+                <View className="flex flex-col items-center justify-center mt-5 bg-white bg-opacity-80 p-4 rounded-md w-full">
                   <Text className="font-bold text-base mb-2">
                     Recognized Text:
                   </Text>

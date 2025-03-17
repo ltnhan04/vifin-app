@@ -11,6 +11,9 @@ export interface IBillData {
   total: number;
   type: string;
   category: string;
+  category_id?: string;
+  wallet_id?: string;
+  wallet_name?: string;
 }
 
 export interface Item {

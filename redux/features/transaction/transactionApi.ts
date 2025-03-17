@@ -4,11 +4,24 @@ import {
   IResponseTransactionByDay,
   IResponseTransactionByMonth,
   IResponseTransactionByYear,
+  INewTransaction,
+  IResponseNewTransaction,
 } from "@/types/transaction";
 
 export const transactionApi = baseApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
+    createTransaction: builder.mutation<
+      IResponseNewTransaction,
+      INewTransaction
+    >({
+      query: (newTransaction) => ({
+        url: `/v1/transactions`,
+        method: "POST",
+        body: newTransaction,
+      }),
+      invalidatesTags: ["Wallet", "Transaction"],
+    }),
     recentTransaction: builder.query<
       IResponseRecentTransaction,
       { walletId: string; type: string; limit: number }
@@ -59,4 +72,5 @@ export const {
   useGetTransactionByWeekQuery,
   useGetTransactionByMonthQuery,
   useGetTransactionByYearQuery,
+  useCreateTransactionMutation,
 } = transactionApi;

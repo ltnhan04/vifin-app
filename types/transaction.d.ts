@@ -64,6 +64,18 @@ export interface IResponseRecentTransaction {
   message: string;
 }
 
+export interface IResponseNewTransaction {
+  data: ITransaction;
+  message: string;
+}
+
+export interface INewTransaction {
+  amount: number;
+  transaction_type: string;
+  wallet_id: string;
+  category_id: string;
+  note?: string;
+}
 export interface ITransaction {
   amount: number;
   customer_id: string;
