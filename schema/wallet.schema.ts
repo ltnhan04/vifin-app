@@ -3,7 +3,7 @@ import z from "zod";
 export const walletSchema = z
   .object({
     symbol: z.string(),
-    amount: z.number(),
+    amount: z.number().gt(0, "Amount must be greater than 0"),
     currency_unit: z.enum(["VND", "USD"]),
     wallet_name: z
       .string()

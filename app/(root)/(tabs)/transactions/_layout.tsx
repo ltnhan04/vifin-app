@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, Image, Text } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, useSegments } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -14,6 +14,8 @@ import { ITransactionType } from "@/types/transaction";
 import { transactionType } from "@/constants/data";
 
 const TransactionLayout = () => {
+  const segments = useSegments();
+  const page = segments[segments.length - 1];
   const dispatch = useAppDispatch();
   const transactionData = useAppSelector(
     (state) => state.transaction.selectedTransaction
@@ -65,6 +67,7 @@ const TransactionLayout = () => {
           headerTitle: "",
           headerRight: () => (
             <TouchableOpacity
+              disabled={page === "modal" || page === "list-category"}
               className="flex-row items-center gap-x-2"
               onPress={() => setDropdownType("wallet")}
             >
@@ -79,27 +82,34 @@ const TransactionLayout = () => {
               <Icon name="chevron-down-outline" color="#fff" size={20} />
             </TouchableOpacity>
           ),
-          headerLeft: () => (
-            <TouchableOpacity
-              className="px-4 py-2 border-2 rounded-lg border-secondary-gray-100"
-              onPress={() => setDropdownType("transaction_type")}
-            >
-              <View className="flex flex-row items-center">
-                <Image
-                  source={transactionData && transactionData.icon}
-                  className="size-8"
-                  resizeMode="contain"
-                />
-                <Text className="text-white font-semibold text-base mx-2">
-                  {transactionData && transactionData.label}
-                </Text>
-                <Icon name="chevron-down-outline" size={16} color={"#fff"} />
-              </View>
-            </TouchableOpacity>
-          ),
+          headerLeft: () =>
+            page === "modal" || page === "list-category" ? (
+              ""
+            ) : (
+              <TouchableOpacity
+                className="px-4 py-2 border-2 rounded-lg border-secondary-gray-100"
+                onPress={() => setDropdownType("transaction_type")}
+              >
+                <View className="flex flex-row items-center">
+                  <Image
+                    source={transactionData && transactionData.icon}
+                    className="size-8"
+                    resizeMode="contain"
+                  />
+                  <Text className="text-white font-semibold text-base mx-2">
+                    {transactionData && transactionData.label}
+                  </Text>
+                  <Icon name="chevron-down-outline" size={16} color={"#fff"} />
+                </View>
+              </TouchableOpacity>
+            ),
         }}
       >
         <Stack.Screen name="(top-tabs)" />
+        <Stack.Screen
+          name="modal"
+          options={{ presentation: "modal", animation: "fade_from_bottom" }}
+        />
       </Stack>
 
       <ModalDropdown

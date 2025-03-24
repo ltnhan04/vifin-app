@@ -14,6 +14,7 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useCreateBudgetMutation } from "@/redux/features/budget/budgetApi";
 import { budgetSchema, BudgetType } from "@/schema/budget.schema";
 import ButtonSubmit from "@/components/ui/Button";
@@ -25,7 +26,6 @@ import DatePickerBottom from "@/components/common/budget/DatePickerBottom";
 import SelectDateRangeBudget from "@/components/common/budget/SelectDateRangeBudget";
 import SelectWalletInBudget from "@/components/common/budget/SelectWalletInBudget";
 import WalletPickerBottom from "@/components/common/budget/WalletPickerBottom";
-import Icon from "react-native-vector-icons/Ionicons";
 
 const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
   const bottomRef = useRef<BottomSheet>(null);
@@ -120,7 +120,11 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
             </ScrollView>
           </SafeAreaView>
           <DatePickerBottom bottomRef={bottomRef} control={control} />
-          <WalletPickerBottom bottomRef={walletRef} control={control} />
+          <WalletPickerBottom
+            type="budget"
+            bottomRef={walletRef}
+            control={control}
+          />
         </LinearGradient>
       </KeyboardAvoidingView>
     </GestureHandlerRootView>

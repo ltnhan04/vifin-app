@@ -1,5 +1,13 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Modal,
+} from "react-native";
 import React, { useState, useEffect } from "react";
+import { BarChart } from "react-native-gifted-charts";
 import {
   useRecentTransactionQuery,
   useGetTransactionByYearQuery,
@@ -9,13 +17,19 @@ import { useAppSelector } from "@/redux/hooks";
 import androidSafeArea from "@/utils/android-safe-area";
 import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
 import images from "@/constants/images";
-import { BarChart } from "react-native-gifted-charts";
 import { formatChartDate } from "@/utils/format-date";
 import { getBarColor } from "@/utils/get-color";
 import { formatCurrency } from "@/utils/format-currency";
+import { ITransaction } from "@/types/transaction";
+import ModalDetailsTransaction from "@/components/common/transactions/ModalDetailsTransaction";
+import AddTransactionButton from "@/components/common/transactions/AddTransactionButton";
 
 const ThisYear = () => {
-  const [indexBar, setIndexBar] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedBarData, setSelectedBarData] = useState<{
+    total: number;
+    transactions: ITransaction[];
+  } | null>(null);
 
   const walletId = useAppSelector((state) => state.wallet.selectedWalletId);
   const transactionType = useAppSelector(
@@ -70,7 +84,11 @@ const ThisYear = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <BarChart
                 data={transactionsByYear.data.transactionsByYear.map(
-                  (item: { total: number; year: string }) => {
+                  (item: {
+                    total: number;
+                    year: string;
+                    transactions: ITransaction[];
+                  }) => {
                     return {
                       value: item.total,
                       label: formatChartDate(new Date(item.year), "year"),
@@ -80,6 +98,13 @@ const ThisYear = () => {
                           {formatCurrency(item.total, "VND")}
                         </Text>
                       ),
+                      onPress: () => {
+                        setSelectedBarData({
+                          total: item.total,
+                          transactions: item.transactions,
+                        });
+                        setOpenModal(true);
+                      },
                     };
                   }
                 )}
@@ -100,7 +125,6 @@ const ThisYear = () => {
                 showGradient
                 gradientColor={gradientColor}
                 rulesColor={"#6BBFFF"}
-                onPress={setIndexBar}
                 activeOpacity={0.8}
               />
             </ScrollView>
@@ -119,15 +143,18 @@ const ThisYear = () => {
         )}
 
         <View className="mt-4">
-          <Text className="text-xl font-bold text-white mb-3">
-            Recent Transactions
-          </Text>
+          <View className="flex-row justify-between items-center mb-4">
+            <Text className="text-xl font-bold text-white">
+              Recent Transactions
+            </Text>
+            <AddTransactionButton />
+          </View>
           {recentTransactions && recentTransactions.data.length > 0 ? (
             recentTransactions.data.map((transaction, index) => (
               <RecentTransactionItem key={index} transaction={transaction} />
             ))
           ) : (
-            <View className="flex flex-col items-center">
+            <View className="flex flex-col items-center justify-center">
               <Image
                 resizeMode="contain"
                 className="w-64 h-64"
@@ -140,6 +167,15 @@ const ThisYear = () => {
           )}
         </View>
       </ScrollView>
+      {selectedBarData ? (
+        <ModalDetailsTransaction
+          modalVisible={openModal}
+          setModalVisible={() => setOpenModal(false)}
+          selectedBarData={selectedBarData}
+        />
+      ) : (
+        ""
+      )}
     </SafeAreaView>
   );
 };

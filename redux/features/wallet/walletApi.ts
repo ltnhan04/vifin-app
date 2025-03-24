@@ -33,10 +33,12 @@ export const walletApi = baseApi.injectEndpoints({
       invalidatesTags: ["Wallet", "Budget", "Transaction"],
     }),
     getWallet: builder.query<ResponseWalletType, { id: string }>({
-      query: ({ id }) => ({
-        url: `/v1/wallet/${id}`,
-        method: "GET",
-      }),
+      query: ({ id }) => {
+        return {
+          url: `/v1/wallet/${id}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Wallet"],
     }),
     getWallets: builder.query<ResponseListWallet, void>({

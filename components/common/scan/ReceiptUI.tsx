@@ -147,6 +147,23 @@ const ReceiptUI = ({
             </Text>
           )}
         </View>
+        <View className="flex-row justify-between mb-3">
+          <Text className="text-gray-600 text-sm">Transaction Type:</Text>
+          {isEditing ? (
+            <Picker
+              selectedValue={editedReceipt.type}
+              onValueChange={(itemValue) =>
+                setEditedReceipt({ ...editedReceipt, type: itemValue })
+              }
+              style={{ width: 150 }}
+            >
+              <Picker.Item label="Income" value="income" />
+              <Picker.Item label="Expense" value="expense" />
+            </Picker>
+          ) : (
+            <Text className="text-gray-600 text-sm">{editedReceipt.type}</Text>
+          )}
+        </View>
 
         <View className="flex-row justify-between mb-2">
           <Text className="text-gray-600 text-sm">Category:</Text>

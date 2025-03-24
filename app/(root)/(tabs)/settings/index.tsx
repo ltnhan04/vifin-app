@@ -47,23 +47,20 @@ const Settings = () => {
           <TouchableOpacity onPress={() => router.push("/settings/profile")}>
             <SettingItem icon="person" title="Edit Profile" showArrow={true} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("/(root)/(tabs)/home/(wallet)")}
+          >
             <SettingItem icon="wallet" title="My Wallet" showArrow={true} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              router.push(
+                "/(root)/(tabs)/budget/modal/(category)/list-category"
+              )
+            }
+          >
             <SettingItem icon="grid" title="Categories" showArrow={true} />
           </TouchableOpacity>
-          <SettingItem icon="timer" title="Reminder" showSwitch={true} />
-          <SettingItem
-            icon="cash"
-            title="Currency Unit"
-            showOptions="currency_unit"
-          />
-          <SettingItem
-            icon="language"
-            title="Languages"
-            showOptions="languages"
-          />
           <LogoutSection />
         </View>
       </ScrollView>

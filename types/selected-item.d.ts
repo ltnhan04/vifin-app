@@ -11,4 +11,5 @@ export interface SelectedItemProps {
   symbol?: string;
   categoryName?: string;
   walletName?: string;
+  page?: "transaction" | "budget";
 }
