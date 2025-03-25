@@ -20,7 +20,6 @@ const FormField: React.FC<FormDataProps> = ({
   handleShowingPassword,
   control,
   placeholder,
-  testId,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
@@ -47,17 +46,17 @@ const FormField: React.FC<FormDataProps> = ({
                 onBlur();
               }}
               onChangeText={onChange}
-              testID={testId}
               style={[
                 styles.textInput,
                 isFocused && styles.textInputFocused,
-                error[name]?.message && styles.textInputError,
+                error?.[name]?.message && styles.textInputError,
               ]}
               placeholderTextColor="#D3D3D3"
             />
 
             {icon && (
               <TouchableOpacity
+                testID="toggle-password"
                 onPress={handleShowingPassword}
                 className="absolute right-4 top-1/4"
               >
@@ -66,9 +65,9 @@ const FormField: React.FC<FormDataProps> = ({
             )}
           </View>
 
-          {error[name]?.message && (
+          {error?.[name]?.message && (
             <Text className="text-secondary-red font-rubik-bold mt-1">
-              {error[name]?.message}
+              {error?.[name]?.message}
             </Text>
           )}
         </View>

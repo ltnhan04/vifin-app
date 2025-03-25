@@ -1,0 +1,12 @@
+appId: "com.nhanluong.vifinapp"
+---
+- launchApp
+- waitForAnimationToEnd
+
+- tapOn: "Enter your email"
+- inputText: "l@gmail.com"
+
+- tapOn: "Enter your password"
+- inputText: "nHAN@281204"
+
+- tapOn: "Login"

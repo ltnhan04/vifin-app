@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonSubmit Component renders correctly when not loading and not disabled 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "backgroundColor": "#123456",
+      "opacity": 1,
+    }
+  }
+  testID="button-submit"
+>
+  <View
+    className="flex flex-row items-center justify-center gap-x-4"
+  >
+    <Text
+      className="text-center font-rubik-medium text-lg"
+      style={
+        {
+          "color": "#FFFFFF",
+        }
+      }
+    >
+      Submit
+    </Text>
+  </View>
+</View>
+`;
