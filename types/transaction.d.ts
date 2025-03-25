@@ -76,6 +76,22 @@ export interface INewTransaction {
   category_id: string;
   note?: string;
 }
+
+export interface IResponseEditTransaction {
+  data: IEditTransaction;
+  message: string;
+}
+export interface IEditTransaction {
+  amount: number;
+  customer_id: string;
+  transaction_type: string;
+  wallet_id: string;
+  category_id: string;
+  note: any;
+  createdAt: CreatedAt;
+  updatedAt: UpdatedAt;
+  _id: string;
+}
 export interface ITransaction {
   amount: number;
   customer_id: string;

@@ -2,7 +2,6 @@ import { View, Text, Image, SafeAreaView } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-
 import ButtonSubmit from "@/components/ui/Button";
 import images from "@/constants/images";
 import androidSafeArea from "@/utils/android-safe-area";

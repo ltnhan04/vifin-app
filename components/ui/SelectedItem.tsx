@@ -17,6 +17,7 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
   symbol,
   categoryName,
   walletName,
+  page,
 }) => {
   const contentLeft = () => {
     switch (selectedItem) {
@@ -65,7 +66,9 @@ const SelectedItem: React.FC<SelectedItemProps> = ({
             activeOpacity={0.7}
             onPress={() =>
               router.push(
-                "/(root)/(tabs)/budget/modal/(category)/list-category"
+                page === "budget"
+                  ? "/(root)/(tabs)/budget/modal/(category)/list-category"
+                  : "/transactions/modal/list-category"
               )
             }
           >

@@ -1,21 +1,28 @@
 import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import React, { useState, useEffect } from "react";
+import { BarChart } from "react-native-gifted-charts";
 import {
   useRecentTransactionQuery,
   useGetTransactionByWeekQuery,
 } from "@/redux/features/transaction/transactionApi";
-import Loading from "@/app/loading";
 import { useAppSelector } from "@/redux/hooks";
-import images from "@/constants/images";
 import androidSafeArea from "@/utils/android-safe-area";
 import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
+import Loading from "@/app/loading";
+import images from "@/constants/images";
 import { formatChartDate } from "@/utils/format-date";
-import { BarChart } from "react-native-gifted-charts";
 import { formatCurrency } from "@/utils/format-currency";
 import { getBarColor } from "@/utils/get-color";
+import { ITransaction } from "@/types/transaction";
+import ModalDetailsTransaction from "@/components/common/transactions/ModalDetailsTransaction";
+import AddTransactionButton from "@/components/common/transactions/AddTransactionButton";
 
 const ThisWeek = () => {
-  const [indexBar, setIndexBar] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedBarData, setSelectedBarData] = useState<{
+    total: number;
+    transactions: ITransaction[];
+  } | null>(null);
   const walletId = useAppSelector((state) => state.wallet.selectedWalletId);
   const transactionType = useAppSelector(
     (state) => state.transaction.selectedTransaction
@@ -69,7 +76,11 @@ const ThisWeek = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <BarChart
                 data={transactionsByWeek.data.transactionsByDay.map(
-                  (item: { total: number; date: string }) => {
+                  (item: {
+                    total: number;
+                    date: string;
+                    transactions: ITransaction[];
+                  }) => {
                     return {
                       value: item.total,
                       label: formatChartDate(new Date(item.date), "week"),
@@ -79,6 +90,13 @@ const ThisWeek = () => {
                           {formatCurrency(item.total, "VND")}
                         </Text>
                       ),
+                      onPress: () => {
+                        setSelectedBarData({
+                          total: item.total,
+                          transactions: item.transactions,
+                        });
+                        setOpenModal(true);
+                      },
                     };
                   }
                 )}
@@ -99,7 +117,6 @@ const ThisWeek = () => {
                 showGradient
                 gradientColor={gradientColor}
                 rulesColor={"#6BBFFF"}
-                onPress={setIndexBar}
                 activeOpacity={0.8}
               />
             </ScrollView>
@@ -118,9 +135,12 @@ const ThisWeek = () => {
         )}
 
         <View className="mt-4">
-          <Text className="text-xl font-bold text-white mb-4">
-            Recent Transactions
-          </Text>
+          <View className="flex-row justify-between items-center mb-4">
+            <Text className="text-xl font-bold text-white mb-4">
+              Recent Transactions
+            </Text>
+            <AddTransactionButton />
+          </View>
           {recentTransactions && recentTransactions.data.length > 0 ? (
             recentTransactions.data.map((transaction, index) => (
               <RecentTransactionItem key={index} transaction={transaction} />
@@ -139,6 +159,15 @@ const ThisWeek = () => {
           )}
         </View>
       </ScrollView>
+      {selectedBarData ? (
+        <ModalDetailsTransaction
+          modalVisible={openModal}
+          setModalVisible={() => setOpenModal(false)}
+          selectedBarData={selectedBarData}
+        />
+      ) : (
+        ""
+      )}
     </SafeAreaView>
   );
 };

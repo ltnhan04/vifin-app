@@ -10,6 +10,7 @@ const MyWalletSection = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data, isLoading, isFetching } = useGetWalletsQuery(undefined, {
     skip: !user,
+    refetchOnMountOrArgChange: true,
   });
   const wallets = data?.data?.slice(0, 3) || [];
 

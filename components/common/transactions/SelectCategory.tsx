@@ -1,17 +1,17 @@
 import { View, Text } from "react-native";
+import React, { useEffect } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { useEffect } from "react";
+import { TransactionType } from "@/schema/transaction.schema";
 import SelectedItem from "@/components/ui/SelectedItem";
-import { BudgetType } from "@/schema/budget.schema";
 import { useAppSelector } from "@/redux/hooks";
 import { useGetCategoryQuery } from "@/redux/features/category/categoryApi";
 
-const SelectCategoryInBudget = ({
+const SelectCategory = ({
   control,
   errors,
 }: {
-  control: Control<BudgetType>;
-  errors: FieldErrors<BudgetType>;
+  control: Control<TransactionType>;
+  errors: FieldErrors<TransactionType>;
 }) => {
   const selectedCategoryId = useAppSelector(
     (state) => state.category.selectedCategoryId
@@ -39,7 +39,6 @@ const SelectCategoryInBudget = ({
         return (
           <View className="flex flex-col gap-y-2">
             <SelectedItem
-              page="budget"
               categoryName={categoryName as string}
               symbol={symbol as string}
               selectedItem="category"
@@ -57,5 +56,4 @@ const SelectCategoryInBudget = ({
     />
   );
 };
-
-export default SelectCategoryInBudget;
+export default SelectCategory;

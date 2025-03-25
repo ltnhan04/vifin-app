@@ -1,19 +1,19 @@
 import { View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { useAppSelector } from "@/redux/hooks";
+import { TransactionType } from "@/schema/transaction.schema";
 import SelectedItem from "@/components/ui/SelectedItem";
 import { useGetWalletQuery } from "@/redux/features/wallet/walletApi";
-import { BudgetType } from "@/schema/budget.schema";
+import { useAppSelector } from "@/redux/hooks";
 
-const SelectWalletInBudget = ({
+const SelectWallet = ({
   expand,
   control,
   errors,
 }: {
   expand: () => void;
-  control: Control<BudgetType>;
-  errors: FieldErrors<BudgetType>;
+  control: Control<TransactionType>;
+  errors: FieldErrors<TransactionType>;
 }) => {
   const selectedWalletId = useAppSelector(
     (state) => state.wallet.selectedWalletId
@@ -35,7 +35,7 @@ const SelectWalletInBudget = ({
         return (
           <View className="flex flex-col items-center">
             <SelectedItem
-              page="budget"
+              page="transaction"
               walletName={data?.data.wallet_name}
               selectedItem="wallet"
               openBottomSheet={expand}
@@ -51,5 +51,4 @@ const SelectWalletInBudget = ({
     />
   );
 };
-
-export default SelectWalletInBudget;
+export default SelectWallet;

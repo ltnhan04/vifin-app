@@ -6,6 +6,8 @@ import {
   IResponseTransactionByYear,
   INewTransaction,
   IResponseNewTransaction,
+  ITransaction,
+  IResponseEditTransaction,
 } from "@/types/transaction";
 
 export const transactionApi = baseApi.injectEndpoints({
@@ -20,7 +22,28 @@ export const transactionApi = baseApi.injectEndpoints({
         method: "POST",
         body: newTransaction,
       }),
-      invalidatesTags: ["Wallet", "Transaction"],
+      invalidatesTags: ["Wallet", "Transaction", "Budget"],
+    }),
+    updateTransaction: builder.mutation<
+      IResponseNewTransaction,
+      { id: string; updateTransaction: Partial<ITransaction> }
+    >({
+      query: ({ id, updateTransaction }) => ({
+        url: `/v1/transactions/${id}`,
+        method: "PUT",
+        body: updateTransaction,
+      }),
+      invalidatesTags: ["Budget", "Transaction", "Wallet"],
+    }),
+    deleteTransaction: builder.mutation<
+      IResponseNewTransaction,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/v1/transactions/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Budget", "Transaction", "Wallet"],
     }),
     recentTransaction: builder.query<
       IResponseRecentTransaction,
@@ -33,6 +56,15 @@ export const transactionApi = baseApi.injectEndpoints({
         };
       },
       keepUnusedDataFor: 0,
+    }),
+    getDetailsTransaction: builder.query<
+      IResponseEditTransaction,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/v1/transactions/${id}`,
+        method: "GET",
+      }),
     }),
     getTransactionByWeek: builder.query<
       IResponseTransactionByDay,
@@ -72,5 +104,8 @@ export const {
   useGetTransactionByWeekQuery,
   useGetTransactionByMonthQuery,
   useGetTransactionByYearQuery,
+  useGetDetailsTransactionQuery,
   useCreateTransactionMutation,
+  useUpdateTransactionMutation,
+  useDeleteTransactionMutation,
 } = transactionApi;

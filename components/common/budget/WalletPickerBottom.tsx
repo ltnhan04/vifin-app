@@ -11,21 +11,22 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, Path } from "react-hook-form";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
 import { BudgetType } from "@/schema/budget.schema";
+import { TransactionType } from "@/schema/transaction.schema";
 import { formatCurrency } from "@/utils/format-currency";
 import Icon from "react-native-vector-icons/Ionicons";
 import NoWallet from "@/components/ui/NoWallet";
-import images from "@/constants/images";
-import { router } from "expo-router";
 
-const WalletPickerBottom = ({
+const WalletPickerBottom = <T extends BudgetType | TransactionType>({
+  type,
   bottomRef,
   control,
 }: {
   bottomRef: React.RefObject<BottomSheet>;
-  control: Control<BudgetType>;
+  control: Control<T>;
+  type: "budget" | "transaction";
 }) => {
   const { data: wallets, isLoading, isFetching } = useGetWalletsQuery();
 
@@ -52,7 +53,9 @@ const WalletPickerBottom = ({
     >
       <BottomSheetView className="flex-1 px-5 py-4 bg-white">
         <Text className="text-xl font-bold mb-4 text-center text-gray-800">
-          Select Wallet
+          {type === "budget"
+            ? "Select Budget Wallet"
+            : "Select Transaction Wallet"}
         </Text>
 
         {isLoading || isFetching ? (
@@ -60,7 +63,7 @@ const WalletPickerBottom = ({
         ) : (
           <Controller
             control={control}
-            name="wallet_id"
+            name={"wallet_id" as Path<T>}
             render={({ field: { onChange, value } }) => (
               <BottomSheetFlatList
                 data={wallets?.data || []}
@@ -69,12 +72,12 @@ const WalletPickerBottom = ({
                   <TouchableOpacity
                     key={item._id}
                     onPress={() => {
-                      onChange(item._id);
-                      bottomRef.current?.close();
                       if (item._id === value) {
                         onChange("");
-                        bottomRef.current?.close();
+                      } else {
+                        onChange(item._id);
                       }
+                      bottomRef.current?.close();
                     }}
                     activeOpacity={0.7}
                     className={`flex-row items-center p-4 mb-2 rounded-xl border ${
@@ -108,34 +111,7 @@ const WalletPickerBottom = ({
                     )}
                   </TouchableOpacity>
                 )}
-                ListEmptyComponent={() => (
-                  <View className="flex flex-col items-center justify-center">
-                    <Image
-                      source={images.emptyWallet}
-                      resizeMode="contain"
-                      className="w-40 h-40"
-                    />
-                    <Text className="text-base text-secondary-gray-200 font-semibold">
-                      No wallets set yet! 📉
-                    </Text>
-                    <Text className="text-sm text-secondary-gray-200 text-center px-8 mt-2">
-                      Stay on track with your finances. Start by adding a wallet
-                      now! 🚀
-                    </Text>
-                    <TouchableOpacity
-                      className="mt-6 bg-primary px-4 py-3 rounded-lg bg-primary-brighterBlue shadow-lg"
-                      onPress={() =>
-                        router.push(
-                          "/(root)/(tabs)/home/(wallet)/create-wallet"
-                        )
-                      }
-                    >
-                      <Text className="text-white text-sm font-bold">
-                        Add Wallet
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+                ListEmptyComponent={() => <NoWallet />}
               />
             )}
           />

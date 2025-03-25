@@ -9,7 +9,7 @@ export const budgetSchema = z
     wallet_id: z.string().min(1, { message: "Wallet is required" }),
     startDate: z.date(),
     dueDate: z.date(),
-    amount: z.number().min(0, { message: "Amount must be at least 0" }),
+    amount: z.number().gt(0, "Amount must be greater than 0"),
     repeat_type: z.enum(["monthly", "weekly", "yearly", "custom"]),
     is_repeated: z.boolean().default(true),
     is_completed: z.boolean().default(false),
