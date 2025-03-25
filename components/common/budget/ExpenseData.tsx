@@ -49,7 +49,7 @@ const ExpenseData = ({
               {categoryName}
             </Text>
             <Text className="text-sm text-gray-500 mt-1">
-              Due day: {formatDueDate(dueDate)}
+            {dueDate ? `Due day: ${formatDueDate(dueDate)}` : "No due date"}
             </Text>
           </View>
           <View className="flex-row justify-between items-center mt-2">

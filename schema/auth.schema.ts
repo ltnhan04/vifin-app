@@ -33,7 +33,7 @@ export const signUpSchema = z
       ),
     confirmPassword: z
       .string()
-      .min(8, "Password must be at least 8 characters")
+      .min(8, "Password must be at least 8 characters") //exceoption
       .max(100, "Password must not exceed 100 characters"),
   })
   .strict()

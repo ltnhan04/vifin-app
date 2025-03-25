@@ -66,7 +66,7 @@ export default function Dropdown({
       {expanded && buttonPosition ? (
         <Modal visible={expanded} transparent>
           <TouchableWithoutFeedback onPress={() => setExpanded(false)}>
-            <View style={styles.backdrop}>
+            <View testID="dropdown-backdrop" style={styles.backdrop}>
               <View
                 style={[
                   styles.options,

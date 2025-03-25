@@ -20,6 +20,7 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
+      testID="button-submit"
       disabled={isLoading || isDisabled}
       onPress={() => {
         handleOnPress();
@@ -30,7 +31,7 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
     >
       <View className="flex flex-row items-center justify-center gap-x-4">
         {icon ? (
-          <Image source={icon} className="w-6 h-6" resizeMode="contain" />
+          <Image testID="button-icon" source={icon} className="w-6 h-6" resizeMode="contain" />
         ) : (
           ""
         )}
@@ -47,7 +48,7 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
                 {title}
               </Text>
               {isLoading && (
-                <ActivityIndicator size="small" color={textColor} />
+                <ActivityIndicator testID="activity-indicator" size="small" color={textColor} />
               )}
             </View>
           ) : (

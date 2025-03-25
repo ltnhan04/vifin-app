@@ -64,7 +64,7 @@ const EmailLoginSection = () => {
       console.log(err.message);
       Toast.show({
         type: "error",
-        text1: "Sign In Failed" + err.message,
+        text1: "Sign In Failed" + err.message, //log message
       });
     } finally {
       setIsLoading(false);
@@ -101,7 +101,7 @@ const EmailLoginSection = () => {
         background="#6BBDE3"
         textColor="white"
         handleOnPress={handleSubmit(onSubmit)}
-        title="Sign In"
+        title="Login"
         isLoading={isLoading}
       />
     </View>
