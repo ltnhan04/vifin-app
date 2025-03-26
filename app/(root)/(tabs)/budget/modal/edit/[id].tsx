@@ -5,17 +5,21 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useCreateBudgetMutation } from "@/redux/features/budget/budgetApi";
+import {
+  useGetBudgetByIdQuery,
+  useUpdateBudgetMutation,
+} from "@/redux/features/budget/budgetApi";
 import { budgetSchema, BudgetType } from "@/schema/budget.schema";
 import ButtonSubmit from "@/components/ui/Button";
 import androidSafeArea from "@/utils/android-safe-area";
@@ -27,13 +31,21 @@ import SelectDateRangeBudget from "@/components/common/budget/SelectDateRangeBud
 import SelectWalletInBudget from "@/components/common/budget/SelectWalletInBudget";
 import WalletPickerBottom from "@/components/common/budget/WalletPickerBottom";
 
-const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
+const EditBudget = () => {
+  const { id } = useLocalSearchParams<{ id: string }>();
   const bottomRef = useRef<BottomSheet>(null);
   const walletRef = useRef<BottomSheet>(null);
-  const [createBudget, { isLoading }] = useCreateBudgetMutation();
+
+  const { data: budgetData, isLoading } = useGetBudgetByIdQuery(
+    { id: id as string },
+    { skip: !id }
+  );
+  const [updateBudget, { isLoading: isUpdating }] = useUpdateBudgetMutation();
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<BudgetType>({
     resolver: zodResolver(budgetSchema),
@@ -48,21 +60,51 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
       is_completed: false,
     },
   });
+
+  useEffect(() => {
+    if (budgetData) {
+      setValue("category_id", budgetData.data.category_id);
+      setValue("wallet_id", budgetData.data.wallet_id);
+      setValue("startDate", new Date(budgetData.data.startDate));
+      setValue("dueDate", new Date(budgetData.data.dueDate));
+      setValue("amount", budgetData.data.amount);
+      setValue(
+        "repeat_type",
+        budgetData.data.repeat_type as
+          | "custom"
+          | "monthly"
+          | "weekly"
+          | "yearly"
+      );
+      setValue("is_repeated", budgetData.data.is_repeated);
+      setValue("is_completed", budgetData.data.is_completed);
+    }
+  }, [budgetData, setValue]);
+
   const onSubmit: SubmitHandler<BudgetType> = async (data) => {
-    console.log(data);
     try {
-      const response = await createBudget(data).unwrap();
+      const response = await updateBudget({
+        id,
+        newBudget: { ...data },
+      }).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: response.message,
-        });
+        Toast.show({ type: "success", text1: "Budget updated successfully!" });
       }
       router.back();
     } catch (error) {
-      console.error("Error creating wallet:", error);
+      console.error("Error updating budget:", error);
+      Toast.show({ type: "error", text1: "Failed to update budget." });
     }
   };
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#6BBFFF" />
+      </View>
+    );
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -80,23 +122,12 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
                 style={{ flex: 1 }}
               >
                 <View className="flex flex-col gap-y-3">
-                  {handleCloseModal && (
-                    <View className="w-full bg-primary-dark">
-                      <TouchableOpacity
-                        onPress={handleCloseModal}
-                        className="self-end"
-                      >
-                        <Icon name="close-outline" size={28} color={"white"} />
-                      </TouchableOpacity>
-                    </View>
-                  )}
                   <SelectCategory control={control} errors={errors} />
                   <InputBudgetAmount
                     control={control}
-                    disabled={isLoading}
+                    disabled={isUpdating}
                     errors={errors}
                   />
-
                   <SelectDateRangeBudget
                     expand={() => bottomRef.current?.expand()}
                     control={control}
@@ -110,9 +141,9 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
                   <RepeatBudget control={control} />
                 </View>
                 <ButtonSubmit
-                  title="Save"
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
+                  title="Update"
+                  isLoading={isUpdating}
+                  isDisabled={isUpdating}
                   background="#6BBFFF"
                   textColor="white"
                   handleOnPress={handleSubmit(onSubmit)}
@@ -132,4 +163,4 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
   );
 };
 
-export default AddBudget;
+export default EditBudget;

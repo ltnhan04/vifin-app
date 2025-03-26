@@ -16,6 +16,12 @@ export const budgetApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Budget"],
     }),
+    getBudgetById: builder.query<ResponseBudgetType, { id: string }>({
+      query: ({ id }) => ({
+        url: `/v1/budget/${id}`,
+        method: "GET",
+      }),
+    }),
     getBudgetByRepeatType: builder.query<
       IResponseGetBudgetByRepeatType,
       { walletId: string; repeat_type: string }
@@ -63,4 +69,5 @@ export const {
   useGetBudgetsQuery,
   useUpdateBudgetMutation,
   useGetBudgetByRepeatTypeQuery,
+  useGetBudgetByIdQuery,
 } = budgetApi;

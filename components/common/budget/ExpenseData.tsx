@@ -1,13 +1,18 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Alert, TouchableOpacity } from "react-native";
 import React from "react";
 import { ProgressBar } from "react-native-paper";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Toast from "react-native-toast-message";
+import { useDeleteBudgetMutation } from "@/redux/features/budget/budgetApi";
 import { formatCurrency } from "@/utils/format-currency";
 import { getColorForValue, lightenColor } from "@/utils/get-color";
 import { DueDate } from "@/types/budget";
 import { formatDueDate } from "@/utils/format-date";
 import { calculateExpense } from "@/utils/calculate";
+import { router } from "expo-router";
 
 const ExpenseData = ({
+  budgetId,
   currentAmount,
   goalAmount,
   categoryName,
@@ -19,11 +24,31 @@ const ExpenseData = ({
   categoryName: string;
   dueDate: DueDate;
   symbol: string;
+  budgetId: string;
 }) => {
   const { percentage, remainingAmount, progress } = calculateExpense(
     goalAmount,
     currentAmount
   );
+  const [deleteBudget] = useDeleteBudgetMutation();
+
+  const handleDelete = async () => {
+    Alert.alert("Confirm", "Are you sure you want to delete this budget?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          await deleteBudget({ id: budgetId });
+          Toast.show({
+            type: "success",
+            text1: "Deleted budget successfully",
+          });
+        },
+      },
+    ]);
+  };
+
   return (
     <View
       className="px-4 py-4 rounded-2xl bg-white border border-gray-200"
@@ -49,12 +74,12 @@ const ExpenseData = ({
               {categoryName}
             </Text>
             <Text className="text-sm text-gray-500 mt-1">
-              Due day: {formatDueDate(dueDate)}
+              Due: {formatDueDate(dueDate)}
             </Text>
           </View>
           <View className="flex-row justify-between items-center mt-2">
             <Text
-              className="text-xl font-bold "
+              className="text-xl font-bold"
               style={{ color: getColorForValue(percentage) }}
             >
               {formatCurrency(currentAmount, "VND")}
@@ -75,7 +100,7 @@ const ExpenseData = ({
           />
           <View className="flex-row justify-between mt-1">
             <Text
-              className="text-sm "
+              className="text-sm"
               style={{ color: getColorForValue(percentage) }}
             >
               {percentage}%
@@ -84,9 +109,31 @@ const ExpenseData = ({
               className="text-sm font-medium"
               style={{ color: getColorForValue(percentage) }}
             >
-              {formatCurrency(remainingAmount, "VND")} left to reach the goal
+              {formatCurrency(remainingAmount, "VND")} left
             </Text>
           </View>
+        </View>
+        <View className="flex flex-col items-center ml-4">
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => router.push(`/budget/modal/edit/${budgetId}`)}
+            className="p-2 rounded-full bg-primary-brightBlue"
+            style={{
+              marginBottom: 6,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Ionicons name="create-outline" size={22} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={handleDelete}
+            className="p-2 rounded-full bg-secondary-red"
+            style={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <Ionicons name="trash-outline" size={22} color="white" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

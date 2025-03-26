@@ -1,5 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
+import { router } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
@@ -10,7 +11,6 @@ import { formatCurrency } from "@/utils/format-currency";
 import { formatDate } from "@/utils/format-date";
 import { IBillData } from "@/types/bill";
 import Loading from "@/app/loading";
-import { router } from "expo-router";
 
 const ReceiptUI = ({
   resetReceipt,

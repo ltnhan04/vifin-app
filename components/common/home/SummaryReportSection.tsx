@@ -47,7 +47,7 @@ const SummaryReportSection = ({
   const { data: transactionsByWeek, isFetching: isFetchingWeek } =
     useGetStatisticWeeklyQuery(
       { walletId: walletData?._id as string },
-      { skip: !walletData }
+      { skip: !walletData, refetchOnMountOrArgChange: true }
     );
 
   useEffect(() => {
