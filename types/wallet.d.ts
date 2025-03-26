@@ -1,3 +1,62 @@
+export interface IResponseTransactionByYear {
+  data: ITransactionByYear;
+  message: string;
+}
+export interface IResponseTransactionByMonth {
+  data: ITransactionByMonth;
+  message: string;
+}
+export interface IResponseTransactionByDay {
+  data: ITransactionByDay;
+  message: string;
+}
+export interface ITransactionByYear {
+  totalIncome: number;
+  totalExpense: number;
+  transactionsByYear: TransactionsByYear[];
+}
+export interface ITransactionByMonth {
+  totalIncome: number;
+  totalExpense: number;
+  transactionsByMonth: TransactionsByMonth[];
+}
+
+export interface ITransactionByDay {
+  totalIncome: number;
+  totalExpense: number;
+  transactionsByDay: TransactionsByDay[];
+}
+
+export interface TransactionsByDay {
+  date: string;
+  totalIncome: number;
+  totalExpense: number;
+  transactions: Transaction[];
+}
+export interface TransactionsByMonth {
+  month: string;
+  totalIncome: number;
+  totalExpense: number;
+  transactions: Transaction[];
+}
+export interface TransactionsByYear {
+  year: string;
+  totalIncome: number;
+  totalExpense: number;
+  transactions: Transaction[];
+}
+export interface Transaction {
+  amount: number;
+  customer_id: string;
+  transaction_type: string;
+  wallet_id: string;
+  category_id: string;
+  note: any;
+  createdAt: CreatedAt;
+  updatedAt: UpdatedAt;
+  _id: string;
+}
+
 export type WalletListType = {
   icon: HTMLImageElement;
   label: string;

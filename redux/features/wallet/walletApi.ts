@@ -3,6 +3,9 @@ import type {
   WalletType,
   ResponseListWallet,
   ResponseWalletType,
+  IResponseTransactionByDay,
+  IResponseTransactionByMonth,
+  IResponseTransactionByYear,
 } from "@/types/wallet";
 import { getFileInfo } from "@/utils/getFileInfo";
 
@@ -44,6 +47,36 @@ export const walletApi = baseApi.injectEndpoints({
     getWallets: builder.query<ResponseListWallet, void>({
       query: () => ({
         url: "/v1/wallet",
+        method: "GET",
+      }),
+      providesTags: ["Wallet"],
+    }),
+    getStatisticWeekly: builder.query<
+      IResponseTransactionByDay,
+      { walletId: string }
+    >({
+      query: ({ walletId }) => ({
+        url: `/v1/wallet/weekly?walletId=${walletId}`,
+        method: "GET",
+      }),
+      providesTags: ["Wallet"],
+    }),
+    getStatisticMonthly: builder.query<
+      IResponseTransactionByMonth,
+      { walletId: string }
+    >({
+      query: ({ walletId }) => ({
+        url: `/v1/wallet/monthly?walletId=${walletId}`,
+        method: "GET",
+      }),
+      providesTags: ["Wallet"],
+    }),
+    getStatisticYearly: builder.query<
+      IResponseTransactionByYear,
+      { walletId: string }
+    >({
+      query: ({ walletId }) => ({
+        url: `/v1/wallet/yearly?walletId=${walletId}`,
         method: "GET",
       }),
       providesTags: ["Wallet"],
@@ -97,4 +130,7 @@ export const {
   useGetWalletQuery,
   useUpdateWalletMutation,
   useDeleteWalletMutation,
+  useGetStatisticWeeklyQuery,
+  useGetStatisticMonthlyQuery,
+  useGetStatisticYearlyQuery,
 } = walletApi;

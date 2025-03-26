@@ -5,9 +5,6 @@ import ThisWeek from "@/components/common/home/ThisWeek";
 import ThisMonth from "@/components/common/home/ThisMonth";
 import ThisYear from "@/components/common/home/ThisYear";
 
-interface CategoriesDetailProps {
-  type: "income" | "expense" | undefined;
-}
 interface RouteType {
   key: string;
   title: string;
@@ -22,7 +19,7 @@ const routes: RouteType[] = [
   },
 ];
 
-const CategoriesDetail: React.FC<CategoriesDetailProps> = ({ type }) => {
+const AllStatistics = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   return (
@@ -110,4 +107,4 @@ const CategoriesDetail: React.FC<CategoriesDetailProps> = ({ type }) => {
   );
 };
 
-export default CategoriesDetail;
+export default AllStatistics;

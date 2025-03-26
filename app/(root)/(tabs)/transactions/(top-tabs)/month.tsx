@@ -1,5 +1,6 @@
 import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import React, { useEffect, useState } from "react";
+import { BarChart } from "react-native-gifted-charts";
 import {
   useRecentTransactionQuery,
   useGetTransactionByMonthQuery,
@@ -9,7 +10,6 @@ import { useAppSelector } from "@/redux/hooks";
 import androidSafeArea from "@/utils/android-safe-area";
 import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
 import images from "@/constants/images";
-import { BarChart } from "react-native-gifted-charts";
 import { formatChartDate } from "@/utils/format-date";
 import { getBarColor } from "@/utils/get-color";
 import { formatCurrency } from "@/utils/format-currency";
