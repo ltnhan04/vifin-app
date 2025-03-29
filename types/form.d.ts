@@ -17,7 +17,7 @@ export type FormDataProps = {
   error: FieldError<signInType | signUpType | ProfileType> | undefined;
   placeholder: string;
   name: ValidFieldName;
-  testId?: string
+  testId?: string;
 
   handleShowingPassword?: () => void;
   control: Control<signInType | signUpType | ProfileType>;
@@ -38,4 +38,9 @@ export type KeyBoardType =
   | "web-search"
   | "visible-password";
 
-export type ValidFieldName = "email" | "password" | "confirmPassword" | "name";
+export type ValidFieldName =
+  | "email"
+  | "password"
+  | "confirmPassword"
+  | "name"
+  | "full_name";

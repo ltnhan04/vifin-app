@@ -80,7 +80,7 @@ const BudgetLayout = () => {
           headerRight: () =>
             walletData && page !== "modal" ? (
               <TouchableOpacity
-                disabled={page === "list-category"}
+                disabled={page === "list-category" || page === "[id]"}
                 className="flex-row items-center gap-x-2"
                 onPress={() => {
                   if (isMountedRef.current) setShowDropdown((prev) => !prev);

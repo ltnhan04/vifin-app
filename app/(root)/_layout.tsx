@@ -6,7 +6,7 @@ const AppLayout = () => {
   const { user } = useAppSelector((state) => state.auth);
   useFocusEffect(() => {
     if (!user) {
-      return router.replace("/(root)/(auth)/sign-in");
+      return router.replace("/(root)/(onboarding)");
     }
   });
 

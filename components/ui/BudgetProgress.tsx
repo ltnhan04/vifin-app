@@ -73,6 +73,7 @@ const BudgetProgress = ({
         {budgetData.map((budget) => (
           <ExpenseData
             key={budget._id}
+            budgetId={budget._id as string}
             currentAmount={budget.usage}
             goalAmount={budget.amount}
             categoryName={budget.category.name}

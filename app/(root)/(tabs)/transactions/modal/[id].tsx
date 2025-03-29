@@ -88,7 +88,6 @@ const EditTransaction = () => {
   if (isFetching) {
     return <Loading />;
   }
-  console.log(JSON.stringify(data));
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

@@ -17,6 +17,7 @@ interface ModalDropdownProps {
   handleSelectedOptions: (option: IWallet | ITransactionType) => void;
   dropdownFor: "transaction_type" | "wallet";
   data: (IWallet | ITransactionType)[];
+  textColor?: string;
 }
 
 const ModalDropdown: React.FC<ModalDropdownProps> = ({
@@ -25,6 +26,7 @@ const ModalDropdown: React.FC<ModalDropdownProps> = ({
   handleSelectedOptions,
   dropdownFor,
   data,
+  textColor,
 }) => {
   return (
     <Modal visible={showDropdown} transparent animationType="fade">
@@ -69,7 +71,7 @@ const ModalDropdown: React.FC<ModalDropdownProps> = ({
                         : (item as ITransactionType).label}
                     </Text>
                     {isWallet && (
-                      <Text className="text-base text-gray-500">
+                      <Text className={`text-base text-gray-500`}>
                         {formatCurrency(
                           Number((item as IWallet).amount),
                           "VND"

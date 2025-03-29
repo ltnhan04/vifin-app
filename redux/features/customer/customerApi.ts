@@ -15,12 +15,34 @@ export const customerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Customer"],
     }),
-    getCustomer: builder.query<ResponseCustomerType, string>({
+
+    getCustomer: builder.query<ResponseCustomerType, { customerId: string }>({
       query: (customerId) => ({
         url: `/v1/customer/${customerId}`,
         method: "GET",
       }),
       providesTags: ["Customer"],
+    }),
+    updateCustomer: builder.mutation<
+      ResponseCustomerType,
+      { customerId: string; updateData: Partial<Omit<CustomerType, "_id">> }
+    >({
+      query: ({ customerId, updateData }) => {
+        const formData = new FormData();
+        if (updateData.full_name)
+          formData.append("full_name", updateData.full_name);
+        if (updateData.gender) formData.append("gender", updateData.gender);
+        if (updateData.avatar) {
+          formData.append("avatar", updateData.avatar);
+        }
+
+        return {
+          url: `/v1/customer/${customerId}`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Customer"],
     }),
   }),
 });
@@ -29,4 +51,5 @@ export const {
   useCreateNewCustomerMutation,
   useGetCustomerQuery,
   useLazyGetCustomerQuery,
+  useUpdateCustomerMutation,
 } = customerApi;

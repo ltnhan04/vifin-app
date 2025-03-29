@@ -10,6 +10,7 @@ import { useCreateNewWalletMutation } from "@/redux/features/wallet/walletApi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Toast from "react-native-toast-message";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
 import androidSafeArea from "@/utils/android-safe-area";
@@ -18,7 +19,6 @@ import { WalletType, walletSchema } from "@/schema/wallet.schema";
 import InputWalletName from "@/components/common/wallet/InputWalletName";
 import SelectCurrencyUnit from "@/components/common/wallet/SelectCurrencyUnit";
 import InputWalletAmount from "@/components/common/wallet/InputWalletAmount";
-import { LinearGradient } from "expo-linear-gradient";
 
 const CreateWallet = () => {
   const [createNewWallet, { isLoading }] = useCreateNewWalletMutation();

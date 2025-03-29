@@ -1,5 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
+import { router } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
@@ -10,7 +11,7 @@ import { formatCurrency } from "@/utils/format-currency";
 import { formatDate } from "@/utils/format-date";
 import { IBillData } from "@/types/bill";
 import Loading from "@/app/loading";
-import { router } from "expo-router";
+import { flattenCategories } from "@/utils/flatten-categories";
 
 const ReceiptUI = ({
   resetReceipt,
@@ -27,6 +28,10 @@ const ReceiptUI = ({
   const { data: categories } = useGetCategoriesQuery();
   const { data: wallets } = useGetWalletsQuery();
 
+  const flatCategories = React.useMemo(() => {
+    return flattenCategories(categories?.data || []);
+  }, [categories]);
+
   useEffect(() => {
     if (wallets?.data?.length && !editedReceipt.wallet_id) {
       setEditedReceipt((prev) => ({
@@ -39,17 +44,18 @@ const ReceiptUI = ({
 
   useEffect(() => {
     if (categories?.data?.length && editedReceipt.category) {
-      const matchedCategory = categories.data.find(
-        (cat) => cat.name === editedReceipt.category
+      const matchedCategory = flatCategories.find(
+        (cat) => cat.name.replace(/--- /g, "") === editedReceipt.category
       );
       if (matchedCategory) {
         setEditedReceipt((prev) => ({
           ...prev,
           category_id: matchedCategory._id,
+          category: matchedCategory.name.replace(/--- /g, ""),
         }));
       }
     }
-  }, [categories]);
+  }, [categories, flatCategories]);
 
   const handleSave = () => {
     onUpdateReceipt(editedReceipt);
@@ -57,6 +63,14 @@ const ReceiptUI = ({
   };
 
   const handleConfirm = async () => {
+    if (!editedReceipt.category_id) {
+      Toast.show({
+        type: "error",
+        text1: "Please select a valid category.",
+      });
+      return;
+    }
+
     const transactionData = {
       amount: editedReceipt.total,
       category_id: editedReceipt.category_id as string,
@@ -171,18 +185,21 @@ const ReceiptUI = ({
             <Picker
               selectedValue={editedReceipt.category_id}
               onValueChange={(itemValue) => {
-                const selectedCategory = categories?.data?.find(
+                const selectedCategory = flatCategories.find(
                   (category) => category._id === itemValue
                 );
                 setEditedReceipt({
                   ...editedReceipt,
                   category_id: itemValue,
-                  category: selectedCategory ? selectedCategory.name : "",
+                  category: selectedCategory
+                    ? selectedCategory.name.replace(/--- /g, "")
+                    : "",
                 });
               }}
               style={{ width: 150 }}
             >
-              {categories?.data?.map((category) => (
+              <Picker.Item label="Select a category" value="" />
+              {flatCategories.map((category) => (
                 <Picker.Item
                   key={category._id}
                   label={category.name}
@@ -192,7 +209,7 @@ const ReceiptUI = ({
             </Picker>
           ) : (
             <Text className="text-gray-600 text-sm">
-              {editedReceipt.category}
+              {editedReceipt.category || "Not selected"}
             </Text>
           )}
         </View>
