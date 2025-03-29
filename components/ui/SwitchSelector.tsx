@@ -19,6 +19,7 @@ const SwitchTab: React.FC<SwitchTabsProps> = ({
 
   return (
     <SegmentedControl
+     testID="switch-tab"
       values={item}
       selectedIndex={selectedIndex}
       style={{ width: setWidth || "100%" }}
