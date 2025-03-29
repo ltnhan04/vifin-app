@@ -12,7 +12,7 @@ import RecentTransactionItem from "@/components/ui/RecentTransactionItem";
 import images from "@/constants/images";
 import { formatChartDate } from "@/utils/format-date";
 import { getBarColor } from "@/utils/get-color";
-import { formatCurrency } from "@/utils/format-currency";
+import { formatValue } from "@/utils/format-currency";
 import { ITransaction } from "@/types/transaction";
 import ModalDetailsTransaction from "@/components/common/transactions/ModalDetailsTransaction";
 import AddTransactionButton from "@/components/common/transactions/AddTransactionButton";
@@ -88,7 +88,7 @@ const ThisMonth = () => {
                       frontColor: barColor,
                       topLabelComponent: () => (
                         <Text className="text-white text-[12px] font-bold text-center mb-1">
-                          {formatCurrency(item.total, "VND")}
+                          {formatValue(item.total)}
                         </Text>
                       ),
                       onPress: () => {
@@ -107,6 +107,7 @@ const ThisMonth = () => {
                 showYAxisIndices
                 yAxisThickness={0.4}
                 xAxisThickness={1}
+                formatYLabel={(value) => formatValue(Number(value))}
                 maxValue={
                   (transactionsByMonth.data.totalAmount || 100000) * 1.2
                 }

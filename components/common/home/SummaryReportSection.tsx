@@ -138,7 +138,7 @@ const SummaryReportSection = ({
                 barWidth={40}
                 noOfSections={8}
                 barBorderRadius={6}
-                spacing={2}
+                spacing={12}
                 formatYLabel={(value) => formatValue(Number(value))}
                 data={chartData.flatMap((item) => [
                   {

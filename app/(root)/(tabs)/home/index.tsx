@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, Text, View, Image } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { LinearGradient } from "expo-linear-gradient";
 import BottomSheet from "@gorhom/bottom-sheet";

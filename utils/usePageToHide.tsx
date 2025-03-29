@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 const usePageToHide = () => {
-  return useMemo(() => ["profile", "categories"], []);
+  return useMemo(() => ["categories"], []);
 };
 
 export default usePageToHide;

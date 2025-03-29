@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { View } from "react-native";
 
 const CategoryLayout = () => {
@@ -29,6 +29,9 @@ const CategoryLayout = () => {
             tintColor: "#fff",
             textColor: "#fff",
             hintTextColor: "#ccc",
+            onChangeText(e) {
+              router.setParams({ search: e.nativeEvent.text });
+            },
           },
         }}
       />

@@ -40,8 +40,6 @@ const SettingsLayout = () => {
             ),
           }}
         />
-        <Stack.Screen name="wallet" />
-        <Stack.Screen name="categories" />
       </Stack>
     </LinearGradient>
   );

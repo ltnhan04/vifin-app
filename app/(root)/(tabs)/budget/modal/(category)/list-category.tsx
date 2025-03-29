@@ -1,20 +1,47 @@
 import { Text, TouchableOpacity, View, FlatList } from "react-native";
-import React from "react";
-import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "@/redux/hooks";
-import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi";
+import {
+  useGetCategoriesQuery,
+  useSearchCategoryByNameMutation,
+} from "@/redux/features/category/categoryApi";
 import Loading from "@/app/loading";
 import SubCategoryItem from "@/components/common/category/SubCategoryItem";
 import ParentCategoryItem from "@/components/common/category/ParentCategoryItem";
 import NoWallet from "@/components/ui/NoWallet";
+import { ICategory } from "@/types/category";
 
 const ListCategory = () => {
+  const params = useLocalSearchParams<{ search?: string }>();
   const { data, isFetching, isLoading } = useGetCategoriesQuery();
   const customerId = useAppSelector((state) => state.auth.user?.customerId);
+  const [foundCategories, setFoundCategories] = useState<ICategory[]>([]);
+  const [searchTrigger, { isLoading: isSearching }] =
+    useSearchCategoryByNameMutation();
 
-  if (isFetching || isLoading) {
+  useEffect(() => {
+    const handler = setTimeout(async () => {
+      if (params.search && params.search.length > 0) {
+        try {
+          const result = await searchTrigger({
+            name: params.search.toString(),
+          }).unwrap();
+          setFoundCategories(result.data);
+        } catch (error) {
+          console.error("Search failed:", error);
+        }
+      }
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [params.search]);
+
+  const displayData = params.search ? foundCategories : data?.data;
+
+  if (isFetching || isLoading || isSearching) {
     return <Loading />;
   }
 
@@ -33,7 +60,7 @@ const ListCategory = () => {
         </TouchableOpacity>
 
         <FlatList
-          data={data?.data}
+          data={displayData}
           keyExtractor={(item) => item._id}
           contentContainerStyle={{ paddingBottom: 50 }}
           showsVerticalScrollIndicator={false}

@@ -1,7 +1,7 @@
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 
 const OnboardingLayout = () => {
-  return <Stack />;
+  return <Slot />;
 };
 
 export default OnboardingLayout;

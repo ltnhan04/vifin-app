@@ -22,6 +22,14 @@ export const categoryApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    searchCategoryByName: builder.mutation<IResponseCategory, { name: string }>(
+      {
+        query: ({ name }) => ({
+          url: `/v1/category/search?q=${name}`,
+          method: "GET",
+        }),
+      }
+    ),
     createCategory: builder.mutation<
       IResponseChildrenCategory,
       Omit<ICategoryChildren, "_id">
@@ -98,4 +106,5 @@ export const {
   useDeleteCategoryMutation,
   useUpdateCategoryMutation,
   useGetCategoryQuery,
+  useSearchCategoryByNameMutation,
 } = categoryApi;
