@@ -3,16 +3,19 @@ import Toast from "react-native-toast-message";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FirebaseError } from "firebase/app";
-import { useCreateNewCustomerMutation } from "@/redux/features/customer/customerApi";
+import {
+  useCreateNewCustomerMutation,
+  useLazyGetCustomerQuery,
+} from "@/redux/features/customer/customerApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
-
 import Button from "@/components/ui/Button";
 import icons from "@/constants/icons";
 
 const GoogleLoginSection = () => {
   const dispatch = useAppDispatch();
   const [createNewCustomer] = useCreateNewCustomerMutation();
+  const [getCustomer] = useLazyGetCustomerQuery();
   const [isLoading, setIsLoading] = useState(false);
   const onGoogleButtonPress = async () => {
     setIsLoading(true);
@@ -29,31 +32,43 @@ const GoogleLoginSection = () => {
         const providerData = googleData.user.providerData.find(
           (value) => value.providerId
         );
+        const tokenResult = await googleData.user.getIdTokenResult();
+
         if (providerData) {
-          const newUser = {
-            full_name: providerData.displayName,
-            avatar: providerData.photoURL,
-            gender: "male",
-            email: providerData?.email,
-            provider: providerData.providerId,
-          };
-          const tokenResult = await googleData.user.getIdTokenResult();
-          dispatch(
-            setUser({
-              token: tokenResult.token,
-              user: { ...newUser, customerId: googleData.user.uid },
-            })
-          );
-          const response = await createNewCustomer(newUser).unwrap();
-          dispatch(
-            setUser({
-              token: tokenResult.token,
-              user: { ...response.data, customerId: response.data._id },
-            })
-          );
+          const { data: existingUser } = await getCustomer({
+            customerId: providerData.uid,
+          });
+
+          if (existingUser) {
+            dispatch(
+              setUser({
+                token: tokenResult.token,
+                user: {
+                  ...existingUser.data,
+                  customerId: existingUser.data._id,
+                },
+              })
+            );
+          } else {
+            const newUser = {
+              full_name: providerData.displayName,
+              avatar: providerData.photoURL,
+              gender: "male",
+              email: providerData?.email,
+              provider: providerData.providerId,
+            };
+            const response = await createNewCustomer(newUser).unwrap();
+            dispatch(
+              setUser({
+                token: tokenResult.token,
+                user: { ...response.data, customerId: response.data._id },
+              })
+            );
+          }
+
           Toast.show({
             type: "success",
-            text1: "Sign Up Successfully!",
+            text1: "Sign In Successfully!",
           });
         }
       }

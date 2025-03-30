@@ -43,7 +43,9 @@ const EmailLoginSection = () => {
       if (signInUser.user) {
         const customerId = signInUser.user.uid;
         const tokenResult = await signInUser.user.getIdTokenResult();
-        const customerResponse = await getCustomer(customerId).unwrap();
+        const customerResponse = await getCustomer({
+          customerId: customerId as string,
+        }).unwrap();
 
         dispatch(
           setUser({
@@ -64,7 +66,7 @@ const EmailLoginSection = () => {
       console.log(err.message);
       Toast.show({
         type: "error",
-        text1: "Sign In Failed" + err.message, //log message
+        text1: "Sign In Failed" + err.message,
       });
     } finally {
       setIsLoading(false);
