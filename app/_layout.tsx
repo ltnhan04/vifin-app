@@ -15,9 +15,12 @@ import SplashScreen from "@/app/splash-screen";
 import "./global.css";
 
 export default function RootLayout() {
-  GoogleSignin.configure({
-    webClientId: process.env.EXPO_PUBLIC_CLIENT_ID,
-  });
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: process.env.EXPO_PUBLIC_CLIENT_ID,
+    });
+  }, []);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
@@ -29,13 +32,14 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    if (!fontsLoaded) return;
     configureReanimatedLogger({ strict: false });
-    if (fontsLoaded) {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [fontsLoaded]);
 
   return isLoading ? (
