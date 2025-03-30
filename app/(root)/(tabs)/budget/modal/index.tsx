@@ -49,7 +49,6 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
     },
   });
   const onSubmit: SubmitHandler<BudgetType> = async (data) => {
-    console.log(data);
     try {
       const response = await createBudget(data).unwrap();
       if (response.data) {
