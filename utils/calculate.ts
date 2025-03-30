@@ -15,6 +15,9 @@ export const calculateBudget = (budgetData: IBudgetByRepeatType[]) => {
 };
 
 export const calculateExpense = (goalAmount: number, currentAmount: number) => {
+  if (goalAmount <= 0) {
+    return { remainingAmount: 0, percentage: 0, progress: 0 };
+  }
   const remainingAmount = goalAmount - currentAmount;
   const progress = currentAmount / goalAmount;
   const percentage = Math.round(progress * 100);

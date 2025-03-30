@@ -52,45 +52,48 @@ const CreateWallet = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-        <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
+    <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+      <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+        >
           <ScrollView
             contentContainerStyle={{
+              flexGrow: 1,
               paddingHorizontal: 24,
               paddingBottom: 24,
-              height: "100%",
             }}
             showsVerticalScrollIndicator={false}
           >
-            <InputWalletName
-              disabled={isLoading}
-              control={control}
-              errors={errors}
-            />
-            <SelectCurrencyUnit control={control} errors={errors} />
-            <InputWalletAmount
-              disabled={isLoading}
-              control={control}
-              errors={errors}
-            />
-            <View style={{ marginTop: "auto" }}>
-              <ButtonSubmit
-                title="Save"
-                isLoading={isLoading}
-                isDisabled={isLoading}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
+            <View style={{ flex: 1 }}>
+              <InputWalletName
+                disabled={isLoading}
+                control={control}
+                errors={errors}
               />
+              <SelectCurrencyUnit control={control} errors={errors} />
+              <InputWalletAmount
+                disabled={isLoading}
+                control={control}
+                errors={errors}
+              />
+              <View style={{ marginTop: "auto" }}>
+                <ButtonSubmit
+                  title="Save"
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={handleSubmit(onSubmit)}
+                />
+              </View>
             </View>
           </ScrollView>
-        </SafeAreaView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
