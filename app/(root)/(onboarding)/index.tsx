@@ -11,7 +11,6 @@ import {
 import React, { useState, useRef } from "react";
 import { router } from "expo-router";
 import { BlurView } from "expo-blur";
-import { useAppDispatch } from "@/redux/hooks";
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,7 +43,6 @@ const onboardingData: OnboardingItem[] = [
 
 const OnboardingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const dispatch = useAppDispatch();
   const flatListRef = useRef<FlatList<OnboardingItem>>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -172,7 +170,7 @@ const OnboardingScreen = () => {
           onPress={handleNext}
           className="bg-primary-brighterBlue px-8 py-3 rounded-full"
         >
-          <Text className="text-white font-medium text-base">
+          <Text className="text-white font-medium transition-all duration-300 ease-in-out text-base">
             {currentIndex === onboardingData.length - 1
               ? "Get Started"
               : "Next"}
