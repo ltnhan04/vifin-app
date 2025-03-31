@@ -4,7 +4,6 @@ import Toast from "react-native-toast-message";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import auth from "@react-native-firebase/auth";
-import { FirebaseError } from "firebase/app";
 import { useLazyGetCustomerQuery } from "@/redux/features/customer/customerApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/authSlice";
@@ -32,7 +31,7 @@ const EmailLoginSection = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<SignInType> = async (data: SignInType) => {
+  const onSubmit: SubmitHandler<SignInType> = async (data) => {
     setIsLoading(true);
     try {
       const { email, password } = data;
@@ -40,33 +39,38 @@ const EmailLoginSection = () => {
         email,
         password
       );
-      if (signInUser.user) {
-        const customerId = signInUser.user.uid;
-        const tokenResult = await signInUser.user.getIdTokenResult();
-        const customerResponse = await getCustomer({
-          customerId: customerId as string,
-        }).unwrap();
-
-        dispatch(
-          setUser({
-            token: tokenResult.token,
-            user: {
-              ...customerResponse.data,
-              customerId: customerResponse.data._id,
-            },
-          })
-        );
+      if (!signInUser.user) {
+        throw new Error("User authentication failed");
       }
+      const customerId = signInUser.user.uid;
+      const [tokenResult, customerResponse] = await Promise.all([
+        signInUser.user.getIdTokenResult(),
+        getCustomer({ customerId }).unwrap(),
+      ]);
+
+      if (!customerResponse?.data) {
+        throw new Error("User data not found");
+      }
+      dispatch(
+        setUser({
+          token: tokenResult.token,
+          user: {
+            ...customerResponse.data,
+            customerId: customerResponse.data._id || customerId,
+          },
+        })
+      );
+
       Toast.show({
         type: "success",
         text1: "Sign In Successfully!",
       });
     } catch (error: any) {
-      const err = error as FirebaseError;
-      console.log(err.message);
+      console.error("Sign In Error:", error);
       Toast.show({
         type: "error",
-        text1: "Sign In Failed" + err.message,
+        text1: "Sign In Failed",
+        text2: error?.message || "Please try again later.",
       });
     } finally {
       setIsLoading(false);

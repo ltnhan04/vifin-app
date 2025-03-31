@@ -17,10 +17,12 @@ export const customerApi = baseApi.injectEndpoints({
     }),
 
     getCustomer: builder.query<ResponseCustomerType, { customerId: string }>({
-      query: (customerId) => ({
-        url: `/v1/customer/${customerId}`,
-        method: "GET",
-      }),
+      query: ({ customerId }) => {
+        return {
+          url: `/v1/customer/${customerId}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Customer"],
     }),
     updateCustomer: builder.mutation<
