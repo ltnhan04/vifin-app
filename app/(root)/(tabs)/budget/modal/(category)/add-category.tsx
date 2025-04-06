@@ -40,12 +40,18 @@ const AddCategory = () => {
       if (response.data) {
         Toast.show({
           type: "success",
-          text1: response.message,
+          text1: "Category created!",
+          text2: "You’re now one step closer to better budgeting 💡",
         });
       }
       router.back();
     } catch (error) {
       console.error("Error creating category:", error);
+      Toast.show({
+        type: "error",
+        text1: "Couldn’t create category",
+        text2: "Please try again later.",
+      });
     }
   };
   return (

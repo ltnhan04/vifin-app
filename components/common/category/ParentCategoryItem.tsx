@@ -42,13 +42,16 @@ const ParentCategoryItem = ({
               await deleteCategory({ id: categoryId }).unwrap();
               Toast.show({
                 type: "success",
-                text1: "Category has been deleted successfully!",
+                text1: "Category deleted",
+                text2: "It’s been removed from your list.",
               });
             } catch (error) {
-              Alert.alert(
-                "Error",
-                "Failed to delete category. Please try again."
-              );
+              console.error(error);
+              Toast.show({
+                type: "error",
+                text1: "Delete failed",
+                text2: "Please try again.",
+              });
             }
           },
           style: "destructive",

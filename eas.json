@@ -28,9 +28,6 @@
     },
     "production": {
       "autoIncrement": true,
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@GOOGLE_SERVICES_JSON"
-      },
       "channel": "production"
     }
   },

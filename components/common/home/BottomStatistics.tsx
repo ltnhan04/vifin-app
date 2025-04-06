@@ -27,7 +27,7 @@ const BottomStatistics = ({
   return (
     <BottomSheet
       ref={bottomRef}
-      snapPoints={["25%", "50%", "70%"]}
+      snapPoints={["25%", "50%", "75%"]}
       maxDynamicContentSize={2}
       index={0}
       backdropComponent={renderBackdrop}
@@ -37,16 +37,11 @@ const BottomStatistics = ({
         style={{
           flex: 1,
           paddingHorizontal: 24,
-          paddingVertical: 16,
+          paddingVertical: 8,
           alignItems: "center",
         }}
       >
         <>
-          <View className="flex flex-row items-center justify-between w-full">
-            <Text className="text-center w-full font-semibold text-black text-2xl">
-              <Image source={icons.columnChart} className="size-9" /> Statistics
-            </Text>
-          </View>
           <AllStatistics />
         </>
       </BottomSheetView>

@@ -63,14 +63,15 @@ const EmailLoginSection = () => {
 
       Toast.show({
         type: "success",
-        text1: "Sign In Successfully!",
+        text1: "Welcome back 👋",
+        text2: "You’re all set to manage your finances.",
       });
     } catch (error: any) {
       console.error("Sign In Error:", error);
       Toast.show({
         type: "error",
-        text1: "Sign In Failed",
-        text2: error?.message || "Please try again later.",
+        text1: "Oops! Something went wrong",
+        text2: "Please double-check your info and try again.",
       });
     } finally {
       setIsLoading(false);

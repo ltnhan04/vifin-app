@@ -9,9 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { store, persistor } from "../redux/store";
 import AuthListener from "@/utils/AuthListener";
-
 import SplashScreen from "@/app/splash-screen";
-
 import "./global.css";
 
 export default function RootLayout() {
@@ -34,11 +32,9 @@ export default function RootLayout() {
   useEffect(() => {
     if (!fontsLoaded) return;
     configureReanimatedLogger({ strict: false });
-
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-
     return () => clearTimeout(timer);
   }, [fontsLoaded]);
 

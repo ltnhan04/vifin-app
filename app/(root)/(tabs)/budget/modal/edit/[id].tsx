@@ -88,12 +88,20 @@ const EditBudget = () => {
         newBudget: { ...data },
       }).unwrap();
       if (response.data) {
-        Toast.show({ type: "success", text1: "Budget updated successfully!" });
+        Toast.show({
+          type: "success",
+          text1: "Budget updated",
+          text2: "Adjustments saved successfully.",
+        });
       }
       router.back();
     } catch (error) {
       console.error("Error updating budget:", error);
-      Toast.show({ type: "error", text1: "Failed to update budget." });
+      Toast.show({
+        type: "error",
+        text1: "Couldn’t create budget",
+        text2: "Try again shortly.",
+      });
     }
   };
 

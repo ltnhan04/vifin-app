@@ -81,15 +81,18 @@ const SignUp = () => {
           );
           Toast.show({
             type: "success",
-            text1: "Sign Up Successfully!",
+            text1: "Welcome back 👋",
+            text2: "You’re all set to manage your finances.",
           });
         }
       }
     } catch (error: any) {
       const err = error as FirebaseError;
+      console.error(err);
       Toast.show({
         type: "error",
-        text1: "Registration failed: " + err.message,
+        text1: "Oops! Something went wrong",
+        text2: "Please double-check your info and try again.",
       });
     } finally {
       setIsLoading(false);

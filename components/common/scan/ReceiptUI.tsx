@@ -87,7 +87,8 @@ const ReceiptUI = ({
       if (response.data) {
         Toast.show({
           type: "success",
-          text1: "Transaction created successfully!",
+          text1: "Transaction added",
+          text2: "Keep tracking your spending!",
         });
         router.push("/(root)/(tabs)/transactions/(top-tabs)");
         resetReceipt();
@@ -96,7 +97,8 @@ const ReceiptUI = ({
       console.error("Transaction error:", error);
       Toast.show({
         type: "error",
-        text1: "Failed to create transaction.",
+        text1: "Couldn’t add transaction",
+        text2: "Please try again.",
       });
     }
   };

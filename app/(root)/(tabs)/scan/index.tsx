@@ -37,7 +37,10 @@ const ScanScreen = () => {
       }
     } catch (error) {
       console.error("Error recognizing text from image: ", error);
-      Alert.alert("Error", "An error occurred during text recognition.");
+      Alert.alert(
+        "Oops!",
+        "We had trouble recognizing the text. Mind giving it another go?"
+      );
     } finally {
       setLoading(false);
     }

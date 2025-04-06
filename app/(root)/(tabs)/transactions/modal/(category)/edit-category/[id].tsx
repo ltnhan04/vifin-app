@@ -64,17 +64,19 @@ const EditCategory = () => {
 
       Toast.show({
         type: "success",
-        text1: response.message,
+        text1: "Category updated",
+        text2: "Changes saved successfully.",
       });
 
       setIsEditing(false);
       router.back();
     } catch (error: any) {
       const errorMessage = error?.data?.message;
+      console.error(errorMessage);
       Toast.show({
         type: "error",
-        text1: "Error updating category",
-        text2: errorMessage,
+        text1: "Update failed",
+        text2: "We couldn’t save your changes.",
       });
     }
   };

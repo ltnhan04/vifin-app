@@ -54,12 +54,18 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
       if (response.data) {
         Toast.show({
           type: "success",
-          text1: response.message,
+          text1: "Nice! Your wallet is ready 🎉",
+          text2: "Let’s add your first transaction.",
         });
       }
       router.back();
     } catch (error) {
       console.error("Error creating wallet:", error);
+      Toast.show({
+        type: "error",
+        text1: "Something went wrong",
+        text2: "We couldn’t create your wallet. Try again soon.",
+      });
     }
   };
   return (

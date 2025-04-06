@@ -70,17 +70,19 @@ const EditTransaction = () => {
 
       Toast.show({
         type: "success",
-        text1: response.message,
+        text1: "Transaction updated",
+        text2: "Your spending info was updated.",
       });
 
       setIsEditing(false);
       router.back();
     } catch (error: any) {
       const errorMessage = error?.data?.message || "Something went wrong";
+      console.error(errorMessage);
       Toast.show({
         type: "error",
-        text1: "Error updating transaction",
-        text2: errorMessage,
+        text1: "Update failed",
+        text2: "Try again later.",
       });
     }
   };

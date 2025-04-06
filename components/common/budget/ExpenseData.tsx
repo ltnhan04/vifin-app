@@ -41,8 +41,9 @@ const ExpenseData = ({
         onPress: async () => {
           await deleteBudget({ id: budgetId });
           Toast.show({
-            type: "success",
-            text1: "Deleted budget successfully",
+            type: "error",
+            text1: "Delete failed",
+            text2: "Couldn’t remove this budget.",
           });
         },
       },
