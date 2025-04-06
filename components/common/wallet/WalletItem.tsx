@@ -46,13 +46,16 @@ const WalletItem: React.FC<WalletItemProps> = ({
               dispatch(clearSelectedWallet());
               Toast.show({
                 type: "success",
-                text1: "Wallet has been deleted successfully!",
+                text1: "Wallet deleted",
+                text2: "That wallet is no longer available.",
               });
             } catch (error) {
-              Alert.alert(
-                "Error",
-                "Failed to delete wallet. Please try again."
-              );
+              console.error(error);
+              Toast.show({
+                type: "error",
+                text1: "Failed to delete wallet",
+                text2: "Please check and try again.",
+              });
             }
           },
           style: "destructive",

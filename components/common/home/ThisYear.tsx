@@ -43,14 +43,14 @@ const ThisYear = () => {
   const chartData = processChartData();
   return (
     <SafeAreaView style={androidSafeArea.androidSafeArea}>
-      <View className="w-full flex items-center justify-center mb-4">
+      <View className="w-full flex items-center justify-center">
         <LegendSection textColor="#000" />
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {isFetching ? (
           <View
             className="w-full h-64 flex items-center justify-center"
-            style={{ minWidth: screenWidth - 50 }}
+            style={{ minWidth: screenWidth - 70 }}
           >
             <ActivityIndicator size="large" color="#6BBFFF" />
             <Text className="text-white text-sm mt-2">Loading...</Text>

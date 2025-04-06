@@ -46,6 +46,16 @@ export const customerApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Customer"],
     }),
+    updatePushToken: builder.mutation<
+      ResponseCustomerType,
+      { uid: string; pushToken: string }
+    >({
+      query: ({ uid, pushToken }) => ({
+        url: `/v1/customers/push-token`,
+        method: "POST",
+        body: { uid, pushToken },
+      }),
+    }),
   }),
 });
 
@@ -54,4 +64,5 @@ export const {
   useGetCustomerQuery,
   useLazyGetCustomerQuery,
   useUpdateCustomerMutation,
+  useUpdatePushTokenMutation,
 } = customerApi;

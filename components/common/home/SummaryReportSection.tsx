@@ -123,8 +123,8 @@ const SummaryReportSection = ({
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {isWalletFetching || isWalletLoading || isFetchingWeek ? (
             <View
-              className="w-full h-64 flex items-center justify-center"
-              style={{ minWidth: screenWidth - 50 }}
+              className="w-full h-64 flex items-center justify-center mx-auto"
+              style={{ minWidth: screenWidth - 70 }}
             >
               <ActivityIndicator size="large" color="#6BBFFF" />
               <Text className="text-white text-sm mt-2">Loading...</Text>
@@ -134,7 +134,7 @@ const SummaryReportSection = ({
           ) : (
             <View className="flex flex-col items-center justify-center py-4">
               <BarChart
-                width={Math.max(screenWidth - 50, chartData.length * 100)}
+                width={Math.max(screenWidth - 70, chartData.length * 100)}
                 barWidth={40}
                 noOfSections={8}
                 barBorderRadius={6}

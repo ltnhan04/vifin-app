@@ -32,13 +32,15 @@ const RecentTransactionItem = ({
               }).unwrap();
               Toast.show({
                 type: "success",
-                text1: "Transaction has been deleted successfully!",
+                text1: "Transaction deleted",
+                text2: "It's been removed from your history.",
               });
             } catch (error) {
-              Alert.alert(
-                "Error",
-                "Failed to delete transaction. Please try again."
-              );
+              Toast.show({
+                type: "error",
+                text1: "Failed to delete transaction",
+                text2: "Please try again later.",
+              });
             }
           },
         },

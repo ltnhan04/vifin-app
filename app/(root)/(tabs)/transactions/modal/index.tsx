@@ -52,12 +52,19 @@ const CreateTransaction = ({
       if (response.data) {
         Toast.show({
           type: "success",
-          text1: response.message,
+          text1: "Transaction added",
+          text2: "Keep tracking your spending!",
         });
+
         router.back();
       }
     } catch (error) {
       console.error("Error creating transaction:", error);
+      Toast.show({
+        type: "error",
+        text1: "Couldn’t add transaction",
+        text2: "Please try again.",
+      });
     }
   };
   return (

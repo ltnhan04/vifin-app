@@ -42,13 +42,15 @@ const SubCategoryItem = ({
               await deleteCategory({ id: categoryId }).unwrap();
               Toast.show({
                 type: "success",
-                text1: "Subcategory has been deleted successfully!",
+                text1: "Subcategory created!",
+                text2: "Now your categories are even more organized 📂",
               });
             } catch (error) {
-              Alert.alert(
-                "Error",
-                "Failed to delete subcategory. Please try again."
-              );
+              Toast.show({
+                type: "error",
+                text1: "Failed to create subcategory",
+                text2: "Please try again.",
+              });
             }
           },
           style: "destructive",

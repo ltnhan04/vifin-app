@@ -36,14 +36,16 @@ const LogoutSection = () => {
       dispatch(setLogout());
       Toast.show({
         type: "success",
-        text1: "Logout Successfully!",
+        text1: "Signed out successfully",
+        text2: "Hope to see you again soon 👋",
       });
-      router.replace("/(auth)/sign-in");
+      router.replace("/(root)/(auth)/sign-in");
     } catch (error: any) {
       const err = error as FirebaseError;
       Toast.show({
         type: "error",
-        text1: "Logout Failed" + err.message,
+        text1: "Logout failed",
+        text2: "Please try again in a moment.",
       });
     }
   };

@@ -43,7 +43,7 @@ const AllStatistics = () => {
                   style={[
                     style,
                     {
-                      fontSize: 14,
+                      fontSize: 13,
                       color: focused ? "#57A9D1" : "#000",
                       fontWeight: "600",
                     },
@@ -60,7 +60,7 @@ const AllStatistics = () => {
                   style={[
                     style,
                     {
-                      fontSize: 14,
+                      fontSize: 13,
                       color: focused ? "#57A9D1" : "#000",
                       fontWeight: "600",
                     },
@@ -77,7 +77,7 @@ const AllStatistics = () => {
                   style={[
                     style,
                     {
-                      fontSize: 14,
+                      fontSize: 13,
                       color: focused ? "#57A9D1" : "#000",
                       fontWeight: "600",
                     },

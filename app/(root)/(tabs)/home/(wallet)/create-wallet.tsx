@@ -42,12 +42,18 @@ const CreateWallet = () => {
       if (response.data) {
         Toast.show({
           type: "success",
-          text1: response.message,
+          text1: "Wallet created successfully!",
+          text2: "Let’s manage your money smartly.",
         });
       }
       router.back();
     } catch (error) {
       console.error("Error creating wallet:", error);
+      Toast.show({
+        type: "error",
+        text1: "Couldn’t create wallet",
+        text2: "Try again in a moment.",
+      });
     }
   };
 

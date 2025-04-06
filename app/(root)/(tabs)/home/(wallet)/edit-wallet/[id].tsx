@@ -66,7 +66,8 @@ const EditWallet = () => {
       }).unwrap();
       Toast.show({
         type: "success",
-        text1: response.message,
+        text1: "Wallet updated",
+        text2: "Your changes were saved.",
       });
       setIsEditing(false);
       router.back();
@@ -74,8 +75,8 @@ const EditWallet = () => {
       const errorMessage = error?.data?.message;
       Toast.show({
         type: "error",
-        text1: "Error update wallet",
-        text2: errorMessage,
+        text1: "Failed to update wallet",
+        text2: "Please try again.",
       });
     }
   };
