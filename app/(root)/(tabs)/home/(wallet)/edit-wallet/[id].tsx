@@ -12,7 +12,7 @@ import {
 } from "@/redux/features/wallet/walletApi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { router, useLocalSearchParams } from "expo-router";
 import androidSafeArea from "@/utils/android-safe-area";
 import ButtonSubmit from "@/components/ui/Button";
@@ -64,19 +64,18 @@ const EditWallet = () => {
         id,
         newWallet: formData,
       }).unwrap();
-      Toast.show({
-        type: "success",
-        text1: "Wallet updated",
-        text2: "Your changes were saved.",
-      });
-      setIsEditing(false);
-      router.back();
+      if (response.data) {
+        toast.success("Wallet updated", {
+          description: "Your changes were saved.",
+        });
+        setIsEditing(false);
+        router.back();
+      }
     } catch (error: any) {
       const errorMessage = error?.data?.message;
-      Toast.show({
-        type: "error",
-        text1: "Failed to update wallet",
-        text2: "Please try again.",
+      console.error(errorMessage);
+      toast.error("Failed to update wallet", {
+        description: "Please try again.",
       });
     }
   };

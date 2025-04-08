@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, View, KeyboardAvoidingView } from "react-native";
-import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useCreateCategoryMutation } from "@/redux/features/category/categoryApi";
@@ -8,10 +7,11 @@ import { CategoryType, categorySchema } from "@/schema/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppSelector } from "@/redux/hooks";
 import ButtonSubmit from "@/components/ui/Button";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import InputCategoryName from "@/components/common/category/InputCategoryName";
 import SelectTransactionType from "@/components/common/category/SelectTransactionType";
 import SelectParentCategory from "@/components/common/category/SelectParentCategory";
+import { router } from "expo-router";
 
 const AddCategory = () => {
   const customerId = useAppSelector((state) => state.auth.user?.customerId);
@@ -38,19 +38,15 @@ const AddCategory = () => {
         createdBy: customerId,
       }).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Category created!",
-          text2: "You’re now one step closer to better budgeting 💡",
+        toast.success("Category created!", {
+          description: "You’re now one step closer to better budgeting 💡",
         });
       }
       router.back();
     } catch (error) {
-      console.error("Error creating category:", error);
-      Toast.show({
-        type: "error",
-        text1: "Couldn’t create category",
-        text2: "Please try again later.",
+      console.error("Create Category Error:", error);
+      toast.error("Couldn’t create category", {
+        description: "Please try again later.",
       });
     }
   };

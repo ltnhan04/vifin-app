@@ -1,5 +1,5 @@
-import { View, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
+import { View, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,8 +13,9 @@ import InputCategoryName from "@/components/common/category/InputCategoryName";
 import SelectTransactionType from "@/components/common/category/SelectTransactionType";
 import SelectParentCategory from "@/components/common/category/SelectParentCategory";
 import ButtonSubmit from "@/components/ui/Button";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import Loading from "@/app/loading";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const EditCategory = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -61,22 +62,16 @@ const EditCategory = () => {
         id,
         categoryData: formData,
       }).unwrap();
-
-      Toast.show({
-        type: "success",
-        text1: "Category updated",
-        text2: "Changes saved successfully.",
+      toast.success("Category updated", {
+        description: "Changes saved successfully.",
       });
-
       setIsEditing(false);
       router.back();
     } catch (error: any) {
       const errorMessage = error?.data?.message;
-      console.error(errorMessage);
-      Toast.show({
-        type: "error",
-        text1: "Update failed",
-        text2: "We couldn’t save your changes.",
+      console.error("Update Category Error:", errorMessage);
+      toast.error("Update failed", {
+        description: "We couldn’t save your changes.",
       });
     }
   };
@@ -86,58 +81,60 @@ const EditCategory = () => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: 24,
-            paddingBottom: 16,
-            height: "100%",
-          }}
-        >
-          <View
-            className="flex flex-col justify-between mt-4"
-            style={{ flex: 1 }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              paddingBottom: 16,
+              height: "100%",
+            }}
           >
-            <View className="flex flex-col gap-y-2">
-              <InputCategoryName
-                control={control}
-                errors={errors}
-                disabled={!isEditing || isUpdating}
-              />
-              <SelectTransactionType
-                transactionType={data?.data.transaction_type as string}
-                control={control}
-              />
-              <SelectParentCategory control={control} />
-            </View>
+            <View
+              className="flex flex-col justify-between mt-4"
+              style={{ flex: 1 }}
+            >
+              <View className="flex flex-col gap-y-2">
+                <InputCategoryName
+                  control={control}
+                  errors={errors}
+                  disabled={!isEditing || isUpdating}
+                />
+                <SelectTransactionType
+                  transactionType={data?.data.transaction_type as string}
+                  control={control}
+                />
+                <SelectParentCategory control={control} />
+              </View>
 
-            {isEditing ? (
-              <ButtonSubmit
-                title="Save Changes"
-                isLoading={isUpdating}
-                isDisabled={isUpdating}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
-              />
-            ) : (
-              <ButtonSubmit
-                title="Update Category"
-                isLoading={false}
-                isDisabled={false}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={() => setIsEditing(true)}
-              />
-            )}
-          </View>
-        </ScrollView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+              {isEditing ? (
+                <ButtonSubmit
+                  title="Save Changes"
+                  isLoading={isUpdating}
+                  isDisabled={isUpdating}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={handleSubmit(onSubmit)}
+                />
+              ) : (
+                <ButtonSubmit
+                  title="Update Category"
+                  isLoading={false}
+                  isDisabled={false}
+                  background="#6BBFFF"
+                  textColor="white"
+                  handleOnPress={() => setIsEditing(true)}
+                />
+              )}
+            </View>
+          </ScrollView>
+        </LinearGradient>
+      </KeyboardAvoidingView>
+    </GestureHandlerRootView>
   );
 };
 

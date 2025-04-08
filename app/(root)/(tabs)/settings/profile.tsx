@@ -12,7 +12,7 @@ import {
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FirebaseError } from "firebase/app";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
@@ -87,13 +87,14 @@ const Profile = () => {
         },
       };
       await updateCustomer(payload).unwrap();
-      Toast.show({ type: "success", text1: "Profile Updated Successfully!" });
+      toast.success("Profile updated", {
+        description: "Your profile has been updated successfully.",
+      });
       setEdited(false);
     } catch (error: any) {
       const err = error as FirebaseError;
-      Toast.show({
-        type: "error",
-        text1: "Update Failed: " + err.message,
+      toast.error("Failed to update profile", {
+        description: err.message,
       });
     }
   };

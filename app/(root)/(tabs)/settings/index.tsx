@@ -13,7 +13,7 @@ import images from "@/constants/images";
 import androidSafeArea from "@/utils/android-safe-area";
 import SettingItem from "@/components/ui/SettingItem";
 import LogoutSection from "@/components/common/settings/LogoutSection";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 
 const Settings = () => {
   const router = useRouter();
@@ -22,10 +22,8 @@ const Settings = () => {
     if (!user) return;
 
     if (user.provider === "google.com") {
-      Toast.show({
-        type: "error",
-        text1: "Cannot edit Google-linked profile",
-        text2: "Please update information via Google account",
+      toast.error("Cannot edit Google-linked profile", {
+        description: "Please update information via Google account",
       });
       return;
     }

@@ -71,6 +71,9 @@ export const categoryApi = baseApi.injectEndpoints({
         if (categoryData.transaction_type) {
           formData.append("transaction_type", categoryData.transaction_type);
         }
+        if (categoryData.parent_id) {
+          formData.append("parent_id", categoryData.parent_id);
+        }
 
         if (categoryData.symbol) {
           const { fileName, type } = getFileInfo(categoryData.symbol);

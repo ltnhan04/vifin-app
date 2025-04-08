@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Alert } from "react-native";
 import { useRouter } from "expo-router";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import auth from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { useAppDispatch } from "@/redux/hooks";
@@ -34,18 +34,14 @@ const LogoutSection = () => {
     try {
       await auth().signOut();
       dispatch(setLogout());
-      Toast.show({
-        type: "success",
-        text1: "Signed out successfully",
-        text2: "Hope to see you again soon 👋",
+      toast.success("Logged out successfully", {
+        description: "See you again soon! 👋",
       });
       router.replace("/(root)/(auth)/sign-in");
     } catch (error: any) {
       const err = error as FirebaseError;
-      Toast.show({
-        type: "error",
-        text1: "Logout failed",
-        text2: "Please try again in a moment.",
+      toast.error("Logout failed", {
+        description: "Please try again later.",
       });
     }
   };
