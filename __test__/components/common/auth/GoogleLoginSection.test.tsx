@@ -18,9 +18,6 @@ jest.mock("@react-native-google-signin/google-signin", () => ({
   },
 }));
 
-jest.mock("react-native-toast-message", () => ({
-  show: jest.fn(),
-}));
 
 jest.mock("@/redux/features/customer/customerApi", () => ({
   useCreateNewCustomerMutation: jest.fn(() => [jest.fn()]),

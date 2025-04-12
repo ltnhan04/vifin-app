@@ -1,13 +1,13 @@
 import { View, Text, Image, Alert, TouchableOpacity } from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
+import { toast } from "sonner-native";
+import { router } from "expo-router";
 import { useDeleteTransactionMutation } from "@/redux/features/transaction/transactionApi";
 import Icon from "react-native-vector-icons/Ionicons";
 import { formatCurrency } from "@/utils/format-currency";
 import { formatDate } from "@/utils/format-date";
 import { ITransaction } from "@/types/transaction";
-import Toast from "react-native-toast-message";
-import { router } from "expo-router";
 
 const RecentTransactionItem = ({
   transaction,
@@ -30,16 +30,13 @@ const RecentTransactionItem = ({
               await deleteTransaction({
                 id: transaction._id,
               }).unwrap();
-              Toast.show({
-                type: "success",
-                text1: "Transaction deleted",
-                text2: "It's been removed from your history.",
+              toast.success("Transaction deleted", {
+                description: "It's been removed from your history.",
               });
             } catch (error) {
-              Toast.show({
-                type: "error",
-                text1: "Failed to delete transaction",
-                text2: "Please try again later.",
+              console.error("Delete Transaction Error:", error);
+              toast.error("Failed to delete transaction", {
+                description: "Please try again later.",
               });
             }
           },
@@ -52,65 +49,115 @@ const RecentTransactionItem = ({
     <BlurView
       intensity={30}
       tint="dark"
-      className="flex-row items-center p-4 rounded-xl mb-3"
+      className="p-4 rounded-xl mb-3"
       style={{
         backgroundColor: "rgba(255, 255, 255, 0.15)",
         borderWidth: 1,
         borderColor: "rgba(255,255,255,0.3)",
       }}
     >
-      <View className="mr-4">
-        <Image
-          source={{ uri: transaction.category.symbol }}
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: "rgba(255,255,255,0.2)",
-          }}
-          resizeMode="contain"
-        />
-      </View>
-
-      <View className="flex-1">
-        <Text className="text-white font-semibold text-xl" numberOfLines={1}>
-          {transaction.category.name}
-        </Text>
-
-        <View className="flex-row justify-between mt-2">
-          <Text className="text-gray-400 text-xl" numberOfLines={1}>
-            {transaction.wallet.wallet_name}
-          </Text>
-          <Text
-            className="text-lg font-semibold"
+      <View className="flex-row items-center">
+        <View className="mr-3">
+          <View
+            className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{
-              color:
+              backgroundColor:
                 transaction.transaction_type === "income"
-                  ? "#4CAF50"
-                  : "#F44336",
+                  ? "rgba(76, 175, 80, 0.2)"
+                  : "rgba(244, 67, 54, 0.2)",
+              borderWidth: 1,
+              borderColor:
+                transaction.transaction_type === "income"
+                  ? "rgba(76, 175, 80, 0.3)"
+                  : "rgba(244, 67, 54, 0.3)",
             }}
           >
-            {transaction.transaction_type === "income" ? "+" : "-"}
-            {formatCurrency(transaction.amount, "VND")}
-          </Text>
+            <Image
+              source={{ uri: transaction.category.symbol as string }}
+              style={{
+                width: 30,
+                height: 30,
+              }}
+              resizeMode="contain"
+            />
+          </View>
         </View>
 
-        <View className="flex-row justify-between items-center mt-2">
-          <Text className="text-gray-500 text-base font-bold">
-            {formatDate(new Date(transaction.createdAt._seconds * 1000))}
-          </Text>
-          <View className="flex-row items-center gap-x-3">
-            <TouchableOpacity
-              onPress={() =>
-                router.push(`/transactions/modal/${transaction?._id}`)
-              }
-            >
-              <Icon name="create-outline" size={22} color="#FFD700" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleDelete}>
-              <Icon name="trash-outline" size={22} color="#FF4C4C" />
-            </TouchableOpacity>
+        <View className="flex-1 mr-3">
+          <View className="flex-row justify-between items-start">
+            <View className="flex-1 mr-2">
+              <Text
+                className="text-white font-bold text-base"
+                numberOfLines={1}
+              >
+                {transaction.category.name}
+              </Text>
+              <View className="flex-row items-center mt-1">
+                <Icon
+                  name="wallet-outline"
+                  size={14}
+                  color="rgba(255,255,255,0.6)"
+                />
+                <Text className="text-white/60 text-sm ml-1" numberOfLines={1}>
+                  {transaction.wallet.wallet_name}
+                </Text>
+              </View>
+              {transaction.note && (
+                <Text className="text-white/40 text-xs mt-1" numberOfLines={1}>
+                  {transaction.note}
+                </Text>
+              )}
+            </View>
+            <View className="items-end">
+              <Text
+                className="text-base font-bold"
+                style={{
+                  color:
+                    transaction.transaction_type === "income"
+                      ? "#4CAF50"
+                      : "#F44336",
+                }}
+              >
+                {transaction.transaction_type === "income" ? "+" : "-"}
+                {formatCurrency(transaction.amount, "VND")}
+              </Text>
+              <View className="flex-row items-center mt-1">
+                <Icon
+                  name="time-outline"
+                  size={14}
+                  color="rgba(255,255,255,0.6)"
+                />
+                <Text className="text-white/60 text-xs ml-1">
+                  {formatDate(new Date(transaction.createdAt._seconds * 1000))}
+                </Text>
+              </View>
+            </View>
           </View>
+        </View>
+
+        <View className="flex-col gap-y-2">
+          <TouchableOpacity
+            onPress={() =>
+              router.push(`/transactions/modal/${transaction?._id}`)
+            }
+            className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"
+            style={{
+              borderWidth: 1,
+              borderColor: "rgba(255,255,255,0.3)",
+            }}
+          >
+            <Icon name="create-outline" size={16} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleDelete}
+            className="w-8 h-8 rounded-full bg-[#F44336]/20 flex items-center justify-center"
+            style={{
+              borderWidth: 1,
+              borderColor: "rgba(244,67,54,0.3)",
+            }}
+          >
+            <Icon name="trash-outline" size={16} color="#F44336" />
+          </TouchableOpacity>
         </View>
       </View>
     </BlurView>

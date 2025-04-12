@@ -11,7 +11,7 @@ import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -88,19 +88,15 @@ const EditBudget = () => {
         newBudget: { ...data },
       }).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Budget updated",
-          text2: "Adjustments saved successfully.",
+        toast.success("Budget updated", {
+          description: "Adjustments saved successfully.",
         });
       }
       router.back();
     } catch (error) {
-      console.error("Error updating budget:", error);
-      Toast.show({
-        type: "error",
-        text1: "Couldn’t create budget",
-        text2: "Try again shortly.",
+      console.error("Update Budget Error:", error);
+      toast.error("Failed to update budget", {
+        description: "Something went wrong.",
       });
     }
   };
@@ -117,7 +113,7 @@ const EditBudget = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={`${Platform.OS === "ios" ? "padding" : "height"}`}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <SafeAreaView style={androidSafeArea.androidSafeArea}>

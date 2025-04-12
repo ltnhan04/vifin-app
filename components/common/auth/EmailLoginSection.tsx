@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import auth from "@react-native-firebase/auth";
@@ -61,17 +61,13 @@ const EmailLoginSection = () => {
         })
       );
 
-      Toast.show({
-        type: "success",
-        text1: "Welcome back 👋",
-        text2: "You’re all set to manage your finances.",
+      toast.success("Welcome back 👋", {
+        description: "You're all set to manage your finances.",
       });
     } catch (error: any) {
       console.error("Sign In Error:", error);
-      Toast.show({
-        type: "error",
-        text1: "Oops! Something went wrong",
-        text2: "Please double-check your info and try again.",
+      toast.error("Oops! Something went wrong", {
+        description: "Please double-check your info and try again.",
       });
     } finally {
       setIsLoading(false);

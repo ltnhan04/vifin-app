@@ -1,19 +1,19 @@
-import { View, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
+import { View, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { LinearGradient } from "expo-linear-gradient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useGetCategoryQuery,
   useUpdateCategoryMutation,
 } from "@/redux/features/category/categoryApi";
 import { CategoryType, categorySchema } from "@/schema/category.schema";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { LinearGradient } from "expo-linear-gradient";
 import InputCategoryName from "@/components/common/category/InputCategoryName";
 import SelectTransactionType from "@/components/common/category/SelectTransactionType";
 import SelectParentCategory from "@/components/common/category/SelectParentCategory";
 import ButtonSubmit from "@/components/ui/Button";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import Loading from "@/app/loading";
 
 const EditCategory = () => {
@@ -61,22 +61,19 @@ const EditCategory = () => {
         id,
         categoryData: formData,
       }).unwrap();
-
-      Toast.show({
-        type: "success",
-        text1: "Category updated",
-        text2: "Changes saved successfully.",
-      });
-
-      setIsEditing(false);
-      router.back();
+      console.log(response);
+      if (response.data) {
+        toast.success("Category updated", {
+          description: "Changes saved successfully.",
+        });
+        setIsEditing(false);
+        router.back();
+      }
     } catch (error: any) {
       const errorMessage = error?.data?.message;
-      console.error(errorMessage);
-      Toast.show({
-        type: "error",
-        text1: "Update failed",
-        text2: "We couldn’t save your changes.",
+      console.error("Update Category Error:", errorMessage);
+      toast.error("Update failed", {
+        description: "We couldn’t save your changes.",
       });
     }
   };

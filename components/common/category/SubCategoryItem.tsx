@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   setSelectedCategory,
@@ -40,16 +40,13 @@ const SubCategoryItem = ({
           onPress: async () => {
             try {
               await deleteCategory({ id: categoryId }).unwrap();
-              Toast.show({
-                type: "success",
-                text1: "Subcategory created!",
-                text2: "Now your categories are even more organized 📂",
+              toast.success("Sub-category deleted", {
+                description: "The sub-category has been removed successfully.",
               });
             } catch (error) {
-              Toast.show({
-                type: "error",
-                text1: "Failed to create subcategory",
-                text2: "Please try again.",
+              console.error("Delete Sub-category Error:", error);
+              toast.error("Failed to delete sub-category", {
+                description: "Please try again later.",
               });
             }
           },

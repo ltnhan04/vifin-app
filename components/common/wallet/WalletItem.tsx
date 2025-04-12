@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { useAppDispatch } from "@/redux/hooks";
 import { useDeleteWalletMutation } from "@/redux/features/wallet/walletApi";
 import { clearSelectedWallet } from "@/redux/features/wallet/walletSlice";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { formatCurrency } from "@/utils/format-currency";
 import Loading from "@/app/loading";
 
@@ -44,17 +44,13 @@ const WalletItem: React.FC<WalletItemProps> = ({
             try {
               await deleteWallet({ id: _id }).unwrap();
               dispatch(clearSelectedWallet());
-              Toast.show({
-                type: "success",
-                text1: "Wallet deleted",
-                text2: "That wallet is no longer available.",
+              toast.success("Wallet deleted", {
+                description: "That wallet is no longer available.",
               });
             } catch (error) {
-              console.error(error);
-              Toast.show({
-                type: "error",
-                text1: "Failed to delete wallet",
-                text2: "Please check and try again.",
+              console.error("Delete Wallet Error:", error);
+              toast.error("Failed to delete wallet", {
+                description: "Please check and try again.",
               });
             }
           },

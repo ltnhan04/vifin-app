@@ -18,35 +18,35 @@ const HomeScreen = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={androidSafeArea.androidSafeArea}>
-        <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 1 }} contentContainerClassName="px-6 pb-6">
-            <View className="flex flex-row items-center justify-between my-6">
-              <View className="flex flex-row items-center">
+          <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }} contentContainerClassName="px-6 pb-6">
+              <View className="flex flex-row items-center justify-between my-6">
+                <View className="flex flex-row items-center">
+                  <Image
+                    source={icons.hello}
+                    className="size-7"
+                    resizeMode="contain"
+                  />
+                  <Text className="text-white font-rubik-medium text-xl ml-2">
+                    Welcome to{" "}
+                    <Text className="text-primary-brightBlue">ViFin</Text>
+                    <Text className="font-rubik-bold">, {user?.full_name}</Text>
+                  </Text>
+                </View>
                 <Image
-                  source={icons.hello}
-                  className="size-7"
+                  source={icons.bell}
                   resizeMode="contain"
+                  className="size-7"
                 />
-                <Text className="text-white font-rubik-medium text-xl ml-2">
-                  Welcome to{" "}
-                  <Text className="text-primary-brightBlue">ViFin</Text>
-                  <Text className="font-rubik-bold">, {user?.full_name}</Text>
-                </Text>
               </View>
-              <Image
-                source={icons.bell}
-                resizeMode="contain"
-                className="size-7"
+              <MyWalletSection />
+              <SummaryReportSection
+                handleOpenBottomSheet={() => bottomRef.current?.expand()}
               />
-            </View>
-            <MyWalletSection />
-            <SummaryReportSection
-              handleOpenBottomSheet={() => bottomRef.current?.expand()}
-            />
-            <TargetProgressSection />
-          </ScrollView>
-          <BottomStatistics bottomRef={bottomRef} />
-        </LinearGradient>
+              <TargetProgressSection />
+            </ScrollView>
+            <BottomStatistics bottomRef={bottomRef} />
+          </LinearGradient>
       </SafeAreaView>
     </GestureHandlerRootView>
   );

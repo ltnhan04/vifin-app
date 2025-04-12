@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { useCreateTransactionMutation } from "@/redux/features/transaction/transactionApi";
 import { useGetCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { useGetWalletsQuery } from "@/redux/features/wallet/walletApi";
@@ -64,9 +64,8 @@ const ReceiptUI = ({
 
   const handleConfirm = async () => {
     if (!editedReceipt.category_id) {
-      Toast.show({
-        type: "error",
-        text1: "Please select a valid category.",
+      toast.error("Please select a valid category.", {
+        description: "Please try again.",
       });
       return;
     }
@@ -85,20 +84,16 @@ const ReceiptUI = ({
     try {
       const response = await createTransaction(transactionData).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Transaction added",
-          text2: "Keep tracking your spending!",
+        toast.success("Transaction added", {
+          description: "Keep tracking your spending!",
         });
         router.push("/(root)/(tabs)/transactions/(top-tabs)");
         resetReceipt();
       }
     } catch (error) {
       console.error("Transaction error:", error);
-      Toast.show({
-        type: "error",
-        text1: "Couldn’t add transaction",
-        text2: "Please try again.",
+      toast.error("Couldn't add transaction", {
+        description: "Please try again.",
       });
     }
   };

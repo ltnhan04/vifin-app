@@ -9,7 +9,7 @@ import React from "react";
 import { useCreateNewWalletMutation } from "@/redux/features/wallet/walletApi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
@@ -40,19 +40,15 @@ const CreateWallet = () => {
     try {
       const response = await createNewWallet(data).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Wallet created successfully!",
-          text2: "Let’s manage your money smartly.",
+        toast.success("Wallet created successfully!", {
+          description: "Let’s manage your money smartly.",
         });
       }
       router.back();
     } catch (error) {
-      console.error("Error creating wallet:", error);
-      Toast.show({
-        type: "error",
-        text1: "Couldn’t create wallet",
-        text2: "Try again in a moment.",
+      console.error("Create Wallet Error:", error);
+      toast.error("Couldn’t create wallet", {
+        description: "Try again in a moment.",
       });
     }
   };

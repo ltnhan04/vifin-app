@@ -34,6 +34,7 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
     selectedBarData.total,
     selectedBarData.transactions
   );
+
   return (
     <Modal
       animationType="slide"
@@ -42,31 +43,34 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
       onRequestClose={setModalVisible}
     >
       <Pressable
-        className="flex-1 justify-center items-center bg-black/40"
+        className="flex-1 justify-center items-center bg-black/60"
         onPress={setModalVisible}
       >
         <View
-          className="bg-[#081657] p-6 rounded-2xl w-11/12 max-w-lg shadow-lg border border-[#6BBFFF]"
+          className="bg-[#081657] p-6 rounded-2xl w-11/12 max-w-lg shadow-2xl border border-[#6BBFFF]/30"
           onStartShouldSetResponder={() => true}
         >
-          <View className="flex flex-row items-start justify-between">
-            <View></View>
-            <Text className="text-xl font-semibold text-white mb-4 text-center">
+          <View className="flex flex-row items-center justify-between mb-6">
+            <View className="w-6" />
+            <Text className="text-xl font-semibold text-white text-center">
               {formatDueDate(selectedBarData.transactions[0].createdAt)}
             </Text>
-            <TouchableOpacity onPress={setModalVisible}>
-              <Ionicons name="close-outline" color={"white"} size={24} />
+            <TouchableOpacity
+              onPress={setModalVisible}
+              className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"
+            >
+              <Ionicons name="close" color={"white"} size={20} />
             </TouchableOpacity>
           </View>
 
           {selectedBarData && (
             <>
-              <View className="flex flex-row w-full items-center justify-center mt-4">
+              <View className="flex flex-row w-full items-center justify-center mb-8">
                 <PieChart
                   data={pieData}
                   donut
                   textSize={14}
-                  textColor="#444"
+                  textColor="#fff"
                   fontWeight="800"
                   radius={120}
                   focusOnPress
@@ -94,8 +98,10 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
                   }}
                   centerLabelComponent={() => (
                     <View className="flex items-center justify-center">
-                      <Text className="text-lg font-bold">Total</Text>
-                      <Text className="text-xl font-semibold text-primary-brighterBlue">
+                      <Text className="text-lg font-bold text-[#999999 ]">
+                        Total
+                      </Text>
+                      <Text className="text-2xl font-bold text-[#FF6B6B]">
                         {formatCurrency(selectedBarData.total, "VND")}
                       </Text>
                     </View>
@@ -103,20 +109,30 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
                 />
               </View>
 
-              <ScrollView className="max-h-96" indicatorStyle={"white"}>
-                {selectedBarData.transactions.length > 0 ? (
-                  selectedBarData.transactions.map((transaction, idx) => (
-                    <RecentTransactionItem
-                      key={idx}
-                      transaction={transaction}
-                    />
-                  ))
-                ) : (
-                  <Text className="text-gray-400 text-center">
-                    No transactions available
-                  </Text>
-                )}
-              </ScrollView>
+              <View className="bg-white/10 rounded-xl p-4 border border-white/10">
+                <Text className="text-white font-semibold mb-4">
+                  Transactions
+                </Text>
+                <ScrollView
+                  className="max-h-80"
+                  indicatorStyle={"white"}
+                  showsVerticalScrollIndicator={true}
+                >
+                  {selectedBarData.transactions.length > 0 ? (
+                    selectedBarData.transactions.map((transaction, idx) => (
+                      <View key={idx} className="mb-3 last:mb-0">
+                        <RecentTransactionItem transaction={transaction} />
+                      </View>
+                    ))
+                  ) : (
+                    <View className="py-8">
+                      <Text className="text-white/60 text-center">
+                        No transactions available
+                      </Text>
+                    </View>
+                  )}
+                </ScrollView>
+              </View>
             </>
           )}
         </View>
