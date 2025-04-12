@@ -9,7 +9,7 @@ import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { router } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -50,20 +50,15 @@ const CreateTransaction = ({
     try {
       const response = await createTransaction(data).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Transaction added",
-          text2: "Keep tracking your spending!",
+        toast.success("Transaction added", {
+          description: "Keep tracking your spending!",
         });
-
         router.back();
       }
     } catch (error) {
-      console.error("Error creating transaction:", error);
-      Toast.show({
-        type: "error",
-        text1: "Couldn’t add transaction",
-        text2: "Please try again.",
+      console.error("Create Transaction Error:", error);
+      toast.error("Couldn’t add transaction", {
+        description: "Please try again.",
       });
     }
   };

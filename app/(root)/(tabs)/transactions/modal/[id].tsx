@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import ButtonSubmit from "@/components/ui/Button";
@@ -67,22 +67,15 @@ const EditTransaction = () => {
         id,
         updateTransaction: data,
       }).unwrap();
-
-      Toast.show({
-        type: "success",
-        text1: "Transaction updated",
-        text2: "Your spending info was updated.",
-      });
-
-      setIsEditing(false);
-      router.back();
-    } catch (error: any) {
-      const errorMessage = error?.data?.message || "Something went wrong";
-      console.error(errorMessage);
-      Toast.show({
-        type: "error",
-        text1: "Update failed",
-        text2: "Try again later.",
+      if (response.data) {
+        toast.success("Transaction updated", {
+          description: "Your spending info was updated.",
+        });
+      }
+    } catch (error) {
+      console.error("Update Transaction Error:", error);
+      toast.error("Update failed", {
+        description: "Try again later.",
       });
     }
   };

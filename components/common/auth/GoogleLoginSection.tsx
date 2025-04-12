@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Toast from "react-native-toast-message";
+import { View } from "react-native";
+import { toast } from "sonner-native";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FirebaseError } from "firebase/app";
@@ -66,21 +67,16 @@ const GoogleLoginSection = () => {
             );
           }
 
-          Toast.show({
-            type: "success",
-            text1: "Welcome back 👋",
-            text2: "You’re all set to manage your finances.",
+          toast.success("Welcome back 👋", {
+            description: "You're all set to manage your finances.",
           });
         }
       }
       return googleData;
     } catch (error: any) {
-      const err = error as FirebaseError;
-      console.error(err);
-      Toast.show({
-        type: "error",
-        text1: "Oops! Something went wrong",
-        text2: "Please double-check your info and try again.",
+      console.error("Google Sign In Error:", error);
+      toast.error("Oops! Something went wrong", {
+        description: "Please try again later.",
       });
     } finally {
       setIsLoading(false);

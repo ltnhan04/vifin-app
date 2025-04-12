@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   setSelectedCategory,
@@ -40,17 +40,13 @@ const ParentCategoryItem = ({
           onPress: async () => {
             try {
               await deleteCategory({ id: categoryId }).unwrap();
-              Toast.show({
-                type: "success",
-                text1: "Category deleted",
-                text2: "It’s been removed from your list.",
+              toast.success("Category deleted", {
+                description: "The category has been removed successfully.",
               });
             } catch (error) {
-              console.error(error);
-              Toast.show({
-                type: "error",
-                text1: "Delete failed",
-                text2: "Please try again.",
+              console.error("Delete Category Error:", error);
+              toast.error("Failed to delete category", {
+                description: "Please try again later.",
               });
             }
           },

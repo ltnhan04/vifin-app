@@ -5,7 +5,7 @@ import images from "@/constants/images";
 
 const NoBudget = () => {
   return (
-    <View className="flex flex-col items-center justify-center mt-[35%]">
+    <View className="flex flex-col items-center justify-center mt-[30%]">
       <Image
         source={images.noBudget}
         resizeMode="contain"
@@ -20,6 +20,7 @@ const NoBudget = () => {
       <TouchableOpacity
         className="mt-6 bg-primary px-6 py-3 rounded-lg bg-primary-brighterBlue shadow-lg"
         onPress={() => router.push("/(root)/(tabs)/budget/modal")}
+        activeOpacity={0.7}
       >
         <Text className="text-white text-lg font-bold">Add Budget</Text>
       </TouchableOpacity>

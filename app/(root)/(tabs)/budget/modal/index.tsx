@@ -10,7 +10,7 @@ import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { router } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -52,19 +52,15 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
     try {
       const response = await createBudget(data).unwrap();
       if (response.data) {
-        Toast.show({
-          type: "success",
-          text1: "Nice! Your wallet is ready 🎉",
-          text2: "Let’s add your first transaction.",
+        toast.success("Budget created", {
+          description: "Let’s stay on top of your goals 🎯.",
         });
       }
       router.back();
     } catch (error) {
-      console.error("Error creating wallet:", error);
-      Toast.show({
-        type: "error",
-        text1: "Something went wrong",
-        text2: "We couldn’t create your wallet. Try again soon.",
+      console.error("Create Budget Error:", error);
+      toast.error("Couldn’t create budget", {
+        description: "Try again shortly.",
       });
     }
   };
@@ -72,7 +68,7 @@ const AddBudget = ({ handleCloseModal }: { handleCloseModal?: () => void }) => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={`${Platform.OS === "ios" ? "padding" : "height"}`}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
           <SafeAreaView style={androidSafeArea.androidSafeArea}>

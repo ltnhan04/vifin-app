@@ -2,7 +2,7 @@ import { View, Text, Image, Alert, TouchableOpacity } from "react-native";
 import React from "react";
 import { ProgressBar } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Toast from "react-native-toast-message";
+import { toast } from "sonner-native";
 import { useDeleteBudgetMutation } from "@/redux/features/budget/budgetApi";
 import { formatCurrency } from "@/utils/format-currency";
 import { getColorForValue, lightenColor } from "@/utils/get-color";
@@ -39,12 +39,17 @@ const ExpenseData = ({
         text: "Delete",
         style: "destructive",
         onPress: async () => {
-          await deleteBudget({ id: budgetId });
-          Toast.show({
-            type: "error",
-            text1: "Delete failed",
-            text2: "Couldn’t remove this budget.",
-          });
+          try {
+            await deleteBudget({ id: budgetId });
+            toast.success("Budget removed", {
+              description: "Hope you’re adjusting your plan!",
+            });
+          } catch (error) {
+            console.error("Delete Budget Error:", error);
+            toast.error("Delete failed", {
+              description: "Couldn’t remove this budget.",
+            });
+          }
         },
       },
     ]);
