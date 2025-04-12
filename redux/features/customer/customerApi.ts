@@ -51,7 +51,7 @@ export const customerApi = baseApi.injectEndpoints({
       { uid: string; pushToken: string }
     >({
       query: ({ uid, pushToken }) => ({
-        url: `/v1/customers/push-token`,
+        url: `/v1/customer/push-token`,
         method: "POST",
         body: { uid, pushToken },
       }),

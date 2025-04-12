@@ -1,8 +1,17 @@
-import { useRouter, Slot, useFocusEffect } from "expo-router";
+import { Slot, useRouter, useFocusEffect } from "expo-router";
 import { useCallback, useEffect } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { useUpdatePushTokenMutation } from "@/redux/features/customer/customerApi";
 import { registerForPushNotificationsAsync } from "@/utils/registerForPushNotificationsAsync";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const AppLayout = () => {
   const router = useRouter();
@@ -28,6 +37,17 @@ const AppLayout = () => {
       registerPushNotification();
     }
   }, [user?.customerId]);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log("Notification received in foreground:", notification);
+      }
+    );
+
+    return () => subscription.remove();
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       if (!user) {
