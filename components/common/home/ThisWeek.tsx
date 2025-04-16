@@ -50,7 +50,7 @@ const ThisWeek = () => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {isFetching ? (
           <View
-            className="w-full h-64 flex items-center justify-center"
+            className="w-full h-64 flex items-center justify-center mx-auto"
             style={{ minWidth: screenWidth - 70 }}
           >
             <ActivityIndicator size="large" color="#6BBFFF" />
@@ -127,7 +127,7 @@ const ThisWeek = () => {
               }}
               height={300}
               activeOpacity={0.7}
-              isAnimated={false}
+              isAnimated={true}
               maxValue={
                 Math.ceil(
                   Math.max(

@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { formatCurrency } from "@/utils/format-currency";
 import { formatDate } from "@/utils/format-date";
 import { ITransaction } from "@/types/transaction";
+import icons from "@/constants/icons";
 
 const RecentTransactionItem = ({
   transaction,
@@ -93,20 +94,21 @@ const RecentTransactionItem = ({
                 {transaction.category.name}
               </Text>
               <View className="flex-row items-center mt-1">
-                <Icon
-                  name="wallet-outline"
-                  size={14}
-                  color="rgba(255,255,255,0.6)"
+                <Image
+                  source={icons.wallet}
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                  resizeMode="contain"
                 />
-                <Text className="text-white/60 text-sm ml-1" numberOfLines={1}>
+                <Text
+                  className="text-white font-medium text-sm ml-1"
+                  numberOfLines={1}
+                >
                   {transaction.wallet.wallet_name}
                 </Text>
               </View>
-              {transaction.note && (
-                <Text className="text-white/40 text-xs mt-1" numberOfLines={1}>
-                  {transaction.note}
-                </Text>
-              )}
             </View>
             <View className="items-end">
               <Text
@@ -121,13 +123,9 @@ const RecentTransactionItem = ({
                 {transaction.transaction_type === "income" ? "+" : "-"}
                 {formatCurrency(transaction.amount, "VND")}
               </Text>
-              <View className="flex-row items-center mt-1">
-                <Icon
-                  name="time-outline"
-                  size={14}
-                  color="rgba(255,255,255,0.6)"
-                />
-                <Text className="text-white/60 text-xs ml-1">
+              <View className="flex-row items-center mt-1 font-medium">
+                <Icon name="time-outline" size={16} color="white" />
+                <Text className="text-white text-xs ml-1">
                   {formatDate(new Date(transaction.createdAt._seconds * 1000))}
                 </Text>
               </View>

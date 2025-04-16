@@ -57,7 +57,7 @@ const ExpenseData = ({
 
   return (
     <View
-      className="px-4 py-4 rounded-2xl bg-white border border-gray-200"
+      className="p-4 rounded-2xl bg-white border border-gray-200"
       style={{
         elevation: 5,
         shadowColor: "#d3d3d3",
@@ -68,7 +68,7 @@ const ExpenseData = ({
       <View className="flex-row items-center">
         <Image
           source={{ uri: symbol }}
-          className="w-14 h-14 rounded-full bg-gray-200 p-2"
+          className="size-12 rounded-full bg-gray-200 p-2"
           resizeMode="contain"
         />
         <View className="flex-1 ml-3">
@@ -83,7 +83,7 @@ const ExpenseData = ({
               Due: {formatDueDate(dueDate)}
             </Text>
           </View>
-          <View className="flex-row justify-between items-center mt-2">
+          <View className="flex-row justify-between items-center">
             <Text
               className="text-xl font-bold"
               style={{ color: getColorForValue(percentage) }}
@@ -119,7 +119,7 @@ const ExpenseData = ({
             </Text>
           </View>
         </View>
-        <View className="flex flex-col items-center ml-4">
+        <View className="flex flex-col items-center ml-2">
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => router.push(`/budget/modal/edit/${budgetId}`)}
@@ -130,7 +130,7 @@ const ExpenseData = ({
               justifyContent: "center",
             }}
           >
-            <Ionicons name="create-outline" size={22} color="white" />
+            <Ionicons name="create-outline" size={18} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -138,7 +138,7 @@ const ExpenseData = ({
             className="p-2 rounded-full bg-secondary-red"
             style={{ alignItems: "center", justifyContent: "center" }}
           >
-            <Ionicons name="trash-outline" size={22} color="white" />
+            <Ionicons name="trash-outline" size={18} color="white" />
           </TouchableOpacity>
         </View>
       </View>

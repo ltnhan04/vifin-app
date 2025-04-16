@@ -26,12 +26,17 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
         handleOnPress();
       }}
       activeOpacity={0.7}
-      className={`py-4 px-5 mt-4 w-full rounded-xl transition-opacity duration-300 ease-in-out ${isLoading || isDisabled ? "opacity-40" : ""}`}
+      className={`py-3 px-4 mt-4 w-full rounded-xl transition-opacity duration-300 ease-in-out ${isLoading || isDisabled ? "opacity-40" : ""}`}
       style={{ backgroundColor: background }}
     >
       <View className="flex flex-row items-center justify-center gap-x-4">
         {icon ? (
-          <Image testID="button-icon" source={icon} className="w-6 h-6" resizeMode="contain" />
+          <Image
+            testID="button-icon"
+            source={icon}
+            className="w-6 h-6"
+            resizeMode="contain"
+          />
         ) : (
           ""
         )}
@@ -48,7 +53,11 @@ const ButtonSubmit: React.FC<ButtonProps> = ({
                 {title}
               </Text>
               {isLoading && (
-                <ActivityIndicator testID="activity-indicator" size="small" color={textColor} />
+                <ActivityIndicator
+                  testID="activity-indicator"
+                  size="small"
+                  color={textColor}
+                />
               )}
             </View>
           ) : (

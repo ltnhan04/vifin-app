@@ -16,31 +16,41 @@ const SelectParentCategory = ({
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View>
+    <View className="mb-4">
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => setModalVisible(true)}
-        className="flex-row items-center gap-x-8 border-b border-gray-500 pb-5"
+        className="flex-row items-center gap-x-6 border-b border-white/10 pb-4"
       >
-        <Image
-          source={images.inheritance}
-          resizeMode="contain"
-          className="w-12 h-12"
-        />
+        <View className="pr-8 border-r border-white/10">
+          <View className="bg-secondary-gray-100/20 rounded-xl p-2">
+            <Image
+              source={images.inheritance}
+              resizeMode="contain"
+              className="w-10 h-10 opacity-90"
+            />
+          </View>
+        </View>
         <View className="flex-row items-center justify-between flex-1">
           <Controller
             name="parent_id"
             control={control}
             render={({ field: { value } }) => (
-              <Text className="text-xl font-semibold text-white">
+              <Text className="text-xl font-rubik-semibold text-white/90">
                 {value
                   ? data?.data.find((category) => category._id === value)
-                      ?.name || "Select parent category"
-                  : "Select parent category"}
+                      ?.name || "Parent category"
+                  : "Parent category"}
               </Text>
             )}
           />
-          <Icon name="chevron-forward-outline" size={20} color="#fff" />
+          <View className="bg-white/5 rounded-full p-1">
+            <Icon
+              name="chevron-forward-outline"
+              size={18}
+              color="rgba(255,255,255,0.8)"
+            />
+          </View>
         </View>
       </TouchableOpacity>
 

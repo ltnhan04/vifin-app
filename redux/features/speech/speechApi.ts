@@ -5,7 +5,7 @@ export const speechApi = baseApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     transcribeAudio: builder.mutation<
-      { transcript: string },
+      IResponseCategorized,
       { audioUrl: string; audioConfig: any }
     >({
       query: ({ audioUrl, audioConfig }) => {

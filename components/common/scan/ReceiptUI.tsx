@@ -263,7 +263,7 @@ const ReceiptUI = ({
         )}
 
         <TouchableOpacity
-          className="bg-green-500 px-4 py-2 rounded-md"
+          className="bg-primary-brighterBlue px-4 py-2 rounded-md"
           onPress={handleConfirm}
         >
           <Text className="text-white font-bold">Confirm</Text>

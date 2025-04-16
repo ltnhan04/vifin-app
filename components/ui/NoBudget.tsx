@@ -18,11 +18,11 @@ const NoBudget = () => {
         Stay on track with your finances. Start by adding a budget now! 🚀
       </Text>
       <TouchableOpacity
-        className="mt-6 bg-primary px-6 py-3 rounded-lg bg-primary-brighterBlue shadow-lg"
+        className="mt-6 bg-primary px-5 py-3 rounded-full bg-primary-brighterBlue shadow-lg"
         onPress={() => router.push("/(root)/(tabs)/budget/modal")}
         activeOpacity={0.7}
       >
-        <Text className="text-white text-lg font-bold">Add Budget</Text>
+        <Text className="text-white text-sm font-bold">Add Budget</Text>
       </TouchableOpacity>
     </View>
   );

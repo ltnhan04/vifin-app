@@ -102,7 +102,7 @@ const ThisMonth = () => {
                   }
                 )}
                 isAnimated
-                barWidth={56}
+                barWidth={36}
                 spacing={20}
                 showYAxisIndices
                 yAxisThickness={0.4}

@@ -54,7 +54,7 @@ const MyWalletSection = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="w-full border-[0.2px] my-2 border-y-secondary-gray-200"></View>
+      <View className="w-full border-[0.2px] my-2 border-y-gray-600"></View>
 
       {isLoading || isFetching ? (
         <View className="flex items-center">

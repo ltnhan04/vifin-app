@@ -12,27 +12,38 @@ const SelectCurrencyUnit = ({
   errors: FieldErrors<WalletType>;
 }) => {
   return (
-    <View className="flex-row items-center gap-x-4 border-b border-gray-300 pb-4 mb-4">
-      <Icon
-        name="cash"
-        size={40}
-        color={"#fff"}
-        className="pr-8 border-gray-300 border-r"
-      />
+    <View className="flex-row items-center gap-x-6 border-b border-white/10 pb-4 mb-4">
+      <View className="pr-8 border-r border-white/10">
+        <View className="bg-secondary-gray-100/20 rounded-xl p-2.5">
+          <Icon
+            name="cash"
+            size={32}
+            color={"rgba(255,255,255,0.9)"}
+          />
+        </View>
+      </View>
       <Controller
         name="currency_unit"
         control={control}
         render={({ field: { value } }) => (
           <View className="flex flex-col items-start">
-            <Text className="text-lg text-white">Currency Units</Text>
-            <Text className="font-medium text-xl text-white">{value}</Text>
+            <Text className="text-base font-rubik-medium text-white/70 mb-0.5">
+              Currency Units
+            </Text>
+            <Text className="font-rubik-semibold text-xl text-white/90">
+              {value}
+            </Text>
           </View>
         )}
       />
       {errors.currency_unit && (
-        <View className="flex-row items-center gap-x-1">
-          <Icon name="alert-circle-outline" size={16} color="#EF4444" />
-          <Text className="text-red-500 text-sm">
+        <View className="flex-row items-center gap-x-2 ml-2">
+          <Icon 
+            name="alert-circle-outline" 
+            size={14} 
+            color="#ef4444" 
+          />
+          <Text className="text-secondary-red text-sm font-rubik-medium">
             {errors.currency_unit.message}
           </Text>
         </View>

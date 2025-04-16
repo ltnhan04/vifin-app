@@ -1,10 +1,4 @@
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import { useCreateNewWalletMutation } from "@/redux/features/wallet/walletApi";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -55,46 +49,38 @@ const CreateWallet = () => {
 
   return (
     <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-      <SafeAreaView style={[androidSafeArea.androidSafeArea, { flex: 1 }]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
-        >
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              paddingHorizontal: 24,
-              paddingBottom: 24,
-            }}
-            showsVerticalScrollIndicator={false}
-          >
-            <View style={{ flex: 1 }}>
-              <InputWalletName
-                disabled={isLoading}
-                control={control}
-                errors={errors}
-              />
-              <SelectCurrencyUnit control={control} errors={errors} />
-              <InputWalletAmount
-                disabled={isLoading}
-                control={control}
-                errors={errors}
-              />
-              <View style={{ marginTop: "auto" }}>
-                <ButtonSubmit
-                  title="Save"
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
-                  background="#6BBFFF"
-                  textColor="white"
-                  handleOnPress={handleSubmit(onSubmit)}
-                />
-              </View>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: 24,
+          paddingBottom: 24,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>
+          <InputWalletName
+            disabled={isLoading}
+            control={control}
+            errors={errors}
+          />
+          <SelectCurrencyUnit control={control} errors={errors} />
+          <InputWalletAmount
+            disabled={isLoading}
+            control={control}
+            errors={errors}
+          />
+          <View style={{ marginTop: "auto" }}>
+            <ButtonSubmit
+              title="Create Wallet"
+              isLoading={isLoading}
+              isDisabled={isLoading}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </LinearGradient>
   );
 };
