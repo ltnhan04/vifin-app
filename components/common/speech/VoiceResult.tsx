@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { formatCurrency } from "@/utils/format-currency";
 
 interface VoiceResultProps {
@@ -55,8 +55,9 @@ const VoiceResult: React.FC<VoiceResultProps> = ({
           </View>
 
           <TouchableOpacity
-            className="py-3 px-8 rounded-full bg-blue-500 active:bg-blue-600"
+            className="py-3 px-8 rounded-full bg-primary-brighterBlue"
             onPress={onConfirm}
+            activeOpacity={0.7}
           >
             <Text className="text-white text-base font-bold text-center">
               Confirm

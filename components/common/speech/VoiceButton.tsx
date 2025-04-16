@@ -28,7 +28,7 @@ const VoiceButton: React.FC = () => {
           className="w-14 h-14 rounded-full shadow-lg"
           style={{
             transform: [{ scale: scaleAnim }],
-            backgroundColor: "#3B82F6",
+            backgroundColor: "#6BBFFF",
             shadowColor: "#000",
             shadowOffset: {
               width: 0,

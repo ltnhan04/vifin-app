@@ -72,9 +72,9 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
                   textSize={14}
                   textColor="#fff"
                   fontWeight="800"
-                  radius={120}
+                  radius={90}
                   focusOnPress
-                  innerRadius={60}
+                  innerRadius={45}
                   labelsPosition="outward"
                   showValuesAsLabels={true}
                   showExternalLabels
@@ -101,7 +101,7 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
                       <Text className="text-lg font-bold text-[#999999 ]">
                         Total
                       </Text>
-                      <Text className="text-2xl font-bold text-[#FF6B6B]">
+                      <Text className="text-base font-bold text-[#FF6B6B]">
                         {formatCurrency(selectedBarData.total, "VND")}
                       </Text>
                     </View>
@@ -113,11 +113,7 @@ const ModalDetailsTransaction: React.FC<IModalProps> = ({
                 <Text className="text-white font-semibold mb-4">
                   Transactions
                 </Text>
-                <ScrollView
-                  className="max-h-80"
-                  indicatorStyle={"white"}
-                  showsVerticalScrollIndicator={true}
-                >
+                <ScrollView className="max-h-60" indicatorStyle={"white"}>
                   {selectedBarData.transactions.length > 0 ? (
                     selectedBarData.transactions.map((transaction, idx) => (
                       <View key={idx} className="mb-3 last:mb-0">

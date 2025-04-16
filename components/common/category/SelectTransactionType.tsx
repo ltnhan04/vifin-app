@@ -13,13 +13,17 @@ const SelectTransactionType = ({
   transactionType?: string;
 }) => {
   return (
-    <View className="flex-row items-center gap-x-8 mb-4 border-b pb-5 border-gray-500">
-      <Image
-        source={images.expenseIncome}
-        resizeMode="contain"
-        className="w-12 h-12"
-      />
-      <View className="w-full">
+    <View className="flex-row items-center gap-x-6 mb-4 border-b pb-4 border-white/10">
+      <View className="pr-8 border-r border-white/10">
+        <View className="bg-secondary-gray-100/20 rounded-xl p-2">
+          <Image
+            source={images.expenseIncome}
+            resizeMode="contain"
+            className="w-10 h-10 opacity-90"
+          />
+        </View>
+      </View>
+      <View className="flex-1">
         <Controller
           name="transaction_type"
           control={control}

@@ -1,10 +1,4 @@
-import {
-  View,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import React, { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,64 +58,59 @@ const CreateTransaction = ({
   };
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={`${Platform.OS === "ios" ? "padding" : "height"}`}
-      >
-        <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-          <ScrollView
-            contentContainerClassName="px-6 pb-6 h-full"
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerClassName="px-6 pb-6 h-full"
+          style={{ flex: 1 }}
+        >
+          <View
+            className="flex flex-col justify-between mt-4"
             style={{ flex: 1 }}
           >
-            <View
-              className="flex flex-col justify-between mt-4"
-              style={{ flex: 1 }}
-            >
-              {handleCloseModal && (
-                <View className="w-full bg-primary-dark">
-                  <TouchableOpacity
-                    onPress={handleCloseModal}
-                    className="self-end"
-                  >
-                    <Icon name="close-outline" size={28} color={"white"} />
-                  </TouchableOpacity>
-                </View>
-              )}
-              <View className="flex flex-col gap-y-2">
-                <SelectCategory control={control} errors={errors} />
-                <InputAmount
-                  control={control}
-                  errors={errors}
-                  disabled={isLoading}
-                />
-                <SelectTransactionType
-                  control={control}
-                  transactionType="expense"
-                />
-                <SelectWallet
-                  control={control}
-                  errors={errors}
-                  expand={() => walletRef.current?.expand()}
-                />
+            {handleCloseModal && (
+              <View className="w-full bg-primary-dark">
+                <TouchableOpacity
+                  onPress={handleCloseModal}
+                  className="self-end"
+                >
+                  <Icon name="close-outline" size={28} color={"white"} />
+                </TouchableOpacity>
               </View>
-
-              <ButtonSubmit
-                title="Save"
-                isLoading={isLoading}
-                isDisabled={isLoading}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
+            )}
+            <View className="flex flex-col gap-y-2">
+              <SelectCategory control={control} errors={errors} />
+              <InputAmount
+                control={control}
+                errors={errors}
+                disabled={isLoading}
+              />
+              <SelectTransactionType
+                control={control}
+                transactionType="expense"
+              />
+              <SelectWallet
+                control={control}
+                errors={errors}
+                expand={() => walletRef.current?.expand()}
               />
             </View>
-          </ScrollView>
-          <WalletPickerBottom
-            type="transaction"
-            bottomRef={walletRef}
-            control={control}
-          />
-        </LinearGradient>
-      </KeyboardAvoidingView>
+
+            <ButtonSubmit
+              title="Save"
+              isLoading={isLoading}
+              isDisabled={isLoading}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={handleSubmit(onSubmit)}
+            />
+          </View>
+        </ScrollView>
+        <WalletPickerBottom
+          type="transaction"
+          bottomRef={walletRef}
+          control={control}
+        />
+      </LinearGradient>
     </GestureHandlerRootView>
   );
 };

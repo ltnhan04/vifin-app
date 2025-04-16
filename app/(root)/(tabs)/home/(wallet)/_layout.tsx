@@ -1,5 +1,5 @@
 import { router, Stack } from "expo-router";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const WalletLayout = () => {
@@ -24,14 +24,9 @@ const WalletLayout = () => {
           headerRight: () => (
             <TouchableOpacity
               className="flex-row items-center gap-x-1"
-              onPress={() =>
-                router.push("/(root)/(tabs)/home/(wallet)/create-wallet")
-              }
+              onPress={() => router.push("/home/create-wallet")}
             >
-              <Icon name="add-circle-outline" color="#fff" size={20} />
-              <Text className="text-white font-medium text-base">
-                Create Wallet
-              </Text>
+              <Icon name="add-circle-outline" color="#6BBFFF" size={28} />
             </TouchableOpacity>
           ),
         }}

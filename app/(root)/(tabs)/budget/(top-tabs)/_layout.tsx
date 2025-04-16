@@ -26,10 +26,9 @@ const BudgetTabs = () => {
             backgroundColor: "#081657",
           },
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: 10,
             fontWeight: "bold",
             textTransform: "uppercase",
-            marginTop: 16,
           },
           tabBarIndicatorStyle: {
             backgroundColor: "#6BBFFF",

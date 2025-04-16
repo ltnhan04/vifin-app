@@ -96,6 +96,7 @@ export default {
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-google-signin/google-signin",
+      "@config-plugins/ffmpeg-kit-react-native",
     ],
     experiments: {
       typedRoutes: true,

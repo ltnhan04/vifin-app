@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LinearGradient } from "expo-linear-gradient";
@@ -83,58 +83,53 @@ const EditCategory = () => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: 24,
-            paddingBottom: 16,
-            height: "100%",
-          }}
+    <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingBottom: 16,
+          height: "100%",
+        }}
+      >
+        <View
+          className="flex flex-col justify-between mt-4"
+          style={{ flex: 1 }}
         >
-          <View
-            className="flex flex-col justify-between mt-4"
-            style={{ flex: 1 }}
-          >
-            <View className="flex flex-col gap-y-2">
-              <InputCategoryName
-                control={control}
-                errors={errors}
-                disabled={!isEditing || isUpdating}
-              />
-              <SelectTransactionType
-                transactionType={data?.data.transaction_type as string}
-                control={control}
-              />
-              <SelectParentCategory control={control} />
-            </View>
-
-            {isEditing ? (
-              <ButtonSubmit
-                title="Save Changes"
-                isLoading={isUpdating}
-                isDisabled={isUpdating}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={handleSubmit(onSubmit)}
-              />
-            ) : (
-              <ButtonSubmit
-                title="Update Category"
-                isLoading={false}
-                isDisabled={false}
-                background="#6BBFFF"
-                textColor="white"
-                handleOnPress={() => setIsEditing(true)}
-              />
-            )}
+          <View className="flex flex-col gap-y-2">
+            <InputCategoryName
+              control={control}
+              errors={errors}
+              disabled={!isEditing || isUpdating}
+            />
+            <SelectTransactionType
+              transactionType={data?.data.transaction_type as string}
+              control={control}
+            />
+            <SelectParentCategory control={control} />
           </View>
-        </ScrollView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+
+          {isEditing ? (
+            <ButtonSubmit
+              title="Save Changes"
+              isLoading={isUpdating}
+              isDisabled={isUpdating}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={handleSubmit(onSubmit)}
+            />
+          ) : (
+            <ButtonSubmit
+              title="Update Category"
+              isLoading={false}
+              isDisabled={false}
+              background="#6BBFFF"
+              textColor="white"
+              handleOnPress={() => setIsEditing(true)}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 

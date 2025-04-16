@@ -27,8 +27,8 @@ const ParentCategories = ({
           <Icon name="close" size={30} color="#fff" />
         </TouchableOpacity>
 
-        <Text className="text-2xl font-rubik-bold text-gray-200 mb-4">
-          Categories
+        <Text className="text-xl font-rubik-medium text-gray-200 mb-4">
+          Parent Categories
         </Text>
 
         <Controller
@@ -38,13 +38,13 @@ const ParentCategories = ({
             <FlatList
               data={data?.data}
               keyExtractor={(item) => item._id}
-              contentContainerStyle={{ paddingBottom: 16 }}
+              contentContainerStyle={{ paddingBottom: 72 }}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => {
                 const isSelected = value === item._id;
                 return (
                   <TouchableOpacity
-                    className={`flex flex-row items-center py-3 px-4 rounded-lg mb-2 `}
+                    className={`flex flex-row items-center py-3 px-4 rounded-lg `}
                     activeOpacity={0.8}
                     onPress={() => {
                       if (isSelected) {

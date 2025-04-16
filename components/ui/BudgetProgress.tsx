@@ -30,7 +30,7 @@ const BudgetProgress = ({
     <View className="flex flex-col items-center justify-center w-full">
       <PieChart
         semiCircle
-        radius={180}
+        radius={140}
         showGradient
         innerRadius={120}
         data={[
@@ -69,7 +69,7 @@ const BudgetProgress = ({
       <View className="flex flex-row justify-end w-full">
         <NewLimitBtn bgColor={chartColor} />
       </View>
-      <View className="w-full mt-4 flex flex-col gap-y-4">
+      <View className="w-full mt-4 flex flex-col gap-y-2">
         {budgetData.map((budget) => (
           <ExpenseData
             key={budget._id}

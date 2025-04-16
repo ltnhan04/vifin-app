@@ -1,10 +1,10 @@
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { View, ScrollView } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { toast } from "sonner-native";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import BottomSheet from "@gorhom/bottom-sheet";
 import ButtonSubmit from "@/components/ui/Button";
 import {
@@ -86,68 +86,64 @@ const EditTransaction = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
-          <ScrollView
-            contentContainerStyle={{
-              paddingHorizontal: 24,
-              paddingBottom: 16,
-              height: "100%",
-            }}
+      <LinearGradient colors={["#081657", "#316F95"]} style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+            paddingBottom: 16,
+            height: "100%",
+          }}
+        >
+          <View
+            className="flex flex-col justify-between mt-8"
+            style={{ flex: 1 }}
           >
-            <View
-              className="flex flex-col justify-between mt-4"
-              style={{ flex: 1 }}
-            >
-              <View className="flex flex-col gap-y-2">
-                <InputAmount
-                  control={control}
-                  errors={errors}
-                  disabled={!isEditing || isUpdating}
-                />
-                <SelectTransactionType
-                  transactionType={data?.data.transaction_type as string}
-                  control={control}
-                />
-                <SelectCategory control={control} errors={errors} />
-                <SelectWallet
-                  control={control}
-                  errors={errors}
-                  expand={() => walletRef.current?.expand()}
-                />
-              </View>
+            <View className="flex flex-col gap-y-2">
+              <SelectCategory control={control} errors={errors} />
+              <InputAmount
+                control={control}
+                errors={errors}
+                disabled={!isEditing || isUpdating}
+              />
+              <SelectTransactionType
+                transactionType={data?.data.transaction_type as string}
+                control={control}
+              />
 
-              {isEditing ? (
-                <ButtonSubmit
-                  title="Save Changes"
-                  isLoading={isUpdating}
-                  isDisabled={isUpdating}
-                  background="#6BBFFF"
-                  textColor="white"
-                  handleOnPress={handleSubmit(onSubmit)}
-                />
-              ) : (
-                <ButtonSubmit
-                  title="Update Transaction"
-                  isLoading={false}
-                  isDisabled={false}
-                  background="#6BBFFF"
-                  textColor="white"
-                  handleOnPress={() => setIsEditing(true)}
-                />
-              )}
+              <SelectWallet
+                control={control}
+                errors={errors}
+                expand={() => walletRef.current?.expand()}
+              />
             </View>
-          </ScrollView>
-          <WalletPickerBottom
-            type="transaction"
-            bottomRef={walletRef}
-            control={control}
-          />
-        </LinearGradient>
-      </KeyboardAvoidingView>
+
+            {isEditing ? (
+              <ButtonSubmit
+                title="Save Changes"
+                isLoading={isUpdating}
+                isDisabled={isUpdating}
+                background="#6BBFFF"
+                textColor="white"
+                handleOnPress={handleSubmit(onSubmit)}
+              />
+            ) : (
+              <ButtonSubmit
+                title="Update Transaction"
+                isLoading={false}
+                isDisabled={false}
+                background="#6BBFFF"
+                textColor="white"
+                handleOnPress={() => setIsEditing(true)}
+              />
+            )}
+          </View>
+        </ScrollView>
+        <WalletPickerBottom
+          type="transaction"
+          bottomRef={walletRef}
+          control={control}
+        />
+      </LinearGradient>
     </GestureHandlerRootView>
   );
 };

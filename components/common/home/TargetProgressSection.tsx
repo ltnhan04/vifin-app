@@ -30,7 +30,7 @@ const TargetProgressSection = () => {
             resizeMode="contain"
             className="size-7"
           />
-          <Text className="font-medium text-xl text-secondary-yellow ml-2">
+          <Text className="font-medium text-lg text-secondary-yellow ml-2">
             Target Progress
           </Text>
         </View>
@@ -45,7 +45,7 @@ const TargetProgressSection = () => {
       </View>
       <View>
         {isFetching || isLoading ? (
-          <View className="w-full h-64 flex items-center justify-center">
+          <View className="w-full h-64 flex items-center justify-center mx-auto">
             <ActivityIndicator size="large" color="#6BBFFF" />
             <Text className="text-white text-sm mt-2">Loading...</Text>
           </View>

@@ -93,7 +93,7 @@ const SummaryReportSection = ({
     <View className="px-6 py-6 mt-6 border border-primary-brightBlue rounded-xl ">
       <View className="flex flex-row items-center justify-between mb-1">
         <TouchableOpacity
-          className="flex-row items-center gap-x-2 bg-primary-brightBlue/20 px-3 py-2 rounded-lg"
+          className="flex-row items-center gap-x-2 bg-primary-brightBlue/20 px-2 py-1 rounded-lg"
           onPress={() => setDropdownType("wallet")}
         >
           <Image
@@ -101,7 +101,7 @@ const SummaryReportSection = ({
             className="w-8 h-8 rounded-full"
             resizeMode="contain"
           />
-          <Text className="text-base text-white font-medium">
+          <Text className="text-xs text-white font-medium">
             {walletData?.wallet_name || "Select Wallet"}
           </Text>
           <Icon name="chevron-down-outline" color="#fff" size={18} />
@@ -111,7 +111,7 @@ const SummaryReportSection = ({
           activeOpacity={0.7}
           className="bg-primary-brightBlue/20 px-3 py-2 rounded-lg"
         >
-          <Text className="font-medium text-primary-brighterBlue text-sm">
+          <Text className="font-medium text-primary-brighterBlue text-xs">
             See All Statistics
           </Text>
         </TouchableOpacity>
@@ -197,7 +197,7 @@ const SummaryReportSection = ({
                 }}
                 height={250}
                 activeOpacity={0.7}
-                isAnimated={false}
+                isAnimated={true}
                 maxValue={
                   Math.ceil(
                     Math.max(

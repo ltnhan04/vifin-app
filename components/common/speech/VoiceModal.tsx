@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Modal, TouchableOpacity, ActivityIndicator, Text } from "react-native";
+import {
+  View,
+  Modal,
+  TouchableOpacity,
+  ActivityIndicator,
+  Text,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { toast } from "sonner-native";
 import { router } from "expo-router";
@@ -43,15 +49,14 @@ const VoiceModal: React.FC<VoiceModalProps> = ({ visible, onClose }) => {
         audioUrl: base64Audio,
         audioConfig: {
           encoding: "LINEAR16",
-          sampleRateHertz: 16000,
           languageCode: "en-US",
         },
       }).unwrap();
 
-      if (transcribeResult.transcript) {
-        setText(transcribeResult.transcript);
+      if (transcribeResult.data) {
+        setText(transcribeResult.data);
         const classificationResult = await expenseClassification({
-          text: transcribeResult.transcript,
+          text: transcribeResult.data,
         }).unwrap();
         setCategorizedData(classificationResult.data);
       } else {
@@ -126,8 +131,8 @@ const VoiceModal: React.FC<VoiceModalProps> = ({ visible, onClose }) => {
       <View className="absolute inset-0 bg-black/50 justify-center items-center">
         <View className="w-[90%] max-w-md rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-lg">
           <View className="flex-row justify-end mb-4">
-            <TouchableOpacity 
-              className="p-1" 
+            <TouchableOpacity
+              className="p-1"
               onPress={onClose}
               disabled={isProcessing}
             >
@@ -136,11 +141,11 @@ const VoiceModal: React.FC<VoiceModalProps> = ({ visible, onClose }) => {
           </View>
 
           <View className="items-center py-5">
-            <VoiceRecorder 
-              onAudioProcessed={handleAudioProcessed} 
+            <VoiceRecorder
+              onAudioProcessed={handleAudioProcessed}
               isProcessing={isProcessing}
             />
-            
+
             {isProcessing ? (
               <View className="items-center mt-5">
                 <ActivityIndicator size="large" color="#3B82F6" />

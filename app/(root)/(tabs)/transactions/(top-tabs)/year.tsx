@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  Modal,
-} from "react-native";
+import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import { BarChart } from "react-native-gifted-charts";
 import {
@@ -109,7 +102,7 @@ const ThisYear = () => {
                   }
                 )}
                 isAnimated
-                barWidth={56}
+                barWidth={36}
                 spacing={20}
                 showYAxisIndices
                 yAxisThickness={0.4}
