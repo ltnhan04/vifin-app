@@ -86,7 +86,7 @@ const ThisWeek = () => {
                       label: formatChartDate(new Date(item.date), "week"),
                       frontColor: barColor,
                       topLabelComponent: () => (
-                        <Text className="text-white text-[12px] font-bold text-center mb-1">
+                        <Text className="text-white text-xs font-bold text-center mb-1">
                           {formatValue(item.total)}
                         </Text>
                       ),
@@ -101,7 +101,7 @@ const ThisWeek = () => {
                   }
                 )}
                 isAnimated
-                barWidth={36}
+                barWidth={42}
                 spacing={20}
                 showYAxisIndices
                 yAxisThickness={0.4}
