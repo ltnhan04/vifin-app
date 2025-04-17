@@ -21,6 +21,7 @@ export const budgetApi = baseApi.injectEndpoints({
         url: `/v1/budget/${id}`,
         method: "GET",
       }),
+      providesTags: ["Budget"],
     }),
     getBudgetByRepeatType: builder.query<
       IResponseGetBudgetByRepeatType,

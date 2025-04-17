@@ -15,6 +15,7 @@ export const speechApi = baseApi.injectEndpoints({
           body: { audioUrl, audioConfig },
         };
       },
+      invalidatesTags: ["Budget", "Transaction", "Wallet"],
     }),
     expenseClassificationByVoice: builder.mutation<
       IResponseCategorized,
@@ -27,6 +28,7 @@ export const speechApi = baseApi.injectEndpoints({
           body: { text },
         };
       },
+      invalidatesTags: ["Budget", "Transaction", "Wallet"],
     }),
   }),
 });

@@ -93,6 +93,12 @@ export default {
           },
         },
       ],
+      [
+        "expo-av",
+        {
+          microphonePermission: "Allow ViFin to access your microphone.",
+        },
+      ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-google-signin/google-signin",

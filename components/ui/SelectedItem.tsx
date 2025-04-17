@@ -1,9 +1,8 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { router } from "expo-router";
 import { MoneyTextInput } from "@alexzunik/react-native-money-input";
-
 import icons from "@/constants/icons";
 import type { SelectedItemProps } from "@/types/selected-item";
 
