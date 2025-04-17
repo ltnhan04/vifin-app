@@ -19,10 +19,13 @@ const AppLayout = () => {
   const [updatePushToken] = useUpdatePushTokenMutation();
 
   useEffect(() => {
+    let didRun = false;
+
     const registerPushNotification = async () => {
       try {
         const pushToken = await registerForPushNotificationsAsync();
-        if (pushToken && user?.customerId) {
+        if (pushToken && user?.customerId && !didRun) {
+          didRun = true;
           await updatePushToken({
             uid: user.customerId,
             pushToken: pushToken,
@@ -50,6 +53,7 @@ const AppLayout = () => {
 
   useFocusEffect(
     useCallback(() => {
+      if (user === undefined) return;
       if (!user) {
         router.replace("/(root)/(onboarding)");
       }
