@@ -21,6 +21,7 @@ export const categoryApi = baseApi.injectEndpoints({
         url: `/v1/category/${id}`,
         method: "GET",
       }),
+      providesTags: ["Category"],
     }),
     searchCategoryByName: builder.mutation<IResponseCategory, { name: string }>(
       {

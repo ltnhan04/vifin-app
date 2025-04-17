@@ -5,7 +5,6 @@ const BudgetData = ({
   title,
   amount,
   primaryColor,
-  days,
 }: {
   title: string;
   amount?: number;
@@ -15,16 +14,19 @@ const BudgetData = ({
   <View className="flex flex-col justify-center items-center">
     <Text
       style={{ color: primaryColor }}
-      className="text-base font-rubik-bold max-w-40 w-full"
+      className="text-sm font-bold tracking-wider uppercase"
     >
       {title}
     </Text>
     <Text
       style={{ color: primaryColor }}
-      className="text-sm font-rubik-semibold"
+      className="text-sm font-bold"
+      numberOfLines={1}
+      adjustsFontSizeToFit
     >
-      {days ? `${days} days` : formatCurrency(amount || 0, "VND")}
+      {formatCurrency(amount || 0, "VND")}
     </Text>
   </View>
 );
+
 export default BudgetData;

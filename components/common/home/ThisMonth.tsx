@@ -56,7 +56,7 @@ const ThisMonth = () => {
             <Text className="text-white text-sm mt-2">Loading...</Text>
           </View>
         ) : chartData.length === 0 ? (
-          <NoDataFound screenWidth={screenWidth} />
+          <NoDataFound screenWidth={screenWidth + 30} />
         ) : (
           <View
             style={{ width: Math.max(screenWidth, chartData.length * 100) }}

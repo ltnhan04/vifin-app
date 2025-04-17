@@ -43,7 +43,7 @@ const BudgetProgress = ({
               className="font-rubik-medium text-2xl"
               style={{ color: getTextColor() }}
             >
-              Total Spending
+              Current Spending
             </Text>
             <Text
               className="font-rubik-bold text-lg mt-1"
@@ -56,12 +56,12 @@ const BudgetProgress = ({
       />
       <View className="flex flex-row items-center justify-between w-full px-2 mt-4">
         <BudgetData
-          title="Budget"
+          title="Spending Plan"
           primaryColor={getTextColor()}
           amount={totalLimit}
         />
         <BudgetData
-          title="Remain money"
+          title="Remain Money"
           primaryColor={getTextColor()}
           amount={totalLimit - totalSpent}
         />

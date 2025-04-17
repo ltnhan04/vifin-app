@@ -36,8 +36,20 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       subscription.remove();
     };
   }, [isRecording]);
+  const requestMicrophonePermission = async (): Promise<boolean> => {
+    const { status } = await Audio.requestPermissionsAsync();
+    if (status !== "granted") {
+      toast.error("Microphone permission denied", {
+        description: "Please enable microphone access in settings.",
+      });
+      return false;
+    }
+    return true;
+  };
 
   const startRecording = async () => {
+    const hasPermission = await requestMicrophonePermission();
+    if (!hasPermission) return;
     try {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,

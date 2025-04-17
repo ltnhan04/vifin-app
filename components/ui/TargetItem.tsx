@@ -65,7 +65,7 @@ const TargetItem: React.FC<TargetItemProps> = ({
               innerRadius={15}
               data={pieData}
               centerLabelComponent={() => (
-                <Text className="text-primary-dark font-rubik-bold text-xs">
+                <Text className="text-primary-dark font-medium text-xs">
                   {percentage}%
                 </Text>
               )}
