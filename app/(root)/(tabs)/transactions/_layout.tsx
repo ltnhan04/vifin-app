@@ -83,19 +83,19 @@ const TransactionLayout = () => {
             </TouchableOpacity>
           ),
           headerLeft: () =>
-            page === "modal" || page === "list-category" ? (
-              ""
-            ) : (
+            page === "modal" || page === "list-category" ? null : (
               <TouchableOpacity
                 className="px-4 py-2 border-2 rounded-lg border-secondary-gray-100"
                 onPress={() => setDropdownType("transaction_type")}
               >
                 <View className="flex flex-row items-center">
-                  <Image
-                    source={transactionData && transactionData.icon}
-                    className="size-8"
-                    resizeMode="contain"
-                  />
+                  {transactionData ? (
+                    <Image
+                      source={transactionData.icon}
+                      className="w-8 h-8"
+                      resizeMode="contain"
+                    />
+                  ) : null}
                   <Text className="text-white font-semibold text-base mx-2">
                     {transactionData && transactionData.label}
                   </Text>
