@@ -9,7 +9,9 @@ const NoDataFound = ({ screenWidth }: { screenWidth: number }) => {
       style={{ minWidth: screenWidth - 70 }}
     >
       <Icon name="bar-chart-outline" size={60} color="#6BBFFF" />
-      <Text className="text-white text-xl font-medium mt-2">No Data Found</Text>
+      <Text className="text-gray-300 text-xl font-medium mt-2">
+        No Data Found
+      </Text>
       <Text className="text-gray-400 text-base mt-1">
         Add income or expenses to view the chart.
       </Text>

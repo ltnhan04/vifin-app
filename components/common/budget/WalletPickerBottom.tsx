@@ -45,7 +45,7 @@ const WalletPickerBottom = <T extends BudgetType | TransactionType>({
   return (
     <BottomSheet
       ref={bottomRef}
-      snapPoints={["25%", "50%"]}
+      snapPoints={["25%", "60%"]}
       index={-1}
       backdropComponent={renderBackdrop}
       enablePanDownToClose

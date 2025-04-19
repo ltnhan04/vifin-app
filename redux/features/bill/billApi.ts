@@ -12,6 +12,7 @@ export const billApi = baseApi.injectEndpoints({
           body: { text },
         };
       },
+      invalidatesTags: ["Budget", "Transaction", "Wallet"],
     }),
   }),
 });

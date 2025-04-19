@@ -65,6 +65,7 @@ export const transactionApi = baseApi.injectEndpoints({
         url: `/v1/transactions/${id}`,
         method: "GET",
       }),
+      providesTags: ["Transaction"],
     }),
     getTransactionByWeek: builder.query<
       IResponseTransactionByDay,
