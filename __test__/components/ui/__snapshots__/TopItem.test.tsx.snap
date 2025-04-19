@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopItem Component renders correct percent style based on type 1`] = `
+<View
+  className="flex flex-row items-center gap-x-3"
+>
+  <Image
+    className="size-9 bg-primary-dark rounded-full"
+    source={
+      {
+        "uri": "dummy-wallet-icon",
+      }
+    }
+  />
+  <View
+    className="mt-2 flex-1"
+  >
+    <Text
+      className="text-base text-white font-rubik-medium"
+    >
+      Test Title
+    </Text>
+    <View
+      className="flex flex-row items-center justify-between"
+    >
+      <Text
+        className="text-sm text-white font-rubik-medium"
+      >
+        1000 VND
+      </Text>
+      <Text
+        className="text-secondary-red font-rubik-bold text-sm"
+      >
+        10
+        %
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`TopItem Component renders correct percent style based on type 2`] = `
+<View
+  className="flex flex-row items-center gap-x-3"
+>
+  <Image
+    className="size-9 bg-primary-dark rounded-full"
+    source={
+      {
+        "uri": "dummy-wallet-icon",
+      }
+    }
+  />
+  <View
+    className="mt-2 flex-1"
+  >
+    <Text
+      className="text-base text-white font-rubik-medium"
+    >
+      Test Title
+    </Text>
+    <View
+      className="flex flex-row items-center justify-between"
+    >
+      <Text
+        className="text-sm text-white font-rubik-medium"
+      >
+        1000 VND
+      </Text>
+      <Text
+        className="text-secondary-green-100 font-rubik-bold text-sm"
+      >
+        10
+        %
+      </Text>
+    </View>
+  </View>
+</View>
+`;

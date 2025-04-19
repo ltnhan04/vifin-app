@@ -8,6 +8,12 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+vifin-app-firebase-adminsdk-z76vc-4bb289a55d.json
+
+google-services.json
+GoogleService-Info.plist
+/android
+coverage/**/*
 
 # Native
 *.orig.*
