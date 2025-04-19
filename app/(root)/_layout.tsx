@@ -44,7 +44,10 @@ const AppLayout = () => {
   useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener(
       (notification) => {
-        console.log("Notification received in foreground:", notification);
+        console.log(
+          "💥 Notification received in foreground:",
+          JSON.stringify(notification, null, 2)
+        );
       }
     );
 
